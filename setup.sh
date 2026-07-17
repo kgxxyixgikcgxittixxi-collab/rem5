@@ -4,13 +4,12 @@
 #   by Srcnrofree / akah3674-glitch
 # =============================================
 
-RAR_ID="1uH2O2FtuGpIQfIYVAhi9wcuxfDjTQddY"
 APK_ID="1pATLKSc404yUY2wO8EBiJVAvOXCdUWg2"
 SERVER_DIR="$HOME/nro-chuberong"
-RAR_FILE="$SERVER_DIR/server.rar"
 DB_NAME="team2026"
 PORT=14445
 SETUP_FLAG="$SERVER_DIR/.setup_done"
+GH_RAW="https://raw.githubusercontent.com/akah3674-glitch/rem5/main/server"
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; NC='\033[0m'
 info()    { echo -e "${CYAN}[INFO]${NC} $1"; }
@@ -41,7 +40,7 @@ show_menu() {
   echo "  0. Thoát"
   echo ""
   printf "  Chọn: "
-  read -r opt
+  read -r opt </dev/tty
   case "$opt" in
     1) start_server ;;
     2) stop_server ;;
@@ -105,8 +104,13 @@ show_connect_info() {
   echo -e "  IP Game  : ${YELLOW}$LOCAL_IP${NC}"
   echo -e "  PORT Game: ${YELLOW}$PORT${NC}"
   echo ""
-  echo -e "  APK mod: tải từ link đã cho hoặc $HOME/Downloads/ChuBeRong_mod.apk"
+  echo -e "  APK mod: $HOME/Downloads/ChuBeRong_mod.apk"
   echo ""
+}
+
+dl() {
+  # dl <url> <dest>
+  curl -fsSL --max-redirs 10 --retry 3 -o "$2" "$1"
 }
 
 # ─── Nếu đã setup xong → vào menu ─────────────────
@@ -123,72 +127,49 @@ echo -e "${CYAN}╚════════════════════�
 echo ""
 
 # Bước 1: Cài packages
-info "Bước 1/6: Cài packages..."
+info "Bước 1/5: Cài packages..."
 pkg update -y 2>/dev/null | tail -1
-pkg install -y openjdk-17 mariadb unrar curl wget 2>/dev/null | tail -3
-ok "Packages đã cài"
+pkg install -y openjdk-17 mariadb curl wget 2>/dev/null | tail -3
+ok "Packages đã cài (không cần unrar nữa)"
 
 # Bước 2: Tạo thư mục
-info "Bước 2/6: Tạo thư mục server..."
+info "Bước 2/5: Tạo thư mục server..."
 mkdir -p "$SERVER_DIR/lib"
 mkdir -p "$HOME/Downloads"
 ok "Thư mục: $SERVER_DIR"
 
-# Bước 3: Tải RAR server
-info "Bước 3/6: Tải server RAR (~629MB) - có thể mất 10-20 phút..."
-DL_URL="https://drive.usercontent.google.com/download?id=${RAR_ID}&export=download&authuser=0&confirm=t"
-if [ -f "$RAR_FILE" ] && [ $(stat -c%s "$RAR_FILE" 2>/dev/null || echo 0) -gt 100000000 ]; then
-  ok "RAR đã tải rồi, bỏ qua"
-else
-  curl -L --max-redirs 15 -C - "$DL_URL" -o "$RAR_FILE" --progress-bar
-  ok "Tải RAR xong: $(du -sh $RAR_FILE | cut -f1)"
-fi
+# Bước 3: Tải file server từ GitHub
+info "Bước 3/5: Tải server files từ GitHub (~8MB)..."
 
-# Bước 4: Giải nén files cần thiết
-info "Bước 4/6: Giải nén files..."
-EXTRACT_DIR="/tmp/nro_extract_$$"
-mkdir -p "$EXTRACT_DIR"
+info "  NgocRongOnline.jar..."
+dl "$GH_RAW/NgocRongOnline.jar" "$SERVER_DIR/NgocRongOnline.jar"
+ok "  NgocRongOnline.jar ($(du -sh $SERVER_DIR/NgocRongOnline.jar | cut -f1))"
 
-info "  Giải nén dist folder..."
-unrar x -y "$RAR_FILE" "SRC/dist/" "$EXTRACT_DIR/" 2>/dev/null | tail -2
+info "  Thư viện (lib)..."
+LIBS=(
+  apache-commons-lang.jar
+  bson-5.1.3.jar
+  gson-2.8.2.jar
+  HikariCP-5.1.0.jar
+  java-json.jar
+  json-simple-1.1.jar
+  log4j-1.2.17.jar
+  lombok.jar
+  mysql-connector-java8-5.1.23.jar
+  slf4j-api-2.0.0-alpha1.jar
+  slf4j-simple-2.0.0-alpha1.jar
+)
+for lib in "${LIBS[@]}"; do
+  dl "$GH_RAW/lib/$lib" "$SERVER_DIR/lib/$lib"
+done
+ok "  Libs: $(ls $SERVER_DIR/lib/*.jar | wc -l) files"
 
-info "  Giải nén Config.properties..."
-unrar e -y "$RAR_FILE" "Config.properties" "$EXTRACT_DIR/" 2>/dev/null | tail -1
+info "  Database SQL..."
+dl "$GH_RAW/database_team2026.sql" "$SERVER_DIR/team2026.sql"
+ok "  SQL: $(du -sh $SERVER_DIR/team2026.sql | cut -f1)"
 
-info "  Giải nén database SQL..."
-unrar e -y "$RAR_FILE" "database team2026.sql" "$EXTRACT_DIR/" 2>/dev/null | tail -1
-
-# Copy vào server dir
-if [ -f "$EXTRACT_DIR/SRC/dist/NgocRongOnline.jar" ]; then
-  cp "$EXTRACT_DIR/SRC/dist/NgocRongOnline.jar" "$SERVER_DIR/"
-  ok "  NgocRongOnline.jar OK"
-else
-  # fallback: thử extract thẳng tên file
-  unrar e -y -r "$RAR_FILE" "NgocRongOnline.jar" "$SERVER_DIR/" 2>/dev/null
-  ok "  NgocRongOnline.jar (fallback) OK"
-fi
-
-if [ -d "$EXTRACT_DIR/SRC/dist/lib" ]; then
-  cp "$EXTRACT_DIR/SRC/dist/lib/"*.jar "$SERVER_DIR/lib/" 2>/dev/null
-  ok "  Libs: $(ls $SERVER_DIR/lib/*.jar 2>/dev/null | wc -l) files"
-else
-  unrar e -y -r "$RAR_FILE" "*.jar" "$SERVER_DIR/lib/" 2>/dev/null
-  # remove the main jar from lib if it got extracted there
-  rm -f "$SERVER_DIR/lib/NgocRongOnline.jar" 2>/dev/null
-fi
-
-SQL_FILE="$SERVER_DIR/team2026.sql"
-if [ -f "$EXTRACT_DIR/database team2026.sql" ]; then
-  cp "$EXTRACT_DIR/database team2026.sql" "$SQL_FILE"
-  ok "  SQL: $(du -sh $SQL_FILE | cut -f1)"
-elif [ -f "$EXTRACT_DIR/database"*".sql" ]; then
-  cp "$EXTRACT_DIR/"*".sql" "$SQL_FILE" 2>/dev/null
-fi
-
-rm -rf "$EXTRACT_DIR" 2>/dev/null
-
-# Bước 5: Cấu hình
-info "Bước 5/6: Cấu hình server..."
+# Bước 4: Cấu hình
+info "Bước 4/5: Cấu hình server..."
 LOCAL_IP=$(get_local_ip)
 warn "IP tự động phát hiện: $LOCAL_IP"
 
@@ -220,8 +201,8 @@ database.lifetime=120000
 EOF
 ok "Config.properties đã tạo với IP: $LOCAL_IP"
 
-# Bước 6: Setup MariaDB
-info "Bước 6/6: Setup MariaDB..."
+# Bước 5: Setup MariaDB
+info "Bước 5/5: Setup MariaDB..."
 mysql_install_db --user=root 2>/dev/null | tail -2 || true
 mysqld_safe --user=root &>/dev/null &
 sleep 5
@@ -232,21 +213,21 @@ CREATE DATABASE IF NOT EXISTS $DB_NAME CHARACTER SET utf8mb4 COLLATE utf8mb4_uni
 FLUSH PRIVILEGES;
 SQLEOF
 
-if [ -f "$SQL_FILE" ]; then
-  info "Import SQL database (~1MB)..."
-  mysql -u root "$DB_NAME" < "$SQL_FILE" 2>/dev/null && ok "SQL import OK" || warn "SQL import gặp lỗi nhỏ, có thể vẫn OK"
-fi
+info "Import SQL database (~1MB)..."
+mysql -u root "$DB_NAME" < "$SERVER_DIR/team2026.sql" 2>/dev/null \
+  && ok "SQL import OK" \
+  || warn "SQL import gặp lỗi nhỏ, có thể vẫn OK"
 
 ok "MariaDB: DB '$DB_NAME' sẵn sàng"
 
-# Tải APK về Downloads
-info "Tải APK mod về Downloads..."
+# Tải APK
+info "Tải APK mod về Downloads (~84MB)..."
 APK_URL="https://drive.usercontent.google.com/download?id=${APK_ID}&export=download&authuser=0&confirm=t"
 APK_FILE="$HOME/Downloads/ChuBeRong_mod.apk"
 curl -L --max-redirs 15 -C - "$APK_URL" -o "$APK_FILE" --progress-bar 2>/dev/null
 ok "APK lưu tại: $APK_FILE"
 
-# Start scripts
+# Start/Stop scripts
 cat > "$SERVER_DIR/start.sh" << 'STARTEOF'
 #!/data/data/com.termux/files/usr/bin/bash
 cd ~/nro-chuberong
@@ -269,10 +250,6 @@ chmod +x "$SERVER_DIR/start.sh" "$SERVER_DIR/stop.sh"
 
 # Đánh dấu setup xong
 touch "$SETUP_FLAG"
-
-# Xóa RAR để tiết kiệm dung lượng
-info "Xóa RAR để giải phóng bộ nhớ..."
-rm -f "$RAR_FILE" 2>/dev/null
 
 echo ""
 echo -e "${GREEN}╔══════════════════════════════════════╗${NC}"

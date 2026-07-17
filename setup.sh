@@ -168,6 +168,13 @@ info "  Database SQL..."
 dl "$GH_RAW/database_team2026.sql" "$SERVER_DIR/team2026.sql"
 ok "  SQL: $(du -sh $SERVER_DIR/team2026.sql | cut -f1)"
 
+info "  Game data (map/update_data/effdata)..."
+dl "https://github.com/akah3674-glitch/rem5/releases/download/v1.0/nro_data.tar.gz" \
+   "$SERVER_DIR/nro_data.tar.gz"
+tar -xzf "$SERVER_DIR/nro_data.tar.gz" -C "$SERVER_DIR/"
+rm -f "$SERVER_DIR/nro_data.tar.gz"
+ok "  Game data OK ($(ls $SERVER_DIR/data/ | wc -l) folders)"
+
 # Bước 4: Cấu hình
 info "Bước 4/5: Cấu hình server..."
 LOCAL_IP=$(get_local_ip)

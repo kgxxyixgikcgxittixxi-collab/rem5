@@ -155,7 +155,7 @@ LIBS=(
   json-simple-1.1.jar
   log4j-1.2.17.jar
   lombok.jar
-  mysql-connector-java8-5.1.23.jar
+  mysql-connector-java-5.1.49.jar
   slf4j-api-2.0.0-alpha1.jar
   slf4j-simple-2.0.0-alpha1.jar
 )

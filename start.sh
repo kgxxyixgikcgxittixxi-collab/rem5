@@ -1,75 +1,73 @@
 #!/bin/bash
-# =============================================
-#  NGOC RONG SERVER + SSH REMOTE
-# =============================================
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SERVER_DIR="$SCRIPT_DIR/server"
-LOG_DIR="$SCRIPT_DIR/logs"
-mkdir -p "$LOG_DIR"
+LOG=~/logs
+mkdir -p $LOG
 
-echo "=== Cài SSH server ==="
-sudo apt-get install -y -qq openssh-server 2>/dev/null
-sudo mkdir -p /run/sshd
-echo "PermitRootLogin yes
-PasswordAuthentication yes
-ChallengeResponseAuthentication no
-UsePAM no
-Subsystem sftp /usr/lib/openssh/sftp-server" | sudo tee /etc/ssh/sshd_config > /dev/null
-echo "codespace:colab2024" | sudo chpasswd 2>/dev/null || true
-sudo service ssh start 2>/dev/null || sudo /usr/sbin/sshd
-echo "✅ SSH OK"
-
-echo "=== Khởi động MariaDB ==="
-sudo service mariadb start 2>/dev/null || sudo mysqld_safe --skip-grant-tables &
+echo "[1] Khởi động MariaDB..."
+sudo service mariadb start 2>/dev/null || true
 sleep 3
+sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY ''; FLUSH PRIVILEGES;" 2>/dev/null || true
 
-# Import DB nếu chưa có
-DB_OK=$(sudo mysql -e "SHOW DATABASES LIKE 'team2026';" 2>/dev/null | grep team2026 || true)
-if [ -z "$DB_OK" ]; then
-  sudo mysql -e "CREATE DATABASE IF NOT EXISTS team2026 CHARACTER SET utf8mb4;"
-  [ -f "$SERVER_DIR/database_team2026.sql" ] && sudo mysql team2026 < "$SERVER_DIR/database_team2026.sql"
-  echo "✅ Database ready"
+echo "[2] Import database..."
+SQL=$(find ~/nro -name "*.sql" 2>/dev/null | head -1)
+if [ -n "$SQL" ]; then
+  DBNAME=$(basename "$SQL" .sql)
+  sudo mysql -e "CREATE DATABASE IF NOT EXISTS \`$DBNAME\` CHARACTER SET utf8mb4;" 2>/dev/null || true
+  sudo mysql "$DBNAME" < "$SQL" 2>/dev/null && echo "✅ DB: $DBNAME" || echo "DB đã có"
 fi
 
-echo "=== Tải bore ==="
-if [ ! -f /tmp/bore ]; then
-  curl -sLo /tmp/bore.tar.gz "https://github.com/ekzhang/bore/releases/download/v0.5.1/bore-v0.5.1-x86_64-unknown-linux-musl.tar.gz"
-  tar -xzf /tmp/bore.tar.gz -C /tmp/
-  chmod +x /tmp/bore
+echo "[3] Cập nhật config..."
+CFG=$(find ~/nro -name "Config.properties" 2>/dev/null | head -1)
+if [ -n "$CFG" ]; then
+  sed -i "s|database.pass=.*|database.pass=|g" "$CFG"
+  sed -i "s|database.user=.*|database.user=root|g" "$CFG"
+  sed -i "s|server.local=.*|server.local=true|g" "$CFG"
 fi
 
-echo "=== Mở SSH tunnel ==="
-/tmp/bore local 22 --to bore.pub > /tmp/bore_ssh.log 2>&1 &
-sleep 3
-SSH_PORT=$(grep -o 'remote_port=[0-9]*' /tmp/bore_ssh.log | cut -d= -f2)
+echo "[4] Chạy Java server..."
+JAR=$(find ~/nro -name "*.jar" | grep -viE "login|Login|lib/" | head -1)
+JAR_LOGIN=$(find ~/nro -name "*.jar" | grep -iE "login" | head -1)
+LIB=$(find ~/nro -name "lib" -type d | head -1)
+echo "  JAR game : $JAR"
+echo "  JAR login: $JAR_LOGIN"
 
-echo "=== Khởi động Java Game Server ==="
-cd "$SERVER_DIR"
-# Cập nhật config
-sed -i "s|database.pass=.*|database.pass=|g" Config.properties
-sed -i "s|database.user=.*|database.user=root|g" Config.properties
+if [ -n "$JAR_LOGIN" ]; then
+  SDIR=$(dirname "$JAR_LOGIN")
+  CP="$(basename $JAR_LOGIN)"; [ -n "$LIB" ] && CP="$CP:$LIB/*"
+  cd "$SDIR"
+  nohup java -Xms128m -Xmx512m -cp "$CP" Main > $LOG/login.log 2>&1 &
+  echo "✅ Login server PID: $!"
+  sleep 2
+fi
 
-nohup java -Xms256m -Xmx1g \
-  -cp "NgocRongOnline.jar:lib/*" \
-  Main \
-  > "$LOG_DIR/server.log" 2>&1 &
-SERVER_PID=$!
-echo $SERVER_PID > /tmp/server.pid
-echo "✅ Game server PID: $SERVER_PID"
+if [ -n "$JAR" ]; then
+  SDIR=$(dirname "$JAR")
+  CP="$(basename $JAR)"; [ -n "$LIB" ] && CP="$CP:$LIB/*"
+  cd "$SDIR"
+  nohup java -Xms256m -Xmx1g -cp "$CP" Main > $LOG/server.log 2>&1 &
+  echo "✅ Game server PID: $!"
+  sleep 5
+fi
+
+echo "[5] Mở ngrok tunnel port 14445..."
+pkill ngrok 2>/dev/null || true
+nohup ngrok tcp 14445 > $LOG/ngrok.log 2>&1 &
+sleep 6
+
+NGROK=$(curl -s http://localhost:4040/api/tunnels 2>/dev/null | \
+  grep -o '"public_url":"tcp://[^"]*"' | cut -d'"' -f4)
+HOST=$(echo $NGROK | cut -d: -f2 | tr -d '/')
+PORT=$(echo $NGROK | cut -d: -f3)
 
 echo ""
-echo "╔══════════════════════════════════════════════════════╗"
-echo "  ✅ SERVER ĐÃ CHẠY"
-echo "  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "  🎮 Game port : 14445 (Codespaces forward)"
-echo "  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "  🔐 SSH TỪ XA (Replit / Termux / máy tính):"
-echo "  ssh -o StrictHostKeyChecking=no -p $SSH_PORT codespace@bore.pub"
-echo "  Password: colab2024"
-echo "  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "  📋 ALL-IN-ONE paste vào Replit Shell:"
-echo "  ssh -o StrictHostKeyChecking=no -p $SSH_PORT codespace@bore.pub"
-echo "╚══════════════════════════════════════════════════════╝"
-echo ""
-echo "🔄 Log server (Ctrl+C không tắt server):"
-tail -f "$LOG_DIR/server.log"
+echo "╔══════════════════════════════════════════╗"
+echo "  ✅  NGOC RONG SERVER ONLINE"
+echo "  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  🌐 IP   : $HOST"
+echo "  🔌 Port : $PORT"
+echo "  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Điền vào game: IP=$HOST  Port=$PORT"
+echo "╚══════════════════════════════════════════╝"
+
+# Ghi ra file để đọc sau
+echo "$NGROK" > /tmp/server_addr.txt
+tail -f $LOG/server.log

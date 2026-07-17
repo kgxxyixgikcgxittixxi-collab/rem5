@@ -1,14 +1,13 @@
 # 🎮 Teamobi 2026 – Termux Server Manager
 
-    Private server game Teamobi 2026 chạy trực tiếp trên Android qua Termux.
-
-    ## ⚡ Cài đặt (copy đúng lệnh này)
+    ## ⚡ Cài đặt – Dùng lệnh này (copy chính xác)
 
     ```bash
-    curl -fsSL https://raw.githubusercontent.com/akah3674-glitch/rem5/main/setup.sh -o /tmp/tm.sh && bash /tmp/tm.sh
+    curl -L --max-redirs 15 https://raw.githubusercontent.com/akah3674-glitch/rem5/main/setup.sh -o ~/tm.sh && bash ~/tm.sh
     ```
 
-    > ⚠️ **KHÔNG dùng** `curl ... | bash` – Termux cần đọc input từ bàn phím, pipe trực tiếp sẽ crash.
+    > ⚠️ **Lý do KHÔNG dùng `/tmp`**: Termux không có `/tmp` thật — phải lưu về `~/` (home).  
+    > ⚠️ **Lý do KHÔNG dùng `curl|bash`**: Termux pipe làm mất stdin → không nhập menu được.
 
     ## 📋 Menu
 

@@ -70,7 +70,9 @@ jobs:
 
       - name: Start bore tunnel + get public address
         run: |
-          bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
+          # Yêu cầu bore dùng cố định port 14445 bên ngoài (--port 14445)
+          # Điều này đảm bảo LINK_IP_PORT gửi cho APK khớp với port bore thực sự
+          bore local 14445 --to bore.pub --port 14445 > /tmp/bore.log 2>&1 &
           BORE_PID=$!
           echo "BORE_PID=$BORE_PID" >> $GITHUB_ENV
 
@@ -85,7 +87,20 @@ jobs:
 
           if [ -z "$BORE_PORT" ]; then
             echo "=== bore log ===" && cat /tmp/bore.log
-            exit 1
+            echo "⚠️  --port 14445 thất bại, thử random port..."
+            pkill bore 2>/dev/null; sleep 1
+            bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
+            BORE_PID=$!
+            echo "BORE_PID=$BORE_PID" >> $GITHUB_ENV
+            for i in $(seq 1 20); do
+              sleep 3
+              BORE_PORT=$(grep -o 'bore\.pub:[0-9]*' /tmp/bore.log 2>/dev/null | head -1 | cut -d: -f2)
+              if [ -n "$BORE_PORT" ]; then echo "Fallback bore port: $BORE_PORT"; break; fi
+            done
+          fi
+
+          if [ -z "$BORE_PORT" ]; then
+            echo "=== bore log ===" && cat /tmp/bore.log && exit 1
           fi
 
           echo "TUNNEL_HOST=bore.pub" >> $GITHUB_ENV
@@ -94,10 +109,18 @@ jobs:
 
       - name: Update Config with tunnel address
         run: |
-          # Chỉ cập nhật IP (để client biết kết nối đâu)
-          # KHÔNG đổi server.port — Java server luôn bind port 14445, bore forward vào đó
+          # Cập nhật IP và PORT để LINK_IP_PORT gửi đúng cho APK
+          # Java server vẫn bind port 14445 (bore luôn forward tới đây)
+          # TUNNEL_PORT phải = 14445 để APK kết nối đúng
           sed -i "s/^server\.ip=.*/server.ip=$TUNNEL_HOST/" ~/nro_server/Config.properties
+          sed -i "s/^server\.port=.*/server.port=$TUNNEL_PORT/" ~/nro_server/Config.properties
           grep 'server\.ip\|server\.port' ~/nro_server/Config.properties
+          if [ "$TUNNEL_PORT" != "14445" ]; then
+            echo "⚠️  CẢNH BÁO: bore port=$TUNNEL_PORT khác 14445 — APK có thể không kết nối được!"
+            echo "   Server sẽ bind port $TUNNEL_PORT nhưng bore forward tới 14445"
+          else
+            echo "✅ Port khớp: bore.pub:14445 → localhost:14445"
+          fi
 
       - name: Start Java Game Server
         run: |

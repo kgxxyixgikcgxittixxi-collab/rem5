@@ -9,11 +9,38 @@ REPO="kgxxyixgikcgxittixxi-collab/rem5"
 SERVER_DIR=~/nro_server
 WORKSPACE_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# 1. Khởi động MySQL
-echo ">>> [1/4] Khởi động MySQL..."
+# 1. Fix MariaDB TCP + Khởi động MySQL
+echo ">>> [1/4] Cấu hình và khởi động MySQL..."
+
+# FIX 1: Đảm bảo MariaDB lắng nghe TCP port 3306 (không chỉ Unix socket)
+MYSQL_CONF="/etc/mysql/mariadb.conf.d/50-server.cnf"
+if [ -f "$MYSQL_CONF" ]; then
+    # Tắt skip-networking nếu có
+    sudo sed -i 's/^skip-networking/#skip-networking/' "$MYSQL_CONF"
+    # Đặt bind-address về 127.0.0.1 để cho phép TCP local
+    if grep -q "^bind-address" "$MYSQL_CONF"; then
+        sudo sed -i 's/^bind-address.*/bind-address = 127.0.0.1/' "$MYSQL_CONF"
+    else
+        echo "bind-address = 127.0.0.1" | sudo tee -a "$MYSQL_CONF" > /dev/null
+    fi
+fi
+# Fallback: thêm config file riêng nếu không tìm thấy file cấu hình chính
+if [ ! -f "$MYSQL_CONF" ]; then
+    echo -e "[mysqld]\nbind-address = 127.0.0.1\nskip-networking = 0" \
+        | sudo tee /etc/mysql/conf.d/tcp-fix.cnf > /dev/null
+fi
+
 sudo service mariadb start 2>/dev/null || sudo service mysql start 2>/dev/null || true
 sleep 2
-echo "✅ MySQL OK"
+
+# Kiểm tra MariaDB có lắng nghe TCP không
+if sudo mysqladmin -h 127.0.0.1 -P 3306 ping 2>/dev/null | grep -q "alive"; then
+    echo "✅ MySQL TCP OK (127.0.0.1:3306)"
+else
+    echo "⚠️  MySQL chưa lắng nghe TCP, thử restart..."
+    sudo service mariadb restart 2>/dev/null || sudo service mysql restart 2>/dev/null || true
+    sleep 3
+fi
 
 # Import database nếu chưa có
 DB_EXISTS=$(sudo mysql -e "SHOW DATABASES LIKE 'team2026';" 2>/dev/null | grep team2026 || true)
@@ -21,6 +48,7 @@ if [ -z "$DB_EXISTS" ]; then
     echo ">>> Import database lần đầu..."
     sudo mysql -e "CREATE DATABASE IF NOT EXISTS team2026 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" 2>/dev/null || true
     sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION; FLUSH PRIVILEGES;" 2>/dev/null || true
+    sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' WITH GRANT OPTION; FLUSH PRIVILEGES;" 2>/dev/null || true
     if [ -f "$WORKSPACE_DIR/database team2026.sql" ]; then
         sudo mysql team2026 < "$WORKSPACE_DIR/database team2026.sql" && echo "✅ DB imported"
     elif [ -f "$WORKSPACE_DIR/SRC/sql/nro1.sql" ]; then
@@ -63,8 +91,9 @@ fi
 echo ">>> [3/4] Khởi động Java Game Server..."
 cd "$SERVER_DIR"
 pkill -f NgocRongOnline.jar 2>/dev/null; sleep 1
+# FIX 2: Thêm < /dev/null để Java không cần stdin (tránh crash khi không có terminal)
 nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
-    -jar NgocRongOnline.jar > /tmp/gameserver.log 2>&1 &
+    -jar NgocRongOnline.jar < /dev/null > /tmp/gameserver.log 2>&1 &
 SERVER_PID=$!
 sleep 4
 

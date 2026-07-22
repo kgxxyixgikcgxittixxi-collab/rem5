@@ -20,16 +20,35 @@ sudo tar -xzf /tmp/ngrok.tgz -C /usr/local/bin/
 ngrok config add-authtoken "3GctAUGxj43OBIHbY32ylzVsg6k_5uGajyhXwWXGeVWwtKEWw"
 echo "✅ ngrok OK"
 
-# 3. Khởi động MySQL và tạo database
+# 3. Cấu hình MariaDB để lắng nghe TCP port 3306
 echo ""
 echo ">>> [3/4] Cài đặt MySQL & import database..."
+
+# FIX: Bật TCP listening cho MariaDB (mặc định chỉ dùng Unix socket)
+MYSQL_CONF="/etc/mysql/mariadb.conf.d/50-server.cnf"
+if [ -f "$MYSQL_CONF" ]; then
+    sudo sed -i 's/^skip-networking/#skip-networking/' "$MYSQL_CONF"
+    if grep -q "^bind-address" "$MYSQL_CONF"; then
+        sudo sed -i 's/^bind-address.*/bind-address = 127.0.0.1/' "$MYSQL_CONF"
+    else
+        echo "bind-address = 127.0.0.1" | sudo tee -a "$MYSQL_CONF" > /dev/null
+    fi
+else
+    # Tạo config file nếu không tìm thấy file chính
+    sudo mkdir -p /etc/mysql/conf.d
+    echo -e "[mysqld]\nbind-address = 127.0.0.1\nskip-networking = 0" \
+        | sudo tee /etc/mysql/conf.d/tcp-fix.cnf > /dev/null
+fi
+
 sudo service mariadb start
 sleep 2
 
-# Tạo DB và user
+# Tạo DB và user (cả localhost và 127.0.0.1)
 sudo mysql -e "CREATE DATABASE IF NOT EXISTS team2026 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 sudo mysql -e "CREATE USER IF NOT EXISTS 'root'@'localhost' IDENTIFIED BY '';"
+sudo mysql -e "CREATE USER IF NOT EXISTS 'root'@'127.0.0.1' IDENTIFIED BY '';"
 sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;"
+sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' WITH GRANT OPTION;"
 sudo mysql -e "FLUSH PRIVILEGES;"
 
 # Import database dump (dùng file đầy đủ hơn)

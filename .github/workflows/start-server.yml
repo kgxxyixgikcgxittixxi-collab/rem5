@@ -5,6 +5,11 @@ on:
   repository_dispatch:
     types: [restart-server]
 
+# Chỉ cho phép 1 instance chạy cùng lúc - cancel cái cũ nếu có cái mới
+concurrency:
+  group: nro-server
+  cancel-in-progress: true
+
 permissions:
   contents: write
   actions: write
@@ -65,8 +70,13 @@ jobs:
         run: |
           mkdir -p ~/nro_server
           cp -r SRC/dist/. ~/nro_server/
+          # Đảm bảo lib/ luôn có từ SRC/lib (phòng trường hợp dist/lib thiếu)
+          mkdir -p ~/nro_server/lib
+          cp SRC/lib/*.jar ~/nro_server/lib/ 2>/dev/null || true
           cp -r SRC/data ~/nro_server/ 2>/dev/null || true
           cp SRC/Config.properties ~/nro_server/
+          echo "=== Libs available ==="
+          ls ~/nro_server/lib/ | head -20
 
       - name: Start bore tunnel (ưu tiên port cố định)
         run: |
@@ -76,8 +86,6 @@ jobs:
           BORE_PORT=""
           BORE_PID=""
 
-          # Thử các port cố định theo thứ tự ưu tiên
-          # APK cấu hình 1 lần với bore.pub:14445 là xong
           FIXED_PORTS="14445 14446 14447 14448 14449 14450 14451 14452 14453 14454 14460 14470 14480 14490 14500"
 
           for try_port in $FIXED_PORTS; do
@@ -87,7 +95,6 @@ jobs:
             bore local 14445 --to bore.pub --port $try_port > /tmp/bore.log 2>&1 &
             BORE_PID=$!
 
-            # Chờ tối đa 8 giây xem bore có lấy được port không
             GOT_PORT=false
             for w in $(seq 1 4); do
               sleep 2
@@ -111,26 +118,17 @@ jobs:
             fi
           done
 
-          # Nếu không có port cố định nào được, dùng random
           if [ -z "$BORE_PORT" ]; then
             echo "⚠️  Tất cả port cố định bị chiếm → dùng random port"
             bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
             BORE_PID=$!
-
             for i in $(seq 1 20); do
               sleep 2
               BORE_PORT=$(grep -oE 'bore\.pub:[0-9]+' /tmp/bore.log 2>/dev/null | head -1 | cut -d: -f2)
-              if [ -z "$BORE_PORT" ]; then
-                BORE_PORT=$(grep -oE '[0-9]{4,5}$' /tmp/bore.log 2>/dev/null | head -1)
-              fi
-              if [ -n "$BORE_PORT" ]; then
-                echo "✅ Random port: bore.pub:$BORE_PORT"
-                break
-              fi
+              [ -z "$BORE_PORT" ] && BORE_PORT=$(grep -oE '[0-9]{4,5}$' /tmp/bore.log 2>/dev/null | head -1)
+              [ -n "$BORE_PORT" ] && echo "✅ Random port: bore.pub:$BORE_PORT" && break
               if ! kill -0 $BORE_PID 2>/dev/null; then
-                echo "Bore died, thử lại..."
-                bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
-                BORE_PID=$!
+                bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 & BORE_PID=$!
               fi
             done
           fi
@@ -150,9 +148,6 @@ jobs:
 
       - name: Update Config with tunnel address
         run: |
-          # server.port=14445 KHÔNG đổi → Java bind cục bộ
-          # server.ip = bore.pub
-          # server.external_port = TUNNEL_PORT (port bore thực, gửi cho APK)
           sed -i "s/^server\.ip=.*/server.ip=$TUNNEL_HOST/" ~/nro_server/Config.properties
           if grep -q "^server\.external_port=" ~/nro_server/Config.properties; then
             sed -i "s/^server\.external_port=.*/server.external_port=$TUNNEL_PORT/" ~/nro_server/Config.properties
@@ -166,12 +161,14 @@ jobs:
       - name: Start Java Game Server
         run: |
           cd ~/nro_server
+          # Dùng -cp thay -jar để lib/*.jar được load đúng
           tail -f /dev/null | nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
-            -jar NgocRongOnline.jar > /tmp/gameserver.log 2>&1 &
+            -cp "NgocRongOnline.jar:lib/*" nro.models.server.ServerManager \
+            > /tmp/gameserver.log 2>&1 &
           SERVER_PID=$!
           echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
-          sleep 12
-          echo "=== Server log (12s) ==="
+          sleep 15
+          echo "=== Server log (15s) ==="
           cat /tmp/gameserver.log
           if kill -0 $SERVER_PID 2>/dev/null; then
             echo "✅ Server running (PID=$SERVER_PID)"
@@ -188,8 +185,9 @@ jobs:
             "$TUNNEL_HOST" "$TUNNEL_PORT" "$(date '+%Y-%m-%d %H:%M:%S UTC')" > SERVER_IP.txt
           cat SERVER_IP.txt
           git add SERVER_IP.txt
-          git commit -m "Server IP: $TUNNEL_HOST:$TUNNEL_PORT [skip ci]"
-          git push
+          git diff --cached --quiet && echo "No changes" || \
+            (git commit -m "Server IP: $TUNNEL_HOST:$TUNNEL_PORT [skip ci]" && \
+             git pull --rebase && git push)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -204,8 +202,16 @@ jobs:
               echo "⚠️  Server died at minute $i (crash #$RESTART_COUNT), restarting..."
               cd ~/nro_server
               tail -f /dev/null | nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
-                -jar NgocRongOnline.jar >> /tmp/gameserver.log 2>&1 &
+                -cp "NgocRongOnline.jar:lib/*" nro.models.server.ServerManager \
+                >> /tmp/gameserver.log 2>&1 &
               SERVER_PID=$!
+              sleep 10
+              if kill -0 $SERVER_PID 2>/dev/null; then
+                echo "✅ Restarted OK"
+              else
+                echo "❌ Restart failed, log:"
+                tail -30 /tmp/gameserver.log
+              fi
             fi
             [ $((i % 30)) -eq 0 ] && echo "[$i/320 min] alive - $(date) - crashes: $RESTART_COUNT"
           done
@@ -222,6 +228,6 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/start-server.yml/dispatches" \
             -d '{"ref":"main"}' && echo "✅ Workflow tiếp theo đã được trigger" \
-            || echo "⚠️  Trigger thất bại (sẽ có watchdog xử lý)"
+            || echo "⚠️  Trigger thất bại"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

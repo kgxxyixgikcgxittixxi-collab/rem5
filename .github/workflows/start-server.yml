@@ -20,11 +20,12 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq mariadb-server default-jdk curl wget
 
-      - name: Install ngrok
+      - name: Install bore (free TCP tunnel, no account needed)
         run: |
-          curl -sLo /tmp/ngrok.tgz https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
-          sudo tar -xzf /tmp/ngrok.tgz -C /usr/local/bin/
-          ngrok config add-authtoken "3GctAUGxj43OBIHbY32ylzVsg6k_5uGajyhXwWXGeVWwtKEWw"
+          curl -sLo /tmp/bore.tgz \
+            https://github.com/ekzhang/bore/releases/download/v0.5.1/bore-v0.5.1-x86_64-unknown-linux-musl.tar.gz
+          tar -xzf /tmp/bore.tgz -C /usr/local/bin/
+          bore --version
 
       - name: Configure MariaDB TCP + Start
         run: |
@@ -43,7 +44,7 @@ jobs:
           fi
           sudo service mariadb start
           sleep 3
-          sudo mysqladmin -h 127.0.0.1 -P 3306 ping && echo "TCP OK" || echo "TCP not ready yet"
+          sudo mysqladmin -h 127.0.0.1 -P 3306 ping && echo "TCP OK" || true
 
       - name: Setup database
         run: |
@@ -64,45 +65,44 @@ jobs:
           cp -r SRC/data ~/nro_server/ 2>/dev/null || true
           cp SRC/Config.properties ~/nro_server/
 
-      - name: Start ngrok + get URL
+      - name: Start bore tunnel + get public address
         run: |
-          nohup ngrok tcp 14445 --log=stdout > /tmp/ngrok.log 2>&1 &
-          # Đợi tối đa 30 giây cho ngrok kết nối
+          # bore local <local_port> --to bore.pub  → in ra "listening at bore.pub:XXXXX"
+          bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
+          BORE_PID=$!
+          echo "BORE_PID=$BORE_PID" >> $GITHUB_ENV
+
+          # Đợi tối đa 30 giây để lấy port
           for i in $(seq 1 15); do
             sleep 2
-            NGROK_URL=$(curl -s http://localhost:4040/api/tunnels 2>/dev/null \
-              | grep -o '"public_url":"tcp://[^"]*"' | head -1 \
-              | sed 's/"public_url":"tcp:\/\///;s/"//')
-            if [ -n "$NGROK_URL" ]; then
-              echo "Got ngrok URL at attempt $i: $NGROK_URL"
+            BORE_PORT=$(grep -o 'bore\.pub:[0-9]*' /tmp/bore.log 2>/dev/null | head -1 | cut -d: -f2)
+            if [ -n "$BORE_PORT" ]; then
+              echo "Got bore port at attempt $i: $BORE_PORT"
               break
             fi
           done
 
-          NGROK_HOST=$(echo "$NGROK_URL" | cut -d: -f1)
-          NGROK_PORT=$(echo "$NGROK_URL" | cut -d: -f2)
-
-          if [ -z "$NGROK_HOST" ]; then
-            echo "=== ngrok log ==="
-            cat /tmp/ngrok.log
-            echo "ERROR: Không lấy được ngrok URL"
+          if [ -z "$BORE_PORT" ]; then
+            echo "=== bore log ==="
+            cat /tmp/bore.log
+            echo "ERROR: Không lấy được bore port"
             exit 1
           fi
 
-          echo "NGROK_HOST=$NGROK_HOST" >> $GITHUB_ENV
-          echo "NGROK_PORT=$NGROK_PORT" >> $GITHUB_ENV
-          echo "✅ ngrok: $NGROK_HOST:$NGROK_PORT"
+          echo "TUNNEL_HOST=bore.pub" >> $GITHUB_ENV
+          echo "TUNNEL_PORT=$BORE_PORT" >> $GITHUB_ENV
+          echo "✅ Tunnel: bore.pub:$BORE_PORT"
 
-      - name: Update Config with ngrok address
+      - name: Update Config with tunnel address
         run: |
-          sed -i "s/^server\.ip=.*/server.ip=$NGROK_HOST/" ~/nro_server/Config.properties
-          sed -i "s/^server\.port=.*/server.port=$NGROK_PORT/" ~/nro_server/Config.properties
-          echo "Config updated: $(grep 'server\.ip\|server\.port' ~/nro_server/Config.properties)"
+          sed -i "s/^server\.ip=.*/server.ip=$TUNNEL_HOST/" ~/nro_server/Config.properties
+          sed -i "s/^server\.port=.*/server.port=$TUNNEL_PORT/" ~/nro_server/Config.properties
+          grep 'server\.ip\|server\.port' ~/nro_server/Config.properties
 
       - name: Start Java Game Server
         run: |
           cd ~/nro_server
-          # FIX stdin: dùng tail -f /dev/null để giữ stdin mở, Java Scanner không crash
+          # tail -f /dev/null giữ stdin mở → Java Scanner không crash
           tail -f /dev/null | nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
             -jar NgocRongOnline.jar > /tmp/gameserver.log 2>&1 &
           SERVER_PID=$!
@@ -122,17 +122,17 @@ jobs:
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
           printf "HOST=%s\nPORT=%s\nSTATUS=RUNNING\nUPDATED=%s\n" \
-            "$NGROK_HOST" "$NGROK_PORT" "$(date '+%Y-%m-%d %H:%M:%S UTC')" > SERVER_IP.txt
+            "$TUNNEL_HOST" "$TUNNEL_PORT" "$(date '+%Y-%m-%d %H:%M:%S UTC')" > SERVER_IP.txt
           cat SERVER_IP.txt
           git add SERVER_IP.txt
-          git commit -m "Server IP: $NGROK_HOST:$NGROK_PORT [skip ci]"
+          git commit -m "Server IP: $TUNNEL_HOST:$TUNNEL_PORT [skip ci]"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Keep server alive (5h 30m)
         run: |
-          echo "✅ Server running at $NGROK_HOST:$NGROK_PORT"
+          echo "✅ Server running at $TUNNEL_HOST:$TUNNEL_PORT"
           for i in $(seq 1 330); do
             sleep 60
             if ! kill -0 $SERVER_PID 2>/dev/null; then

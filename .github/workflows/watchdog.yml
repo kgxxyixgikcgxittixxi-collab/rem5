@@ -1,0 +1,91 @@
+name: Server Watchdog
+
+on:
+  schedule:
+    # Chạy mỗi 10 phút để kiểm tra server
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check server status
+        id: check
+        run: |
+          # Đọc IP/Port từ SERVER_IP.txt
+          if [ ! -f SERVER_IP.txt ]; then
+            echo "SERVER_IP.txt không tồn tại → cần khởi động"
+            echo "need_restart=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          HOST=$(grep '^HOST=' SERVER_IP.txt | cut -d= -f2)
+          PORT=$(grep '^PORT=' SERVER_IP.txt | cut -d= -f2)
+          STATUS=$(grep '^STATUS=' SERVER_IP.txt | cut -d= -f2)
+          UPDATED=$(grep '^UPDATED=' SERVER_IP.txt | cut -d= -f2-)
+
+          echo "Host: $HOST | Port: $PORT | Status: $STATUS | Updated: $UPDATED"
+
+          if [ -z "$HOST" ] || [ -z "$PORT" ]; then
+            echo "Thiếu HOST/PORT → cần khởi động"
+            echo "need_restart=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Kiểm tra TCP port có mở không (timeout 5 giây)
+          if nc -z -w 5 "$HOST" "$PORT" 2>/dev/null; then
+            echo "✅ Server đang sống tại $HOST:$PORT"
+            echo "need_restart=false" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Server không phản hồi tại $HOST:$PORT → cần khởi động lại"
+            echo "need_restart=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check if start-server workflow is already running
+        id: running_check
+        if: steps.check.outputs.need_restart == 'true'
+        run: |
+          RUNNING=$(curl -s \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/start-server.yml/runs?status=in_progress&per_page=5" \
+            | grep -o '"status":"in_progress"' | wc -l)
+
+          echo "Active start-server runs: $RUNNING"
+          if [ "$RUNNING" -gt "0" ]; then
+            echo "already_running=true" >> $GITHUB_OUTPUT
+          else
+            echo "already_running=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger server restart
+        if: steps.check.outputs.need_restart == 'true' && steps.running_check.outputs.already_running == 'false'
+        run: |
+          echo ">>> Server chết và không có job nào đang chạy → trigger start-server..."
+          curl -s -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/start-server.yml/dispatches" \
+            -d '{"ref":"main"}' && echo "✅ Đã trigger start-server workflow"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Skip (already running)
+        if: steps.check.outputs.need_restart == 'true' && steps.running_check.outputs.already_running == 'true'
+        run: echo "ℹ️  start-server đang chạy, bỏ qua trigger."
+
+      - name: All good
+        if: steps.check.outputs.need_restart == 'false'
+        run: echo "✅ Server ổn định, không cần làm gì."

@@ -2,14 +2,17 @@ name: Start NRO Server
 
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [restart-server]
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   start:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: 355
 
     steps:
       - name: Checkout
@@ -18,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq mariadb-server default-jdk curl wget
+          sudo apt-get install -y -qq mariadb-server default-jdk curl wget netcat-openbsd
 
       - name: Install bore (free TCP tunnel, no account needed)
         run: |
@@ -67,14 +70,12 @@ jobs:
 
       - name: Start bore tunnel + get public address
         run: |
-          # bore local <local_port> --to bore.pub  → in ra "listening at bore.pub:XXXXX"
           bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
           BORE_PID=$!
           echo "BORE_PID=$BORE_PID" >> $GITHUB_ENV
 
-          # Đợi tối đa 30 giây để lấy port
-          for i in $(seq 1 15); do
-            sleep 2
+          for i in $(seq 1 20); do
+            sleep 3
             BORE_PORT=$(grep -o 'bore\.pub:[0-9]*' /tmp/bore.log 2>/dev/null | head -1 | cut -d: -f2)
             if [ -n "$BORE_PORT" ]; then
               echo "Got bore port at attempt $i: $BORE_PORT"
@@ -83,9 +84,7 @@ jobs:
           done
 
           if [ -z "$BORE_PORT" ]; then
-            echo "=== bore log ==="
-            cat /tmp/bore.log
-            echo "ERROR: Không lấy được bore port"
+            echo "=== bore log ===" && cat /tmp/bore.log
             exit 1
           fi
 
@@ -102,13 +101,12 @@ jobs:
       - name: Start Java Game Server
         run: |
           cd ~/nro_server
-          # tail -f /dev/null giữ stdin mở → Java Scanner không crash
           tail -f /dev/null | nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
             -jar NgocRongOnline.jar > /tmp/gameserver.log 2>&1 &
           SERVER_PID=$!
           echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
-          sleep 8
-          echo "=== Server log ==="
+          sleep 10
+          echo "=== Server log (10s) ==="
           cat /tmp/gameserver.log
           if kill -0 $SERVER_PID 2>/dev/null; then
             echo "✅ Server running (PID=$SERVER_PID)"
@@ -130,17 +128,36 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Keep server alive (5h 30m)
+      - name: Keep server alive (5h 20m) then auto-chain
         run: |
           echo "✅ Server running at $TUNNEL_HOST:$TUNNEL_PORT"
-          for i in $(seq 1 330); do
+          RESTART_COUNT=0
+          for i in $(seq 1 320); do
             sleep 60
+            # Restart Java nếu bị crash
             if ! kill -0 $SERVER_PID 2>/dev/null; then
-              echo "⚠️  Server died at minute $i, restarting..."
+              RESTART_COUNT=$((RESTART_COUNT + 1))
+              echo "⚠️  Server died at minute $i (crash #$RESTART_COUNT), restarting..."
               cd ~/nro_server
               tail -f /dev/null | nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
-                -jar NgocRongOnline.jar > /tmp/gameserver.log 2>&1 &
+                -jar NgocRongOnline.jar >> /tmp/gameserver.log 2>&1 &
               SERVER_PID=$!
             fi
-            [ $((i % 10)) -eq 0 ] && echo "[$i/330 min] alive - $(date)"
+            [ $((i % 30)) -eq 0 ] && echo "[$i/320 min] alive - $(date) - crashes: $RESTART_COUNT"
           done
+          echo ">>> Thời gian sắp hết (320 phút), trigger workflow mới..."
+        env:
+          SERVER_PID: ${{ env.SERVER_PID }}
+
+      - name: Trigger next server run (auto-chain)
+        if: always()
+        run: |
+          echo ">>> Khởi động workflow kế tiếp để duy trì server 24/7..."
+          curl -s -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/start-server.yml/dispatches" \
+            -d '{"ref":"main"}' && echo "✅ Workflow tiếp theo đã được trigger" \
+            || echo "⚠️  Trigger thất bại (sẽ có watchdog xử lý)"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

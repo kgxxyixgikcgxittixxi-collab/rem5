@@ -70,57 +70,65 @@ jobs:
 
       - name: Start bore tunnel + get public address
         run: |
-          # Yêu cầu bore dùng cố định port 14445 bên ngoài (--port 14445)
-          # Điều này đảm bảo LINK_IP_PORT gửi cho APK khớp với port bore thực sự
-          bore local 14445 --to bore.pub --port 14445 > /tmp/bore.log 2>&1 &
+          # Dùng random port (--port 14445 luôn bị chiếm trên bore.pub)
+          # Java fix đã tách server.port (bind) khỏi server.external_port (quảng cáo)
+          pkill bore 2>/dev/null || true
+          sleep 1
+          # bore output lên stderr → dùng 2>&1 để bắt
+          bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
           BORE_PID=$!
           echo "BORE_PID=$BORE_PID" >> $GITHUB_ENV
+          echo "Bore PID: $BORE_PID, chờ kết nối..."
 
-          for i in $(seq 1 20); do
-            sleep 3
-            BORE_PORT=$(grep -o 'bore\.pub:[0-9]*' /tmp/bore.log 2>/dev/null | head -1 | cut -d: -f2)
+          BORE_PORT=""
+          for i in $(seq 1 30); do
+            sleep 2
+            # bore v0.5.1 in ra: "Listening at bore.pub:XXXXX" hoặc "bore.pub:XXXXX"
+            BORE_PORT=$(grep -oE '[0-9]{4,5}$' /tmp/bore.log 2>/dev/null | head -1)
+            if [ -z "$BORE_PORT" ]; then
+              BORE_PORT=$(grep -oE 'bore\.pub:[0-9]+' /tmp/bore.log 2>/dev/null | head -1 | cut -d: -f2)
+            fi
             if [ -n "$BORE_PORT" ]; then
-              echo "Got bore port at attempt $i: $BORE_PORT"
+              echo "✅ Bore port tìm thấy ở lần $i: $BORE_PORT"
               break
+            fi
+            # Kiểm tra bore có còn sống không
+            if ! kill -0 $BORE_PID 2>/dev/null; then
+              echo "⚠️  Bore died at attempt $i, log:"
+              cat /tmp/bore.log
+              echo "Thử lại..."
+              bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
+              BORE_PID=$!
             fi
           done
 
-          if [ -z "$BORE_PORT" ]; then
-            echo "=== bore log ===" && cat /tmp/bore.log
-            echo "⚠️  --port 14445 thất bại, thử random port..."
-            pkill bore 2>/dev/null; sleep 1
-            bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
-            BORE_PID=$!
-            echo "BORE_PID=$BORE_PID" >> $GITHUB_ENV
-            for i in $(seq 1 20); do
-              sleep 3
-              BORE_PORT=$(grep -o 'bore\.pub:[0-9]*' /tmp/bore.log 2>/dev/null | head -1 | cut -d: -f2)
-              if [ -n "$BORE_PORT" ]; then echo "Fallback bore port: $BORE_PORT"; break; fi
-            done
-          fi
+          echo "=== bore.log ==="
+          cat /tmp/bore.log
 
           if [ -z "$BORE_PORT" ]; then
-            echo "=== bore log ===" && cat /tmp/bore.log && exit 1
+            echo "❌ Không lấy được bore port sau 60 giây"
+            exit 1
           fi
 
           echo "TUNNEL_HOST=bore.pub" >> $GITHUB_ENV
           echo "TUNNEL_PORT=$BORE_PORT" >> $GITHUB_ENV
-          echo "✅ Tunnel: bore.pub:$BORE_PORT"
+          echo "✅ Tunnel sẵn sàng: bore.pub:$BORE_PORT → localhost:14445"
 
       - name: Update Config with tunnel address
         run: |
-          # Cập nhật IP và PORT để LINK_IP_PORT gửi đúng cho APK
-          # Java server vẫn bind port 14445 (bore luôn forward tới đây)
-          # TUNNEL_PORT phải = 14445 để APK kết nối đúng
+          # server.port=14445 KHÔNG đổi → Java bind đúng cổng cục bộ
+          # server.ip = bore.pub (host tunnel)
+          # server.external_port = TUNNEL_PORT (cổng bore quảng cáo cho APK)
           sed -i "s/^server\.ip=.*/server.ip=$TUNNEL_HOST/" ~/nro_server/Config.properties
-          sed -i "s/^server\.port=.*/server.port=$TUNNEL_PORT/" ~/nro_server/Config.properties
-          grep 'server\.ip\|server\.port' ~/nro_server/Config.properties
-          if [ "$TUNNEL_PORT" != "14445" ]; then
-            echo "⚠️  CẢNH BÁO: bore port=$TUNNEL_PORT khác 14445 — APK có thể không kết nối được!"
-            echo "   Server sẽ bind port $TUNNEL_PORT nhưng bore forward tới 14445"
+          # Thêm hoặc cập nhật server.external_port
+          if grep -q "^server\.external_port=" ~/nro_server/Config.properties; then
+            sed -i "s/^server\.external_port=.*/server.external_port=$TUNNEL_PORT/" ~/nro_server/Config.properties
           else
-            echo "✅ Port khớp: bore.pub:14445 → localhost:14445"
+            echo "server.external_port=$TUNNEL_PORT" >> ~/nro_server/Config.properties
           fi
+          echo "=== Config hiện tại ==="
+          grep 'server\.ip\|server\.port\|server\.external_port' ~/nro_server/Config.properties
+          echo "✅ APK sẽ kết nối: $TUNNEL_HOST:$TUNNEL_PORT | Java bind: 14445"
 
       - name: Start Java Game Server
         run: |

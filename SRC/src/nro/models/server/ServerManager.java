@@ -298,9 +298,15 @@ public class ServerManager {
     }
 
     private static void activeCommandLine() {
-        Scanner sc = new Scanner(System.in);
-        while (true) {
-            String line = sc.nextLine();
+        try {
+            if (System.in.available() == 0 && !System.in.markSupported()) {
+                // stdin không có sẵn (chạy headless) - bỏ qua command line
+            }
+        } catch (Exception _ignored) {}
+        try {
+            Scanner sc = new Scanner(System.in);
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
             switch (line) {
                 case "bt":
                     Maintenance.gI().startSeconds(5);
@@ -327,6 +333,11 @@ public class ServerManager {
                     System.out.println("Lệnh không hợp lệ.");
                     break;
             }
+        }
+        } catch (java.util.NoSuchElementException _eof) {
+            // stdin đóng (chạy headless với /dev/null hoặc pipe) - OK
+        } catch (Exception _e) {
+            System.err.println("Command line error: " + _e.getMessage());
         }
     }
 

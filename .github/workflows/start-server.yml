@@ -68,67 +68,100 @@ jobs:
           cp -r SRC/data ~/nro_server/ 2>/dev/null || true
           cp SRC/Config.properties ~/nro_server/
 
-      - name: Start bore tunnel + get public address
+      - name: Start bore tunnel (ưu tiên port cố định)
         run: |
-          # Dùng random port (--port 14445 luôn bị chiếm trên bore.pub)
-          # Java fix đã tách server.port (bind) khỏi server.external_port (quảng cáo)
           pkill bore 2>/dev/null || true
           sleep 1
-          # bore output lên stderr → dùng 2>&1 để bắt
-          bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
-          BORE_PID=$!
-          echo "BORE_PID=$BORE_PID" >> $GITHUB_ENV
-          echo "Bore PID: $BORE_PID, chờ kết nối..."
 
           BORE_PORT=""
-          for i in $(seq 1 30); do
-            sleep 2
-            # bore v0.5.1 in ra: "Listening at bore.pub:XXXXX" hoặc "bore.pub:XXXXX"
-            BORE_PORT=$(grep -oE '[0-9]{4,5}$' /tmp/bore.log 2>/dev/null | head -1)
-            if [ -z "$BORE_PORT" ]; then
-              BORE_PORT=$(grep -oE 'bore\.pub:[0-9]+' /tmp/bore.log 2>/dev/null | head -1 | cut -d: -f2)
-            fi
-            if [ -n "$BORE_PORT" ]; then
-              echo "✅ Bore port tìm thấy ở lần $i: $BORE_PORT"
+          BORE_PID=""
+
+          # Thử các port cố định theo thứ tự ưu tiên
+          # APK cấu hình 1 lần với bore.pub:14445 là xong
+          FIXED_PORTS="14445 14446 14447 14448 14449 14450 14451 14452 14453 14454 14460 14470 14480 14490 14500"
+
+          for try_port in $FIXED_PORTS; do
+            echo ">>> Thử bore --port $try_port ..."
+            pkill bore 2>/dev/null || true
+            sleep 1
+            bore local 14445 --to bore.pub --port $try_port > /tmp/bore.log 2>&1 &
+            BORE_PID=$!
+
+            # Chờ tối đa 8 giây xem bore có lấy được port không
+            GOT_PORT=false
+            for w in $(seq 1 4); do
+              sleep 2
+              if grep -qE "Listening|bore\.pub" /tmp/bore.log 2>/dev/null; then
+                GOT_PORT=true
+                break
+              fi
+              if ! kill -0 $BORE_PID 2>/dev/null; then
+                break
+              fi
+            done
+
+            if $GOT_PORT; then
+              BORE_PORT=$try_port
+              echo "✅ Lấy được port cố định: bore.pub:$BORE_PORT"
               break
-            fi
-            # Kiểm tra bore có còn sống không
-            if ! kill -0 $BORE_PID 2>/dev/null; then
-              echo "⚠️  Bore died at attempt $i, log:"
-              cat /tmp/bore.log
-              echo "Thử lại..."
-              bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
-              BORE_PID=$!
+            else
+              echo "⚠️  Port $try_port bị chiếm, thử port tiếp..."
+              pkill bore 2>/dev/null || true
+              sleep 1
             fi
           done
+
+          # Nếu không có port cố định nào được, dùng random
+          if [ -z "$BORE_PORT" ]; then
+            echo "⚠️  Tất cả port cố định bị chiếm → dùng random port"
+            bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
+            BORE_PID=$!
+
+            for i in $(seq 1 20); do
+              sleep 2
+              BORE_PORT=$(grep -oE 'bore\.pub:[0-9]+' /tmp/bore.log 2>/dev/null | head -1 | cut -d: -f2)
+              if [ -z "$BORE_PORT" ]; then
+                BORE_PORT=$(grep -oE '[0-9]{4,5}$' /tmp/bore.log 2>/dev/null | head -1)
+              fi
+              if [ -n "$BORE_PORT" ]; then
+                echo "✅ Random port: bore.pub:$BORE_PORT"
+                break
+              fi
+              if ! kill -0 $BORE_PID 2>/dev/null; then
+                echo "Bore died, thử lại..."
+                bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
+                BORE_PID=$!
+              fi
+            done
+          fi
 
           echo "=== bore.log ==="
           cat /tmp/bore.log
 
           if [ -z "$BORE_PORT" ]; then
-            echo "❌ Không lấy được bore port sau 60 giây"
+            echo "❌ Không lấy được bore port"
             exit 1
           fi
 
+          echo "BORE_PID=$BORE_PID" >> $GITHUB_ENV
           echo "TUNNEL_HOST=bore.pub" >> $GITHUB_ENV
           echo "TUNNEL_PORT=$BORE_PORT" >> $GITHUB_ENV
-          echo "✅ Tunnel sẵn sàng: bore.pub:$BORE_PORT → localhost:14445"
+          echo "✅ Tunnel: bore.pub:$BORE_PORT → localhost:14445"
 
       - name: Update Config with tunnel address
         run: |
-          # server.port=14445 KHÔNG đổi → Java bind đúng cổng cục bộ
-          # server.ip = bore.pub (host tunnel)
-          # server.external_port = TUNNEL_PORT (cổng bore quảng cáo cho APK)
+          # server.port=14445 KHÔNG đổi → Java bind cục bộ
+          # server.ip = bore.pub
+          # server.external_port = TUNNEL_PORT (port bore thực, gửi cho APK)
           sed -i "s/^server\.ip=.*/server.ip=$TUNNEL_HOST/" ~/nro_server/Config.properties
-          # Thêm hoặc cập nhật server.external_port
           if grep -q "^server\.external_port=" ~/nro_server/Config.properties; then
             sed -i "s/^server\.external_port=.*/server.external_port=$TUNNEL_PORT/" ~/nro_server/Config.properties
           else
             echo "server.external_port=$TUNNEL_PORT" >> ~/nro_server/Config.properties
           fi
           echo "=== Config hiện tại ==="
-          grep 'server\.ip\|server\.port\|server\.external_port' ~/nro_server/Config.properties
-          echo "✅ APK sẽ kết nối: $TUNNEL_HOST:$TUNNEL_PORT | Java bind: 14445"
+          grep 'server\.ip\|server\.port\|server\.external' ~/nro_server/Config.properties
+          echo "✅ APK kết nối: $TUNNEL_HOST:$TUNNEL_PORT | Java bind: 14445"
 
       - name: Start Java Game Server
         run: |
@@ -137,8 +170,8 @@ jobs:
             -jar NgocRongOnline.jar > /tmp/gameserver.log 2>&1 &
           SERVER_PID=$!
           echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
-          sleep 10
-          echo "=== Server log (10s) ==="
+          sleep 12
+          echo "=== Server log (12s) ==="
           cat /tmp/gameserver.log
           if kill -0 $SERVER_PID 2>/dev/null; then
             echo "✅ Server running (PID=$SERVER_PID)"
@@ -166,7 +199,6 @@ jobs:
           RESTART_COUNT=0
           for i in $(seq 1 320); do
             sleep 60
-            # Restart Java nếu bị crash
             if ! kill -0 $SERVER_PID 2>/dev/null; then
               RESTART_COUNT=$((RESTART_COUNT + 1))
               echo "⚠️  Server died at minute $i (crash #$RESTART_COUNT), restarting..."

@@ -245,7 +245,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Trigger next server run (auto-chain)
-        if: always()
+        if: success()
         run: |
           curl -s -X POST \
             -H "Authorization: token $GITHUB_TOKEN" \

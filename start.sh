@@ -4,45 +4,28 @@ echo "======================================"
 echo "   KHỞI ĐỘNG NGOC RONG SERVER         "
 echo "======================================"
 
-# Dùng GITHUB_TOKEN có sẵn trong Codespace (không hardcode)
 REPO="kgxxyixgikcgxittixxi-collab/rem5"
 SERVER_DIR=~/nro_server
 WORKSPACE_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # 1. Fix MariaDB TCP + Khởi động MySQL
-echo ">>> [1/4] Cấu hình và khởi động MySQL..."
-
-# FIX 1: Đảm bảo MariaDB lắng nghe TCP port 3306 (không chỉ Unix socket)
+echo ">>> [1/5] Cấu hình và khởi động MySQL..."
 MYSQL_CONF="/etc/mysql/mariadb.conf.d/50-server.cnf"
 if [ -f "$MYSQL_CONF" ]; then
-    # Tắt skip-networking nếu có
     sudo sed -i 's/^skip-networking/#skip-networking/' "$MYSQL_CONF"
-    # Đặt bind-address về 127.0.0.1 để cho phép TCP local
     if grep -q "^bind-address" "$MYSQL_CONF"; then
         sudo sed -i 's/^bind-address.*/bind-address = 127.0.0.1/' "$MYSQL_CONF"
     else
         echo "bind-address = 127.0.0.1" | sudo tee -a "$MYSQL_CONF" > /dev/null
     fi
 fi
-# Fallback: thêm config file riêng nếu không tìm thấy file cấu hình chính
 if [ ! -f "$MYSQL_CONF" ]; then
     echo -e "[mysqld]\nbind-address = 127.0.0.1\nskip-networking = 0" \
         | sudo tee /etc/mysql/conf.d/tcp-fix.cnf > /dev/null
 fi
-
 sudo service mariadb start 2>/dev/null || sudo service mysql start 2>/dev/null || true
 sleep 2
 
-# Kiểm tra MariaDB có lắng nghe TCP không
-if sudo mysqladmin -h 127.0.0.1 -P 3306 ping 2>/dev/null | grep -q "alive"; then
-    echo "✅ MySQL TCP OK (127.0.0.1:3306)"
-else
-    echo "⚠️  MySQL chưa lắng nghe TCP, thử restart..."
-    sudo service mariadb restart 2>/dev/null || sudo service mysql restart 2>/dev/null || true
-    sleep 3
-fi
-
-# Import database nếu chưa có
 DB_EXISTS=$(sudo mysql -e "SHOW DATABASES LIKE 'team2026';" 2>/dev/null | grep team2026 || true)
 if [ -z "$DB_EXISTS" ]; then
     echo ">>> Import database lần đầu..."
@@ -51,12 +34,33 @@ if [ -z "$DB_EXISTS" ]; then
     sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' WITH GRANT OPTION; FLUSH PRIVILEGES;" 2>/dev/null || true
     if [ -f "$WORKSPACE_DIR/database team2026.sql" ]; then
         sudo mysql team2026 < "$WORKSPACE_DIR/database team2026.sql" && echo "✅ DB imported"
-    elif [ -f "$WORKSPACE_DIR/SRC/sql/nro1.sql" ]; then
-        sudo mysql team2026 < "$WORKSPACE_DIR/SRC/sql/nro1.sql" && echo "✅ DB imported"
     fi
 fi
 
-# Chuẩn bị server files lần đầu
+# 2. Build JAR từ source (fix LINK_IP_PORT + fix stdin crash)
+echo ">>> [2/5] Build JAR từ source..."
+# Cài ant nếu chưa có
+if ! command -v ant &>/dev/null; then
+    echo "  → Cài ant..."
+    sudo apt-get install -y -qq ant 2>/dev/null && echo "✅ ant OK" || echo "⚠️  ant install failed"
+fi
+
+BUILD_SUCCESS=false
+if command -v ant &>/dev/null; then
+    cd "$WORKSPACE_DIR/SRC"
+    ant -q clean jar 2>/tmp/build.log && BUILD_SUCCESS=true || true
+    if [ "$BUILD_SUCCESS" = "true" ]; then
+        echo "✅ Build JAR thành công"
+        cp "$WORKSPACE_DIR/SRC/dist/NgocRongOnline.jar" ~/nro_server/NgocRongOnline.jar 2>/dev/null || true
+    else
+        echo "⚠️  ant build lỗi, dùng JAR cũ"
+        tail -20 /tmp/build.log
+    fi
+else
+    echo "⚠️  ant không có, dùng JAR cũ"
+fi
+
+# Chuẩn bị server files lần đầu nếu chưa có
 if [ ! -f "$SERVER_DIR/NgocRongOnline.jar" ]; then
     echo ">>> Copy server files lần đầu..."
     mkdir -p ~/nro_server
@@ -64,100 +68,96 @@ if [ ! -f "$SERVER_DIR/NgocRongOnline.jar" ]; then
     cp -r "$WORKSPACE_DIR/SRC/data" ~/nro_server/ 2>/dev/null || true
     cp "$WORKSPACE_DIR/SRC/Config.properties" ~/nro_server/
 fi
+# Sync data và config
+cp -r "$WORKSPACE_DIR/SRC/data" ~/nro_server/ 2>/dev/null || true
+cp "$WORKSPACE_DIR/SRC/Config.properties" ~/nro_server/Config.properties.bak 2>/dev/null || true
 
-# 2. Khởi động tunnel (bore → cổng cục bộ 14445)
-echo ">>> [2/4] Khởi động bore tunnel (local port 14445)..."
+# 3. Khởi động tunnel bore (thử port cố định 14445-14460)
+echo ">>> [3/5] Khởi động bore tunnel..."
 pkill bore 2>/dev/null; pkill ngrok 2>/dev/null; sleep 1
 
-# bore local 14445 --to bore.pub
-# Output dạng: "listening at bore.pub:XXXXX"
-nohup bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
-sleep 6
-
-# Lấy cổng bore thực sự đang expose ra ngoài
-BORE_PORT=$(grep -oE 'bore\.pub:[0-9]+' /tmp/bore.log | head -1 | cut -d: -f2)
+BORE_PORT=""
 BORE_HOST="bore.pub"
 
-# Fallback: thử ngrok nếu bore không hoạt động
+# Thử từng port cố định 14445→14460
+for TRY_PORT in 14445 14446 14447 14448 14449 14450 14451 14452 14453 14454 14455 14456 14457 14458 14459 14460; do
+    rm -f /tmp/bore.log
+    nohup bore local 14445 --to bore.pub --port $TRY_PORT > /tmp/bore.log 2>&1 &
+    BORE_PID=$!
+    sleep 4
+    # Kiểm tra bore có lấy được port không
+    if grep -q "listening at" /tmp/bore.log 2>/dev/null; then
+        BORE_PORT=$(grep -oE 'bore\.pub:[0-9]+' /tmp/bore.log | head -1 | cut -d: -f2)
+        if [ -n "$BORE_PORT" ]; then
+            echo "✅ Bore tunnel: bore.pub:$BORE_PORT (local port: 14445)"
+            break
+        fi
+    fi
+    # Port bị chiếm, kill và thử port khác
+    kill $BORE_PID 2>/dev/null
+    pkill bore 2>/dev/null
+    sleep 1
+done
+
+# Fallback: bore random port nếu tất cả port cố định bị chiếm
 if [ -z "$BORE_PORT" ]; then
-    echo "⚠️  bore không lấy được port, thử ngrok..."
-    nohup ngrok tcp 14445 --log=stdout > /tmp/ngrok.log 2>&1 &
+    echo "⚠️  Tất cả port cố định bị chiếm, dùng random port..."
+    nohup bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
     sleep 6
-    NGROK_URL=$(curl -s http://localhost:4040/api/tunnels 2>/dev/null \
-        | grep -o '"public_url":"tcp://[^"]*"' | head -1 \
-        | sed 's/"public_url":"tcp:\/\///;s/"//')
-    BORE_HOST=$(echo "$NGROK_URL" | cut -d: -f1)
-    BORE_PORT=$(echo "$NGROK_URL" | cut -d: -f2)
+    BORE_PORT=$(grep -oE 'bore\.pub:[0-9]+' /tmp/bore.log | head -1 | cut -d: -f2)
 fi
 
-if [ -n "$BORE_PORT" ] && [ -n "$BORE_HOST" ]; then
-    echo "✅ Tunnel: $BORE_HOST:$BORE_PORT (server bind: 14445)"
-    # server.ip = host tunnel (bore.pub hoặc ngrok host)
+if [ -n "$BORE_PORT" ]; then
+    echo "✅ Tunnel: $BORE_HOST:$BORE_PORT"
     sed -i "s/^server\.ip=.*/server.ip=$BORE_HOST/" "$SERVER_DIR/Config.properties"
-    # server.port KHÔNG đổi → server vẫn bind cổng 14445 cục bộ
-    # server.external_port = cổng tunnel thực sự → APK kết nối đúng
     if grep -q "^server\.external_port=" "$SERVER_DIR/Config.properties"; then
         sed -i "s/^server\.external_port=.*/server.external_port=$BORE_PORT/" "$SERVER_DIR/Config.properties"
     else
         echo "server.external_port=$BORE_PORT" >> "$SERVER_DIR/Config.properties"
     fi
 else
-    BORE_HOST="CHUA_CO"
     BORE_PORT="14445"
-    echo "⚠️  Không lấy được tunnel URL — APK sẽ không kết nối được"
+    echo "⚠️  Không lấy được tunnel URL"
 fi
 
-# 3. Khởi động Java server
-echo ">>> [3/4] Khởi động Java Game Server..."
+# 4. Khởi động Java server (dùng named pipe thay /dev/null để tránh Scanner crash)
+echo ">>> [4/5] Khởi động Java Game Server..."
 cd "$SERVER_DIR"
 pkill -f NgocRongOnline.jar 2>/dev/null; sleep 1
-# FIX 2: Thêm < /dev/null để Java không cần stdin (tránh crash khi không có terminal)
-nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
-    -jar NgocRongOnline.jar < /dev/null > /tmp/gameserver.log 2>&1 &
-SERVER_PID=$!
-sleep 4
 
-# 4. Ghi IP+Port vào SERVER_IP.txt trong repo (dùng GITHUB_TOKEN của Codespace)
-echo ">>> [4/4] Ghi IP+Port vào repo..."
-if [ -n "$GITHUB_TOKEN" ]; then
-    CONTENT_RAW="HOST=$BORE_HOST
+# Dùng named pipe thay /dev/null → Scanner.hasNextLine() block thay vì crash
+rm -f /tmp/nro_stdin
+mkfifo /tmp/nro_stdin
+
+nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
+    -jar NgocRongOnline.jar < /tmp/nro_stdin > /tmp/gameserver.log 2>&1 &
+SERVER_PID=$!
+sleep 6
+
+# 5. Ghi IP+Port vào repo
+echo ">>> [5/5] Ghi IP+Port vào repo..."
+CONTENT_RAW="HOST=$BORE_HOST
 PORT=$BORE_PORT
 STATUS=RUNNING
 UPDATED=$(date '+%Y-%m-%d %H:%M:%S UTC')"
-
-    CONTENT_B64=$(printf '%s' "$CONTENT_RAW" | base64 -w 0)
-
-    EXISTING_SHA=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-        "https://api.github.com/repos/$REPO/contents/SERVER_IP.txt" \
-        | grep -o '"sha":"[^"]*"' | head -1 | sed 's/"sha":"//;s/"//')
-
-    if [ -n "$EXISTING_SHA" ]; then
-        PAYLOAD="{\"message\":\"Update server IP\",\"content\":\"$CONTENT_B64\",\"sha\":\"$EXISTING_SHA\"}"
-    else
-        PAYLOAD="{\"message\":\"Add server IP\",\"content\":\"$CONTENT_B64\"}"
-    fi
-
-    RESULT=$(curl -s -X PUT \
-        -H "Authorization: token $GITHUB_TOKEN" \
-        -H "Accept: application/vnd.github+json" \
-        "https://api.github.com/repos/$REPO/contents/SERVER_IP.txt" \
-        -d "$PAYLOAD")
-
-    if echo "$RESULT" | grep -q '"content"'; then
-        echo "✅ Đã ghi SERVER_IP.txt vào repo"
-    else
-        # Fallback: dùng git push thẳng
-        cd "$WORKSPACE_DIR"
-        echo "$CONTENT_RAW" > SERVER_IP.txt
-        git config user.email "server@nro.local"
-        git config user.name "NRO Server"
-        git add SERVER_IP.txt
-        git commit -m "Update server IP [skip ci]" 2>/dev/null || true
-        git push 2>/dev/null && echo "✅ Pushed SERVER_IP.txt" || echo "⚠️  Push thất bại"
-    fi
+CONTENT_B64=$(printf '%s' "$CONTENT_RAW" | base64 -w 0)
+EXISTING_SHA=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+    "https://api.github.com/repos/$REPO/contents/SERVER_IP.txt" \
+    | grep -o '"sha":"[^"]*"' | head -1 | sed 's/"sha":"//;s/"//')
+if [ -n "$EXISTING_SHA" ]; then
+    PAYLOAD="{\"message\":\"Server IP: $BORE_HOST:$BORE_PORT [skip ci]\",\"content\":\"$CONTENT_B64\",\"sha\":\"$EXISTING_SHA\"}"
 else
-    echo "⚠️  GITHUB_TOKEN không có, bỏ qua bước ghi repo"
-    echo "HOST=$BORE_HOST PORT=$BORE_PORT" > /tmp/server_ip.txt
+    PAYLOAD="{\"message\":\"Server IP: $BORE_HOST:$BORE_PORT [skip ci]\",\"content\":\"$CONTENT_B64\"}"
+fi
+RESULT=$(curl -s -X PUT \
+    -H "Authorization: token $GITHUB_TOKEN" \
+    -H "Accept: application/vnd.github+json" \
+    "https://api.github.com/repos/$REPO/contents/SERVER_IP.txt" \
+    -d "$PAYLOAD")
+if echo "$RESULT" | grep -q '"content"'; then
+    echo "✅ Đã ghi SERVER_IP.txt"
+else
+    echo "⚠️  Ghi repo thất bại"
 fi
 
 echo ""
@@ -166,9 +166,12 @@ if kill -0 $SERVER_PID 2>/dev/null; then
     echo "  🎮 SERVER CHẠY THÀNH CÔNG!          "
     echo "  HOST : $BORE_HOST"
     echo "  PORT : $BORE_PORT  (APK kết nối cổng này)"
-    echo "  BIND : 14445       (cổng cục bộ Java bind)"
+    echo "  BIND : 14445       (cổng cục bộ Java)"
     echo "======================================"
+    echo ""
+    echo "Đang theo dõi server log..."
+    tail -f /tmp/gameserver.log
 else
     echo "❌ Server lỗi! Log:"
-    tail -30 /tmp/gameserver.log
+    tail -50 /tmp/gameserver.log
 fi

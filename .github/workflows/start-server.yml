@@ -94,8 +94,9 @@ jobs:
 
       - name: Update Config with tunnel address
         run: |
+          # Chỉ cập nhật IP (để client biết kết nối đâu)
+          # KHÔNG đổi server.port — Java server luôn bind port 14445, bore forward vào đó
           sed -i "s/^server\.ip=.*/server.ip=$TUNNEL_HOST/" ~/nro_server/Config.properties
-          sed -i "s/^server\.port=.*/server.port=$TUNNEL_PORT/" ~/nro_server/Config.properties
           grep 'server\.ip\|server\.port' ~/nro_server/Config.properties
 
       - name: Start Java Game Server

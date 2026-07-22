@@ -1,233 +1,268 @@
 name: Start NRO Server
 
-on:
-  workflow_dispatch:
-  repository_dispatch:
-    types: [restart-server]
+    on:
+    workflow_dispatch:
+    repository_dispatch:
+      types: [restart-server]
 
-# Chỉ cho phép 1 instance chạy cùng lúc - cancel cái cũ nếu có cái mới
-concurrency:
-  group: nro-server
-  cancel-in-progress: true
+    concurrency:
+    group: nro-server
+    cancel-in-progress: true
 
-permissions:
-  contents: write
-  actions: write
+    permissions:
+    contents: write
+    actions: write
 
-jobs:
-  start:
-    runs-on: ubuntu-latest
-    timeout-minutes: 355
+    jobs:
+    start:
+      runs-on: ubuntu-latest
+      timeout-minutes: 355
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq mariadb-server default-jdk curl wget netcat-openbsd
+        - name: Install dependencies
+          run: |
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq mariadb-server default-jdk curl wget netcat-openbsd
 
-      - name: Install bore (free TCP tunnel, no account needed)
-        run: |
-          curl -sLo /tmp/bore.tgz \
-            https://github.com/ekzhang/bore/releases/download/v0.5.1/bore-v0.5.1-x86_64-unknown-linux-musl.tar.gz
-          tar -xzf /tmp/bore.tgz -C /usr/local/bin/
-          bore --version
+        - name: Install bore
+          run: |
+            curl -sLo /tmp/bore.tgz \
+              https://github.com/ekzhang/bore/releases/download/v0.5.1/bore-v0.5.1-x86_64-unknown-linux-musl.tar.gz
+            tar -xzf /tmp/bore.tgz -C /usr/local/bin/
+            bore --version
 
-      - name: Configure MariaDB TCP + Start
-        run: |
-          MYSQL_CONF="/etc/mysql/mariadb.conf.d/50-server.cnf"
-          if [ -f "$MYSQL_CONF" ]; then
-            sudo sed -i 's/^skip-networking/#skip-networking/' "$MYSQL_CONF" || true
-            if grep -q "^bind-address" "$MYSQL_CONF"; then
-              sudo sed -i 's/^bind-address.*/bind-address = 127.0.0.1/' "$MYSQL_CONF"
-            else
-              echo "bind-address = 127.0.0.1" | sudo tee -a "$MYSQL_CONF" > /dev/null
-            fi
-          else
-            sudo mkdir -p /etc/mysql/conf.d
-            printf '[mysqld]\nbind-address = 127.0.0.1\nskip-networking = 0\n' \
-              | sudo tee /etc/mysql/conf.d/tcp-fix.cnf > /dev/null
-          fi
-          sudo service mariadb start
-          sleep 3
-          sudo mysqladmin -h 127.0.0.1 -P 3306 ping && echo "TCP OK" || true
-
-      - name: Setup database
-        run: |
-          sudo mysql -e "CREATE DATABASE IF NOT EXISTS team2026 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-          sudo mysql -e "CREATE USER IF NOT EXISTS 'root'@'127.0.0.1' IDENTIFIED BY '';"
-          sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' WITH GRANT OPTION;"
-          sudo mysql -e "FLUSH PRIVILEGES;"
-          if [ -f "database team2026.sql" ]; then
-            sudo mysql team2026 < "database team2026.sql" && echo "DB imported"
-          elif [ -f "SRC/sql/nro1.sql" ]; then
-            sudo mysql team2026 < "SRC/sql/nro1.sql" && echo "DB imported"
-          fi
-
-      - name: Prepare server files
-        run: |
-          mkdir -p ~/nro_server
-          cp -r SRC/dist/. ~/nro_server/
-          # Đảm bảo lib/ luôn có từ SRC/lib (phòng trường hợp dist/lib thiếu)
-          mkdir -p ~/nro_server/lib
-          cp SRC/lib/*.jar ~/nro_server/lib/ 2>/dev/null || true
-          cp -r SRC/data ~/nro_server/ 2>/dev/null || true
-          cp SRC/Config.properties ~/nro_server/
-          echo "=== Libs available ==="
-          ls ~/nro_server/lib/ | head -20
-
-      - name: Start bore tunnel (ưu tiên port cố định)
-        run: |
-          pkill bore 2>/dev/null || true
-          sleep 1
-
-          BORE_PORT=""
-          BORE_PID=""
-
-          FIXED_PORTS="14445 14446 14447 14448 14449 14450 14451 14452 14453 14454 14460 14470 14480 14490 14500"
-
-          for try_port in $FIXED_PORTS; do
-            echo ">>> Thử bore --port $try_port ..."
-            pkill bore 2>/dev/null || true
-            sleep 1
-            bore local 14445 --to bore.pub --port $try_port > /tmp/bore.log 2>&1 &
-            BORE_PID=$!
-
-            GOT_PORT=false
-            for w in $(seq 1 4); do
-              sleep 2
-              if grep -qE "Listening|bore\.pub" /tmp/bore.log 2>/dev/null; then
-                GOT_PORT=true
-                break
-              fi
-              if ! kill -0 $BORE_PID 2>/dev/null; then
-                break
-              fi
-            done
-
-            if $GOT_PORT; then
-              BORE_PORT=$try_port
-              echo "✅ Lấy được port cố định: bore.pub:$BORE_PORT"
-              break
-            else
-              echo "⚠️  Port $try_port bị chiếm, thử port tiếp..."
-              pkill bore 2>/dev/null || true
-              sleep 1
-            fi
-          done
-
-          if [ -z "$BORE_PORT" ]; then
-            echo "⚠️  Tất cả port cố định bị chiếm → dùng random port"
-            bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
-            BORE_PID=$!
-            for i in $(seq 1 20); do
-              sleep 2
-              BORE_PORT=$(grep -oE 'bore\.pub:[0-9]+' /tmp/bore.log 2>/dev/null | head -1 | cut -d: -f2)
-              [ -z "$BORE_PORT" ] && BORE_PORT=$(grep -oE '[0-9]{4,5}$' /tmp/bore.log 2>/dev/null | head -1)
-              [ -n "$BORE_PORT" ] && echo "✅ Random port: bore.pub:$BORE_PORT" && break
-              if ! kill -0 $BORE_PID 2>/dev/null; then
-                bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 & BORE_PID=$!
-              fi
-            done
-          fi
-
-          echo "=== bore.log ==="
-          cat /tmp/bore.log
-
-          if [ -z "$BORE_PORT" ]; then
-            echo "❌ Không lấy được bore port"
-            exit 1
-          fi
-
-          echo "BORE_PID=$BORE_PID" >> $GITHUB_ENV
-          echo "TUNNEL_HOST=bore.pub" >> $GITHUB_ENV
-          echo "TUNNEL_PORT=$BORE_PORT" >> $GITHUB_ENV
-          echo "✅ Tunnel: bore.pub:$BORE_PORT → localhost:14445"
-
-      - name: Update Config with tunnel address
-        run: |
-          sed -i "s/^server\.ip=.*/server.ip=$TUNNEL_HOST/" ~/nro_server/Config.properties
-          if grep -q "^server\.external_port=" ~/nro_server/Config.properties; then
-            sed -i "s/^server\.external_port=.*/server.external_port=$TUNNEL_PORT/" ~/nro_server/Config.properties
-          else
-            echo "server.external_port=$TUNNEL_PORT" >> ~/nro_server/Config.properties
-          fi
-          echo "=== Config hiện tại ==="
-          grep 'server\.ip\|server\.port\|server\.external' ~/nro_server/Config.properties
-          echo "✅ APK kết nối: $TUNNEL_HOST:$TUNNEL_PORT | Java bind: 14445"
-
-      - name: Start Java Game Server
-        run: |
-          cd ~/nro_server
-          # Dùng -cp thay -jar để lib/*.jar được load đúng
-          tail -f /dev/null | nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
-            -cp "NgocRongOnline.jar:lib/*" nro.models.server.ServerManager \
-            > /tmp/gameserver.log 2>&1 &
-          SERVER_PID=$!
-          echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
-          sleep 15
-          echo "=== Server log (15s) ==="
-          cat /tmp/gameserver.log
-          if kill -0 $SERVER_PID 2>/dev/null; then
-            echo "✅ Server running (PID=$SERVER_PID)"
-          else
-            echo "❌ Server crashed"
-            exit 1
-          fi
-
-      - name: Write IP+Port to SERVER_IP.txt
-        run: |
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-          printf "HOST=%s\nPORT=%s\nSTATUS=RUNNING\nUPDATED=%s\n" \
-            "$TUNNEL_HOST" "$TUNNEL_PORT" "$(date '+%Y-%m-%d %H:%M:%S UTC')" > SERVER_IP.txt
-          cat SERVER_IP.txt
-          git add SERVER_IP.txt
-          git diff --cached --quiet && echo "No changes" || \
-            (git commit -m "Server IP: $TUNNEL_HOST:$TUNNEL_PORT [skip ci]" && \
-             git pull --rebase && git push)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Keep server alive (5h 20m) then auto-chain
-        run: |
-          echo "✅ Server running at $TUNNEL_HOST:$TUNNEL_PORT"
-          RESTART_COUNT=0
-          for i in $(seq 1 320); do
-            sleep 60
-            if ! kill -0 $SERVER_PID 2>/dev/null; then
-              RESTART_COUNT=$((RESTART_COUNT + 1))
-              echo "⚠️  Server died at minute $i (crash #$RESTART_COUNT), restarting..."
-              cd ~/nro_server
-              tail -f /dev/null | nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
-                -cp "NgocRongOnline.jar:lib/*" nro.models.server.ServerManager \
-                >> /tmp/gameserver.log 2>&1 &
-              SERVER_PID=$!
-              sleep 10
-              if kill -0 $SERVER_PID 2>/dev/null; then
-                echo "✅ Restarted OK"
+        - name: Configure MariaDB TCP + Start
+          run: |
+            MYSQL_CONF="/etc/mysql/mariadb.conf.d/50-server.cnf"
+            if [ -f "$MYSQL_CONF" ]; then
+              sudo sed -i 's/^skip-networking/#skip-networking/' "$MYSQL_CONF" || true
+              if grep -q "^bind-address" "$MYSQL_CONF"; then
+                sudo sed -i 's/^bind-address.*/bind-address = 127.0.0.1/' "$MYSQL_CONF"
               else
-                echo "❌ Restart failed, log:"
-                tail -30 /tmp/gameserver.log
+                echo "bind-address = 127.0.0.1" | sudo tee -a "$MYSQL_CONF" > /dev/null
               fi
+            else
+              sudo mkdir -p /etc/mysql/conf.d
+              printf '[mysqld]\nbind-address = 127.0.0.1\nskip-networking = 0\n' \
+                | sudo tee /etc/mysql/conf.d/tcp-fix.cnf > /dev/null
             fi
-            [ $((i % 30)) -eq 0 ] && echo "[$i/320 min] alive - $(date) - crashes: $RESTART_COUNT"
-          done
-          echo ">>> Thời gian sắp hết (320 phút), trigger workflow mới..."
-        env:
-          SERVER_PID: ${{ env.SERVER_PID }}
+            sudo service mariadb start
+            sleep 3
+            sudo mysqladmin -h 127.0.0.1 -P 3306 ping && echo "TCP OK" || true
 
-      - name: Trigger next server run (auto-chain)
-        if: always()
-        run: |
-          echo ">>> Khởi động workflow kế tiếp để duy trì server 24/7..."
-          curl -s -X POST \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/start-server.yml/dispatches" \
-            -d '{"ref":"main"}' && echo "✅ Workflow tiếp theo đã được trigger" \
-            || echo "⚠️  Trigger thất bại"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        - name: Setup database
+          run: |
+            sudo mysql -e "CREATE DATABASE IF NOT EXISTS team2026 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+            sudo mysql -e "CREATE USER IF NOT EXISTS 'root'@'127.0.0.1' IDENTIFIED BY '';"
+            sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' WITH GRANT OPTION;"
+            sudo mysql -e "FLUSH PRIVILEGES;"
+            if [ -f "database team2026.sql" ]; then
+              sudo mysql team2026 < "database team2026.sql" && echo "DB imported"
+            elif [ -f "SRC/sql/nro1.sql" ]; then
+              sudo mysql team2026 < "SRC/sql/nro1.sql" && echo "DB imported"
+            fi
+
+        - name: Prepare server files
+          run: |
+            mkdir -p ~/nro_server
+            cp -r SRC/dist/. ~/nro_server/
+            mkdir -p ~/nro_server/lib
+            cp SRC/lib/*.jar ~/nro_server/lib/ 2>/dev/null || true
+            cp -r SRC/data ~/nro_server/ 2>/dev/null || true
+            cp SRC/Config.properties ~/nro_server/
+            echo "=== Libs ==="
+            ls ~/nro_server/lib/
+
+        - name: Start bore tunnel
+          run: |
+            pkill bore 2>/dev/null || true; sleep 1
+            BORE_PORT=""
+            BORE_PID=""
+            FIXED_PORTS="14445 14446 14447 14448 14449 14450 14451 14452 14453 14454 14460 14470 14480 14490 14500"
+
+            for try_port in $FIXED_PORTS; do
+              echo ">>> Thử port $try_port..."
+              pkill bore 2>/dev/null || true; sleep 1
+              bore local 14445 --to bore.pub --port $try_port > /tmp/bore.log 2>&1 &
+              BORE_PID=$!
+              for w in $(seq 1 4); do
+                sleep 2
+                if grep -qE "Listening|bore\.pub" /tmp/bore.log 2>/dev/null; then
+                  BORE_PORT=$try_port
+                  echo "✅ bore.pub:$BORE_PORT"
+                  break 2
+                fi
+                kill -0 $BORE_PID 2>/dev/null || break
+              done
+              kill $BORE_PID 2>/dev/null; pkill bore 2>/dev/null; sleep 1
+            done
+
+            if [ -z "$BORE_PORT" ]; then
+              echo "⚠️  Dùng random port..."
+              bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
+              BORE_PID=$!
+              for w in $(seq 1 20); do
+                sleep 2
+                BORE_PORT=$(grep -oE 'bore\.pub:[0-9]+' /tmp/bore.log 2>/dev/null | head -1 | cut -d: -f2)
+                [ -n "$BORE_PORT" ] && echo "✅ Random: bore.pub:$BORE_PORT" && break
+                kill -0 $BORE_PID 2>/dev/null || { bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 & BORE_PID=$!; }
+              done
+            fi
+
+            cat /tmp/bore.log
+            [ -z "$BORE_PORT" ] && echo "❌ Không lấy được port" && exit 1
+
+            echo "BORE_PID=$BORE_PID"     >> $GITHUB_ENV
+            echo "TUNNEL_HOST=bore.pub"   >> $GITHUB_ENV
+            echo "TUNNEL_PORT=$BORE_PORT" >> $GITHUB_ENV
+            echo "✅ Tunnel OK: bore.pub:$BORE_PORT"
+
+        - name: Update Config with tunnel address
+          run: |
+            sed -i "s/^server\.ip=.*/server.ip=$TUNNEL_HOST/" ~/nro_server/Config.properties
+            if grep -q "^server\.external_port=" ~/nro_server/Config.properties; then
+              sed -i "s/^server\.external_port=.*/server.external_port=$TUNNEL_PORT/" ~/nro_server/Config.properties
+            else
+              echo "server.external_port=$TUNNEL_PORT" >> ~/nro_server/Config.properties
+            fi
+            grep "^server\." ~/nro_server/Config.properties
+            echo "✅ APK dùng: $TUNNEL_HOST:$TUNNEL_PORT"
+
+        - name: Start Java Game Server
+          run: |
+            cd ~/nro_server
+            tail -f /dev/null | nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
+              -cp "NgocRongOnline.jar:lib/*" nro.models.server.ServerManager \
+              > /tmp/gameserver.log 2>&1 &
+            SERVER_PID=$!
+            echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
+            sleep 15
+            echo "=== Server log (15s) ==="
+            cat /tmp/gameserver.log
+            if kill -0 $SERVER_PID 2>/dev/null; then
+              echo "✅ Server PID=$SERVER_PID"
+            else
+              echo "❌ Server crashed"; exit 1
+            fi
+
+        - name: Write IP+Port to SERVER_IP.txt
+          run: |
+            git config user.email "actions@github.com"
+            git config user.name "GitHub Actions"
+            printf "HOST=%s\nPORT=%s\nSTATUS=RUNNING\nUPDATED=%s\n" \
+              "$TUNNEL_HOST" "$TUNNEL_PORT" "$(date '+%Y-%m-%d %H:%M:%S UTC')" > SERVER_IP.txt
+            cat SERVER_IP.txt
+            git add SERVER_IP.txt
+            git diff --cached --quiet && echo "No changes" || \
+              (git commit -m "Server IP: $TUNNEL_HOST:$TUNNEL_PORT [skip ci]" && \
+               git pull --rebase && git push)
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        - name: Keep server alive (5h 20m) then auto-chain
+          run: |
+            echo "✅ Monitor start | bore.pub:$TUNNEL_PORT | Java=$SERVER_PID | bore=$BORE_PID"
+            FIXED_PORTS="14445 14446 14447 14448 14449 14450 14451 14452 14453 14454 14460 14470 14480 14490 14500"
+            JAVA_CRASH=0; BORE_CRASH=0
+
+            push_server_ip() {
+              local host=$1 port=$2
+              printf "HOST=%s\nPORT=%s\nSTATUS=RUNNING\nUPDATED=%s\n" \
+                "$host" "$port" "$(date '+%Y-%m-%d %H:%M:%S UTC')" > /tmp/sip.txt
+              local b64; b64=$(base64 -w0 /tmp/sip.txt)
+              local sha; sha=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                "https://api.github.com/repos/$GITHUB_REPOSITORY/contents/SERVER_IP.txt" \
+                | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('sha',''))" 2>/dev/null)
+              local msg; msg="Server IP: $host:$port [skip ci]"
+              if [ -n "$sha" ]; then
+                curl -s -X PUT -H "Authorization: token $GITHUB_TOKEN" \
+                  -H "Accept: application/vnd.github+json" \
+                  "https://api.github.com/repos/$GITHUB_REPOSITORY/contents/SERVER_IP.txt" \
+                  -d "{\"message\":\"$msg\",\"content\":\"$b64\",\"sha\":\"$sha\"}" > /dev/null \
+                  && echo "✅ SERVER_IP.txt: $host:$port" || echo "⚠️ push fail"
+              else
+                curl -s -X PUT -H "Authorization: token $GITHUB_TOKEN" \
+                  -H "Accept: application/vnd.github+json" \
+                  "https://api.github.com/repos/$GITHUB_REPOSITORY/contents/SERVER_IP.txt" \
+                  -d "{\"message\":\"$msg\",\"content\":\"$b64\"}" > /dev/null \
+                  && echo "✅ SERVER_IP.txt: $host:$port" || echo "⚠️ push fail"
+              fi
+            }
+
+            restart_bore() {
+              pkill bore 2>/dev/null; sleep 2
+              local np="" pid=""
+              for tp in $FIXED_PORTS; do
+                bore local 14445 --to bore.pub --port $tp > /tmp/bore2.log 2>&1 & pid=$!
+                for w in $(seq 1 4); do
+                  sleep 2
+                  grep -qE "Listening|bore\.pub" /tmp/bore2.log 2>/dev/null && np=$tp && break 2
+                done
+                kill $pid 2>/dev/null; pkill bore 2>/dev/null; sleep 1
+              done
+              if [ -z "$np" ]; then
+                bore local 14445 --to bore.pub > /tmp/bore2.log 2>&1 & pid=$!
+                for w in $(seq 1 10); do
+                  sleep 2
+                  np=$(grep -oE 'bore\.pub:[0-9]+' /tmp/bore2.log 2>/dev/null | head -1 | cut -d: -f2)
+                  [ -n "$np" ] && break
+                done
+              fi
+              if [ -n "$np" ]; then
+                BORE_PID=$pid; TUNNEL_PORT=$np
+                sed -i "s/^server\.external_port=.*/server.external_port=$np/" ~/nro_server/Config.properties || \
+                  echo "server.external_port=$np" >> ~/nro_server/Config.properties
+                push_server_ip "bore.pub" "$np"
+                echo "✅ bore restart: bore.pub:$np"
+              else
+                echo "❌ bore restart fail"
+              fi
+            }
+
+            for i in $(seq 1 320); do
+              sleep 60
+
+              if ! kill -0 $BORE_PID 2>/dev/null; then
+                BORE_CRASH=$((BORE_CRASH+1))
+                echo "⚠️  bore chết phút $i (lần $BORE_CRASH) → restart..."
+                restart_bore
+              fi
+
+              if ! kill -0 $SERVER_PID 2>/dev/null; then
+                JAVA_CRASH=$((JAVA_CRASH+1))
+                echo "⚠️  Java chết phút $i (lần $JAVA_CRASH) → restart..."
+                cd ~/nro_server
+                tail -f /dev/null | nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
+                  -cp "NgocRongOnline.jar:lib/*" nro.models.server.ServerManager \
+                  >> /tmp/gameserver.log 2>&1 &
+                SERVER_PID=$!
+                sleep 10
+                kill -0 $SERVER_PID 2>/dev/null \
+                  && echo "✅ Java restart OK (PID=$SERVER_PID)" \
+                  || { echo "❌ Java restart fail"; tail -20 /tmp/gameserver.log; }
+              fi
+
+              [ $((i % 15)) -eq 0 ] && \
+                echo "[phút $i/320] alive | bore.pub:$TUNNEL_PORT | java=$JAVA_CRASH bore=$BORE_CRASH | $(date)"
+            done
+            echo ">>> 320 phút → trigger chain..."
+          env:
+            SERVER_PID: ${{ env.SERVER_PID }}
+            BORE_PID: ${{ env.BORE_PID }}
+            TUNNEL_PORT: ${{ env.TUNNEL_PORT }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        - name: Trigger next server run (auto-chain)
+          if: always()
+          run: |
+            curl -s -X POST \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/start-server.yml/dispatches" \
+              -d '{"ref":"main"}' && echo "✅ Chain triggered" || echo "⚠️ Trigger fail"
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    

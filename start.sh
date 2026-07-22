@@ -65,26 +65,46 @@ if [ ! -f "$SERVER_DIR/NgocRongOnline.jar" ]; then
     cp "$WORKSPACE_DIR/SRC/Config.properties" ~/nro_server/
 fi
 
-# 2. Khởi động ngrok
-echo ">>> [2/4] Khởi động ngrok (port 14445)..."
-pkill ngrok 2>/dev/null; sleep 1
-nohup ngrok tcp 14445 --log=stdout > /tmp/ngrok.log 2>&1 &
+# 2. Khởi động tunnel (bore → cổng cục bộ 14445)
+echo ">>> [2/4] Khởi động bore tunnel (local port 14445)..."
+pkill bore 2>/dev/null; pkill ngrok 2>/dev/null; sleep 1
+
+# bore local 14445 --to bore.pub
+# Output dạng: "listening at bore.pub:XXXXX"
+nohup bore local 14445 --to bore.pub > /tmp/bore.log 2>&1 &
 sleep 6
 
-NGROK_URL=$(curl -s http://localhost:4040/api/tunnels 2>/dev/null \
-    | grep -o '"public_url":"tcp://[^"]*"' | head -1 \
-    | sed 's/"public_url":"tcp:\/\///;s/"//')
-NGROK_HOST=$(echo "$NGROK_URL" | cut -d: -f1)
-NGROK_PORT=$(echo "$NGROK_URL" | cut -d: -f2)
+# Lấy cổng bore thực sự đang expose ra ngoài
+BORE_PORT=$(grep -oE 'bore\.pub:[0-9]+' /tmp/bore.log | head -1 | cut -d: -f2)
+BORE_HOST="bore.pub"
 
-if [ -n "$NGROK_HOST" ]; then
-    echo "✅ ngrok: $NGROK_HOST:$NGROK_PORT"
-    sed -i "s/^server\.ip=.*/server.ip=$NGROK_HOST/" "$SERVER_DIR/Config.properties"
-    sed -i "s/^server\.port=.*/server.port=$NGROK_PORT/" "$SERVER_DIR/Config.properties"
+# Fallback: thử ngrok nếu bore không hoạt động
+if [ -z "$BORE_PORT" ]; then
+    echo "⚠️  bore không lấy được port, thử ngrok..."
+    nohup ngrok tcp 14445 --log=stdout > /tmp/ngrok.log 2>&1 &
+    sleep 6
+    NGROK_URL=$(curl -s http://localhost:4040/api/tunnels 2>/dev/null \
+        | grep -o '"public_url":"tcp://[^"]*"' | head -1 \
+        | sed 's/"public_url":"tcp:\/\///;s/"//')
+    BORE_HOST=$(echo "$NGROK_URL" | cut -d: -f1)
+    BORE_PORT=$(echo "$NGROK_URL" | cut -d: -f2)
+fi
+
+if [ -n "$BORE_PORT" ] && [ -n "$BORE_HOST" ]; then
+    echo "✅ Tunnel: $BORE_HOST:$BORE_PORT (server bind: 14445)"
+    # server.ip = host tunnel (bore.pub hoặc ngrok host)
+    sed -i "s/^server\.ip=.*/server.ip=$BORE_HOST/" "$SERVER_DIR/Config.properties"
+    # server.port KHÔNG đổi → server vẫn bind cổng 14445 cục bộ
+    # server.external_port = cổng tunnel thực sự → APK kết nối đúng
+    if grep -q "^server\.external_port=" "$SERVER_DIR/Config.properties"; then
+        sed -i "s/^server\.external_port=.*/server.external_port=$BORE_PORT/" "$SERVER_DIR/Config.properties"
+    else
+        echo "server.external_port=$BORE_PORT" >> "$SERVER_DIR/Config.properties"
+    fi
 else
-    NGROK_HOST="CHUA_CO"
-    NGROK_PORT="14445"
-    echo "⚠️  Không lấy được ngrok URL"
+    BORE_HOST="CHUA_CO"
+    BORE_PORT="14445"
+    echo "⚠️  Không lấy được tunnel URL — APK sẽ không kết nối được"
 fi
 
 # 3. Khởi động Java server
@@ -100,8 +120,8 @@ sleep 4
 # 4. Ghi IP+Port vào SERVER_IP.txt trong repo (dùng GITHUB_TOKEN của Codespace)
 echo ">>> [4/4] Ghi IP+Port vào repo..."
 if [ -n "$GITHUB_TOKEN" ]; then
-    CONTENT_RAW="HOST=$NGROK_HOST
-PORT=$NGROK_PORT
+    CONTENT_RAW="HOST=$BORE_HOST
+PORT=$BORE_PORT
 STATUS=RUNNING
 UPDATED=$(date '+%Y-%m-%d %H:%M:%S UTC')"
 
@@ -137,15 +157,16 @@ UPDATED=$(date '+%Y-%m-%d %H:%M:%S UTC')"
     fi
 else
     echo "⚠️  GITHUB_TOKEN không có, bỏ qua bước ghi repo"
-    echo "HOST=$NGROK_HOST PORT=$NGROK_PORT" > /tmp/server_ip.txt
+    echo "HOST=$BORE_HOST PORT=$BORE_PORT" > /tmp/server_ip.txt
 fi
 
 echo ""
 if kill -0 $SERVER_PID 2>/dev/null; then
     echo "======================================"
     echo "  🎮 SERVER CHẠY THÀNH CÔNG!          "
-    echo "  HOST : $NGROK_HOST"
-    echo "  PORT : $NGROK_PORT"
+    echo "  HOST : $BORE_HOST"
+    echo "  PORT : $BORE_PORT  (APK kết nối cổng này)"
+    echo "  BIND : 14445       (cổng cục bộ Java bind)"
     echo "======================================"
 else
     echo "❌ Server lỗi! Log:"

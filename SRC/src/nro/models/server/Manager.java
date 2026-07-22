@@ -1039,10 +1039,16 @@ public final class Manager {
         if ((value = properties.get("server.port")) != null) {
             ServerManager.PORT = Integer.parseInt(String.valueOf(value));
         }
+        // server.external_port: cổng quảng cáo cho APK (dùng khi bore/ngrok expose cổng khác với cổng bind)
+        // Nếu không set thì dùng server.port
+        int externalPort = ServerManager.PORT;
+        if ((value = properties.get("server.external_port")) != null) {
+            externalPort = Integer.parseInt(String.valueOf(value));
+        }
         String linkServer = "";
         if ((value = properties.get("server.ip")) != null) {
             ServerManager.IP = String.valueOf(value);
-            linkServer += ServerManager.NAME + ":" + ServerManager.IP + ":" + ServerManager.PORT + ":0,";
+            linkServer += ServerManager.NAME + ":" + ServerManager.IP + ":" + externalPort + ":0,";
         }
         for (int i = 1; i <= 10; i++) {
             value = properties.get("server.sv" + i);

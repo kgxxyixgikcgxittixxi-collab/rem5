@@ -2,13 +2,14 @@
   "name": "Ngoc Rong Server",
   "image": "mcr.microsoft.com/devcontainers/java:17-bullseye",
   "features": {
-    "ghcr.io/devcontainers/features/sshd:1": { "version": "latest" },
-    "ghcr.io/devcontainers/features/java:1": { "version": "17" }
+    "ghcr.io/devcontainers/features/sshd:1": { "version": "latest" }
   },
   "forwardPorts": [14445, 8080, 4040],
   "postCreateCommand": "bash .devcontainer/setup.sh",
-  "postStartCommand": "bash start.sh > /tmp/autostart.log 2>&1 &",
+  "postStartCommand": "bash start.sh > /tmp/server.log 2>&1 &",
   "customizations": {
-    "vscode": { "extensions": ["vscjava.vscode-java-pack"] }
+    "vscode": {
+      "extensions": ["vscjava.vscode-java-pack"]
+    }
   }
 }

@@ -1,0 +1,117 @@
+name: Start NRO Server
+
+on:
+  workflow_dispatch:
+
+jobs:
+  start:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq mariadb-server default-jdk curl wget
+
+      - name: Install ngrok
+        run: |
+          curl -sLo /tmp/ngrok.tgz https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
+          sudo tar -xzf /tmp/ngrok.tgz -C /usr/local/bin/
+          ngrok config add-authtoken "3GctAUGxj43OBIHbY32ylzVsg6k_5uGajyhXwWXGeVWwtKEWw"
+
+      - name: Configure MariaDB TCP + Start
+        run: |
+          MYSQL_CONF="/etc/mysql/mariadb.conf.d/50-server.cnf"
+          if [ -f "$MYSQL_CONF" ]; then
+            sudo sed -i 's/^skip-networking/#skip-networking/' "$MYSQL_CONF" || true
+            if grep -q "^bind-address" "$MYSQL_CONF"; then
+              sudo sed -i 's/^bind-address.*/bind-address = 127.0.0.1/' "$MYSQL_CONF"
+            else
+              echo "bind-address = 127.0.0.1" | sudo tee -a "$MYSQL_CONF" > /dev/null
+            fi
+          else
+            sudo mkdir -p /etc/mysql/conf.d
+            printf '[mysqld]\nbind-address = 127.0.0.1\nskip-networking = 0\n' \
+              | sudo tee /etc/mysql/conf.d/tcp-fix.cnf > /dev/null
+          fi
+          sudo service mariadb start
+          sleep 3
+          sudo mysqladmin -h 127.0.0.1 -P 3306 ping && echo "TCP OK" || echo "TCP not ready"
+
+      - name: Setup database
+        run: |
+          sudo mysql -e "CREATE DATABASE IF NOT EXISTS team2026 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+          sudo mysql -e "CREATE USER IF NOT EXISTS 'root'@'127.0.0.1' IDENTIFIED BY '';"
+          sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' WITH GRANT OPTION;"
+          sudo mysql -e "FLUSH PRIVILEGES;"
+          if [ -f "database team2026.sql" ]; then
+            sudo mysql team2026 < "database team2026.sql" && echo "DB imported"
+          elif [ -f "SRC/sql/nro1.sql" ]; then
+            sudo mysql team2026 < "SRC/sql/nro1.sql" && echo "DB imported"
+          fi
+
+      - name: Prepare server files
+        run: |
+          mkdir -p ~/nro_server
+          cp -r SRC/dist/. ~/nro_server/
+          cp -r SRC/data ~/nro_server/ 2>/dev/null || true
+          cp SRC/Config.properties ~/nro_server/
+
+      - name: Start ngrok
+        run: |
+          nohup ngrok tcp 14445 --log=stdout > /tmp/ngrok.log 2>&1 &
+          sleep 8
+          NGROK_URL=$(curl -s http://localhost:4040/api/tunnels \
+            | grep -o '"public_url":"tcp://[^"]*"' | head -1 \
+            | sed 's/"public_url":"tcp:\/\///;s/"//')
+          NGROK_HOST=$(echo "$NGROK_URL" | cut -d: -f1)
+          NGROK_PORT=$(echo "$NGROK_URL" | cut -d: -f2)
+          echo "NGROK_HOST=$NGROK_HOST" >> $GITHUB_ENV
+          echo "NGROK_PORT=$NGROK_PORT" >> $GITHUB_ENV
+          echo "ngrok: $NGROK_HOST:$NGROK_PORT"
+
+      - name: Update Config.properties with ngrok address
+        run: |
+          sed -i "s/^server\.ip=.*/server.ip=$NGROK_HOST/" ~/nro_server/Config.properties
+          sed -i "s/^server\.port=.*/server.port=$NGROK_PORT/" ~/nro_server/Config.properties
+
+      - name: Start Java Game Server
+        run: |
+          cd ~/nro_server
+          nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
+            -jar NgocRongOnline.jar < /dev/null > /tmp/gameserver.log 2>&1 &
+          echo "SERVER_PID=$!" >> $GITHUB_ENV
+          sleep 6
+          echo "=== Server log ==="
+          tail -20 /tmp/gameserver.log
+
+      - name: Write IP+Port to SERVER_IP.txt
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          printf "HOST=%s\nPORT=%s\nSTATUS=RUNNING\nUPDATED=%s\n" \
+            "$NGROK_HOST" "$NGROK_PORT" "$(date '+%Y-%m-%d %H:%M:%S UTC')" > SERVER_IP.txt
+          git add SERVER_IP.txt
+          git commit -m "Server IP update: $NGROK_HOST:$NGROK_PORT [skip ci]"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Keep server alive
+        run: |
+          echo "Server running at $NGROK_HOST:$NGROK_PORT"
+          for i in $(seq 1 330); do
+            sleep 60
+            if ! kill -0 $SERVER_PID 2>/dev/null; then
+              echo "Server died, restarting..."
+              cd ~/nro_server
+              nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
+                -jar NgocRongOnline.jar < /dev/null > /tmp/gameserver.log 2>&1 &
+              SERVER_PID=$!
+            fi
+            echo "[$i/330] Server alive - $(date)"
+          done

@@ -27,6 +27,8 @@ import nro.models.server.Manager;
 import nro.models.network.MySession;
 import nro.models.utils.Logger;
 
+import java.io.FileInputStream;
+import java.util.Properties;
 import nro.models.player_system.Template.BgItem;
 
 public class DataGame {
@@ -38,7 +40,21 @@ public class DataGame {
     public static int vsRes = 1;
     public static short maxSmallVersion = 32767;
 
-    public static String LINK_IP_PORT = "Ngọc Rồng Online:36.50.135.16:14445:0";
+    public static String LINK_IP_PORT;
+
+    static {
+        try {
+            Properties _p = new Properties();
+            _p.load(new FileInputStream("Config.properties"));
+            String _name = _p.getProperty("server.name", "Ngọc Rồng Online");
+            String _ip   = _p.getProperty("server.ip", "bore.pub");
+            String _port = _p.getProperty("server.external_port",
+                           _p.getProperty("server.port", "14445"));
+            LINK_IP_PORT = _name + ":" + _ip + ":" + _port + ":0";
+        } catch (Exception _e) {
+            LINK_IP_PORT = "Ngọc Rồng Online:36.50.135.16:14445:0";
+        }
+    }
     public static Map<Object, Object> MAP_MOUNT_NUM = new HashMap<>();
 
     public static void sendVersionGame(MySession session) {

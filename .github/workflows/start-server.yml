@@ -3,6 +3,9 @@ name: Start NRO Server
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   start:
     runs-on: ubuntu-latest
@@ -40,7 +43,7 @@ jobs:
           fi
           sudo service mariadb start
           sleep 3
-          sudo mysqladmin -h 127.0.0.1 -P 3306 ping && echo "TCP OK" || echo "TCP not ready"
+          sudo mysqladmin -h 127.0.0.1 -P 3306 ping && echo "TCP OK" || echo "TCP not ready yet"
 
       - name: Setup database
         run: |
@@ -61,33 +64,58 @@ jobs:
           cp -r SRC/data ~/nro_server/ 2>/dev/null || true
           cp SRC/Config.properties ~/nro_server/
 
-      - name: Start ngrok
+      - name: Start ngrok + get URL
         run: |
           nohup ngrok tcp 14445 --log=stdout > /tmp/ngrok.log 2>&1 &
-          sleep 8
-          NGROK_URL=$(curl -s http://localhost:4040/api/tunnels \
-            | grep -o '"public_url":"tcp://[^"]*"' | head -1 \
-            | sed 's/"public_url":"tcp:\/\///;s/"//')
+          # Đợi tối đa 30 giây cho ngrok kết nối
+          for i in $(seq 1 15); do
+            sleep 2
+            NGROK_URL=$(curl -s http://localhost:4040/api/tunnels 2>/dev/null \
+              | grep -o '"public_url":"tcp://[^"]*"' | head -1 \
+              | sed 's/"public_url":"tcp:\/\///;s/"//')
+            if [ -n "$NGROK_URL" ]; then
+              echo "Got ngrok URL at attempt $i: $NGROK_URL"
+              break
+            fi
+          done
+
           NGROK_HOST=$(echo "$NGROK_URL" | cut -d: -f1)
           NGROK_PORT=$(echo "$NGROK_URL" | cut -d: -f2)
+
+          if [ -z "$NGROK_HOST" ]; then
+            echo "=== ngrok log ==="
+            cat /tmp/ngrok.log
+            echo "ERROR: Không lấy được ngrok URL"
+            exit 1
+          fi
+
           echo "NGROK_HOST=$NGROK_HOST" >> $GITHUB_ENV
           echo "NGROK_PORT=$NGROK_PORT" >> $GITHUB_ENV
-          echo "ngrok: $NGROK_HOST:$NGROK_PORT"
+          echo "✅ ngrok: $NGROK_HOST:$NGROK_PORT"
 
-      - name: Update Config.properties with ngrok address
+      - name: Update Config with ngrok address
         run: |
           sed -i "s/^server\.ip=.*/server.ip=$NGROK_HOST/" ~/nro_server/Config.properties
           sed -i "s/^server\.port=.*/server.port=$NGROK_PORT/" ~/nro_server/Config.properties
+          echo "Config updated: $(grep 'server\.ip\|server\.port' ~/nro_server/Config.properties)"
 
       - name: Start Java Game Server
         run: |
           cd ~/nro_server
-          nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
-            -jar NgocRongOnline.jar < /dev/null > /tmp/gameserver.log 2>&1 &
-          echo "SERVER_PID=$!" >> $GITHUB_ENV
-          sleep 6
+          # FIX stdin: dùng tail -f /dev/null để giữ stdin mở, Java Scanner không crash
+          tail -f /dev/null | nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
+            -jar NgocRongOnline.jar > /tmp/gameserver.log 2>&1 &
+          SERVER_PID=$!
+          echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
+          sleep 8
           echo "=== Server log ==="
-          tail -20 /tmp/gameserver.log
+          cat /tmp/gameserver.log
+          if kill -0 $SERVER_PID 2>/dev/null; then
+            echo "✅ Server running (PID=$SERVER_PID)"
+          else
+            echo "❌ Server crashed"
+            exit 1
+          fi
 
       - name: Write IP+Port to SERVER_IP.txt
         run: |
@@ -95,23 +123,24 @@ jobs:
           git config user.name "GitHub Actions"
           printf "HOST=%s\nPORT=%s\nSTATUS=RUNNING\nUPDATED=%s\n" \
             "$NGROK_HOST" "$NGROK_PORT" "$(date '+%Y-%m-%d %H:%M:%S UTC')" > SERVER_IP.txt
+          cat SERVER_IP.txt
           git add SERVER_IP.txt
-          git commit -m "Server IP update: $NGROK_HOST:$NGROK_PORT [skip ci]"
+          git commit -m "Server IP: $NGROK_HOST:$NGROK_PORT [skip ci]"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Keep server alive
+      - name: Keep server alive (5h 30m)
         run: |
-          echo "Server running at $NGROK_HOST:$NGROK_PORT"
+          echo "✅ Server running at $NGROK_HOST:$NGROK_PORT"
           for i in $(seq 1 330); do
             sleep 60
             if ! kill -0 $SERVER_PID 2>/dev/null; then
-              echo "Server died, restarting..."
+              echo "⚠️  Server died at minute $i, restarting..."
               cd ~/nro_server
-              nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
-                -jar NgocRongOnline.jar < /dev/null > /tmp/gameserver.log 2>&1 &
+              tail -f /dev/null | nohup java -server -Dfile.encoding=UTF-8 -Xmx512m -Xms256m \
+                -jar NgocRongOnline.jar > /tmp/gameserver.log 2>&1 &
               SERVER_PID=$!
             fi
-            echo "[$i/330] Server alive - $(date)"
+            [ $((i % 10)) -eq 0 ] && echo "[$i/330 min] alive - $(date)"
           done

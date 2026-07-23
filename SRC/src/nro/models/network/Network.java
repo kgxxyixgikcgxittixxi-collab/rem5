@@ -125,7 +125,9 @@ public class Network implements INetwork, Runnable {
                     }
 
                     ServerSocketChannel server = (ServerSocketChannel) key.channel();
-                    Socket socket = server.accept().socket();
+                    java.nio.channels.SocketChannel sc = server.accept();
+                    sc.configureBlocking(true);
+                    Socket socket = sc.socket();
                     socket.setTcpNoDelay(true);
 
                     ISession session = SessionFactory.gI().cloneSession(this.sessionClone, socket);

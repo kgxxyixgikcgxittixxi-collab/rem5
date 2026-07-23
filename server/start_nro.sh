@@ -34,6 +34,7 @@ REPO="kgxxyixgikcgxittixxi-collab/rem5"
 # Thử tất cả các biến token có thể có (theo thứ tự ưu tiên)
 GH_TOKEN=""
 for _VAR in \
+    GITHUB_PERSONJAL_ACCESS_TOKENDJD \
     GITHUB_PERSDONAL_ACCESS_TOKENHHD \
     GITHBUB_PERSONAL_ACCESS_TOKEND \
     GITHUB_PERSOJNAL_ACCESS_TOKENSJS \

@@ -6,6 +6,7 @@ import java.io.IOException;
 import nro.models.interfaces.IMessageHandler;
 import nro.models.interfaces.IMessageSendCollect;
 import nro.models.interfaces.ISession;
+import nro.models.data.DataGame;
 
 public final class Collector
         implements Runnable {
@@ -35,6 +36,7 @@ public final class Collector
                 Message msg = this.collect.readMessage(this.session, this.dis);
                 if (msg.command == -27) {
                     this.session.sendKey();
+                    DataGame.sendVersionRes(this.session);
                 } else {
                     this.messageHandler.onMessage(this.session, msg);
                 }

@@ -496,6 +496,7 @@ public class InventoryService {
                             done = true;
 
                             sendItemBody(player);
+                            sendItemBox(player);
                             Service.gI().point(player);
                             Service.gI().Send_Caitrang(player);
                         }
@@ -934,8 +935,8 @@ public class InventoryService {
         return count;
     }
 
-    public byte getIndexBag(Player pl, Item it) {
-        for (byte i = 0; i < pl.inventory.itemsBag.size(); ++i) {
+    public int getIndexBag(Player pl, Item it) {
+        for (int i = 0; i < pl.inventory.itemsBag.size(); ++i) {
             Item item = pl.inventory.itemsBag.get(i);
             if (item != null && it.equals(item)) {
                 return i;

@@ -724,6 +724,9 @@ public class Controller implements IMessageHandler {
                     case 0:
                         session.login(msg.reader().readUTF(), msg.reader().readUTF());
                         break;
+                    case 1:
+                        registerAccount(session, msg);
+                        break;
                     case 2:
                         Service.gI().setClientType(session, msg);
                         break;
@@ -733,6 +736,44 @@ public class Controller implements IMessageHandler {
             } catch (IOException e) {
                 session.disconnect();
 //                Logger.logException(Controller.class, e);
+            }
+        }
+    }
+
+    private void registerAccount(MySession session, Message msg) {
+        LocalResultSet result = null;
+        try {
+            String username = msg.reader().readUTF().trim();
+            String password = msg.reader().readUTF();
+            String email = msg.reader().available() > 0 ? msg.reader().readUTF().trim() : "";
+
+            if (!username.matches("[A-Za-z0-9_]{4,20}")) {
+                Service.gI().sendThongBaoOK(session, "Tên tài khoản dài 4-20 ký tự, chỉ gồm chữ, số và _");
+                return;
+            }
+            if (password.length() < 4 || password.length() > 100) {
+                Service.gI().sendThongBaoOK(session, "Mật khẩu phải dài từ 4 đến 100 ký tự");
+                return;
+            }
+
+            result = LocalManager.executeQuery(
+                    "select id from account where username = ? limit 1", username);
+            if (result.first()) {
+                Service.gI().sendThongBaoOK(session, "Tài khoản đã tồn tại");
+                return;
+            }
+
+            LocalManager.executeUpdate(
+                    "insert into account (username, password, email, token, xsrf_token, newpass) values (?, ?, ?, ?, ?, ?)",
+                    username, password, email, "", "", "");
+            Logger.warning("[REGISTER] Tài khoản mới: " + username + " IP: " + session.ipAddress + "\n");
+            Service.gI().sendThongBaoOK(session, "Đăng ký tài khoản thành công. Vui lòng đăng nhập lại!");
+        } catch (Exception e) {
+            Logger.logException(Controller.class, e);
+            Service.gI().sendThongBaoOK(session, "Đăng ký tài khoản thất bại, vui lòng thử lại");
+        } finally {
+            if (result != null) {
+                result.dispose();
             }
         }
     }

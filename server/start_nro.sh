@@ -34,6 +34,7 @@ REPO="kgxxyixgikcgxittixxi-collab/rem5"
 # Thử tất cả các biến token có thể có (theo thứ tự ưu tiên)
 GH_TOKEN=""
 for _VAR in \
+    GITHUB_PERSDONAL_ACCESS_TOKENHHD \
     GITHBUB_PERSONAL_ACCESS_TOKEND \
     GITHUB_PERSOJNAL_ACCESS_TOKENSJS \
     GITHUDB_PERSONAL_ACCESS_TOKENGMG \
@@ -137,6 +138,39 @@ if ! src_is_valid; then
 else
   log "$INFO [0] rem5_src đã có và hợp lệ, bỏ qua clone"
 fi
+
+# Chẩn đoán protocol tạm thời: ghi command/kích thước gói sau key exchange,
+# không ghi nội dung payload để tránh lộ tài khoản hoặc mật khẩu.
+apply_protocol_diagnostics() {
+  local COLLECTOR="$SRC_DIR/SRC/src/nro/models/network/Collector.java"
+  [ -f "$COLLECTOR" ] || return 0
+  python3 - "$COLLECTOR" <<'PY'
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+marker = 'import nro.models.interfaces.ISession;'
+addition = 'import nro.models.utils.Logger;'
+needle = '''                Message msg = this.collect.readMessage(this.session, this.dis);
+                if (msg.command == -27) {'''
+replacement = '''                Message msg = this.collect.readMessage(this.session, this.dis);
+                Logger.warning("[PROTO] ip=" + this.session.getIP()
+                        + " cmd=" + msg.command
+                        + " bytes=" + (msg.getData() == null ? 0 : msg.getData().length)
+                        + " key=" + this.session.sentKey() + "\\n");
+                if (msg.command == -27) {'''
+if "[PROTO] ip=" not in text:
+    if addition not in text:
+        text = text.replace(marker, marker + "\n" + addition, 1)
+    if needle not in text:
+        raise SystemExit("Collector.java protocol hook location not found")
+    text = text.replace(needle, replacement, 1)
+    path.write_text(text, encoding="utf-8")
+PY
+}
+
+apply_protocol_diagnostics
 
 # ════════════════════════════════════════════════
 # 1. Khởi động MariaDB
@@ -369,46 +403,32 @@ TUNNEL_PORT=""
 TUNNEL_PID=""
 
 start_tunnel() {
-  # Kill tunnel cũ (by PID trước, rồi pkill)
+  # Kill tunnel cũ (by PID trước, rồi pkill toàn bộ)
   [ -n "$TUNNEL_PID" ] && kill "$TUNNEL_PID" 2>/dev/null || true
   pkill -f "bore local 14445" 2>/dev/null || true
-  sleep 1
+  pkill -f "bore local" 2>/dev/null || true
+  sleep 3   # chờ OS giải phóng port phía bore.pub
   TUNNEL_PORT=""
 
-  # Thử port cố định 14445 trước
-  > "$LOG_BORE"
-  "$BORE_BIN" local 14445 --to bore.pub --port 14445 >> "$LOG_BORE" 2>&1 &
-  TUNNEL_PID=$!
-  for i in $(seq 1 10); do
-    sleep 1
-    if grep -qE 'listening at bore\.pub' "$LOG_BORE" 2>/dev/null; then
-      TUNNEL_PORT=14445
-      return 0
-    fi
-    kill -0 "$TUNNEL_PID" 2>/dev/null || break
-  done
-
-  # Port 14445 bị chiếm → thử range 20445-20465
-  log "$WARN bore.pub:14445 bị chiếm, thử port ngẫu nhiên..."
-  kill "$TUNNEL_PID" 2>/dev/null || true
-  wait "$TUNNEL_PID" 2>/dev/null || true
-
-  for TRY_PORT in $(seq 20445 20465); do
+  # Thử port 20445 trước (client cũ hardcode); nếu bị chiếm thử 20446-20460
+  for TRY_PORT in 20445 20446 20447 20448 20449 20450 20460; do
     > "$LOG_BORE"
     "$BORE_BIN" local 14445 --to bore.pub --port "$TRY_PORT" >> "$LOG_BORE" 2>&1 &
     TUNNEL_PID=$!
-    for _ in $(seq 1 6); do
+    for i in $(seq 1 12); do
       sleep 1
-      TUNNEL_PORT=$(grep -oE 'listening at bore\.pub:[0-9]+' "$LOG_BORE" \
-        | grep -oE '[0-9]+$' | tail -1 || true)
-      [ -n "$TUNNEL_PORT" ] && return 0
+      if grep -qE 'listening at bore\.pub' "$LOG_BORE" 2>/dev/null; then
+        TUNNEL_PORT=$TRY_PORT
+        return 0
+      fi
       kill -0 "$TUNNEL_PID" 2>/dev/null || break
     done
-    kill "$TUNNEL_PID" 2>/dev/null || true
-    wait "$TUNNEL_PID" 2>/dev/null || true
+    kill "$TUNNEL_PID" 2>/dev/null; wait "$TUNNEL_PID" 2>/dev/null || true
+    log "  → Port $TRY_PORT bị chiếm, thử tiếp..."
+    sleep 2
   done
 
-  log "$FAIL Không tìm được cổng bore trống!"
+  log "$FAIL Không tìm được bore port trong dải 20445-20460."
   return 1
 }
 
@@ -682,10 +702,24 @@ while true; do
     fi
   fi
 
-  # ── Bore tunnel ──
-  if ! kill -0 "$TUNNEL_PID" 2>/dev/null; then
+  # ── Bore tunnel health check ──
+  # Dùng /dev/tcp: chỉ test TCP handshake (kết nối thành công = port open = tunnel alive)
+  # Khác với nc: /dev/tcp trả 0 khi connect xong, dù server đóng ngay sau đó
+  BORE_ALIVE=0
+  if kill -0 "$TUNNEL_PID" 2>/dev/null; then
+    if timeout 5 bash -c "exec 3<>/dev/tcp/bore.pub/$TUNNEL_PORT && exec 3>&-" 2>/dev/null; then
+      BORE_ALIVE=1
+    fi
+  fi
+
+  if [ $BORE_ALIVE -eq 0 ]; then
     BORE_FAIL=$((BORE_FAIL+1))
-    log "$WARN Tunnel chết lần $BORE_FAIL! Restart..."
+    if kill -0 "$TUNNEL_PID" 2>/dev/null; then
+      log "$WARN Bore zombie (PID=$TUNNEL_PID sống nhưng bore.pub:$TUNNEL_PORT UNREACHABLE)! Kill..."
+      kill "$TUNNEL_PID" 2>/dev/null || true
+      sleep 1
+    fi
+    log "$WARN Tunnel lần $BORE_FAIL! Restart..."
     start_tunnel && {
       sed -i "s|server.external_port=.*|server.external_port=$TUNNEL_PORT|" "$SERVER_DIR/Config.properties"
       write_server_ip "$TUNNEL_PORT"

@@ -673,15 +673,28 @@ while true; do
     } || log "$FAIL Tunnel restart thất bại"
   fi
 
-  # ── Java health check ──
-  if ! kill -0 "$JAVA_PID" 2>/dev/null; then
+  # ── Java health check (port thực, không chỉ kill -0) ──
+  JAVA_PORT_HEX=$(printf "%04X" "$SERVER_PORT")
+  JAVA_PORT_OK=0
+  grep -qi "$JAVA_PORT_HEX" /proc/net/tcp /proc/net/tcp6 2>/dev/null && JAVA_PORT_OK=1
+
+  if ! kill -0 "$JAVA_PID" 2>/dev/null || [ $JAVA_PORT_OK -eq 0 ]; then
     JAVA_FAIL=$((JAVA_FAIL+1))
-    log "$WARN Java chết lần $JAVA_FAIL! Backup + restart..."
+    if kill -0 "$JAVA_PID" 2>/dev/null && [ $JAVA_PORT_OK -eq 0 ]; then
+      log "$WARN Java zombie (PID=$JAVA_PID sống nhưng port $SERVER_PORT ĐÓNG)! Kill..."
+      kill -9 "$JAVA_PID" 2>/dev/null || true
+      sleep 2
+    fi
+    log "$WARN Java lần $JAVA_FAIL! Backup + restart..."
     backup_db "java-crash"
-    JAVA_PID=$(start_java); sleep 8
-    kill -0 "$JAVA_PID" 2>/dev/null \
-      && log "$OK Java restarted (PID=$JAVA_PID)" \
-      || { log "$FAIL Java vẫn không lên!"; tail -20 "$LOG_GAME" || true; }
+    JAVA_PID=$(start_java)
+    for _W in $(seq 1 15); do
+      sleep 2
+      grep -qi "$JAVA_PORT_HEX" /proc/net/tcp /proc/net/tcp6 2>/dev/null && break
+    done
+    grep -qi "$JAVA_PORT_HEX" /proc/net/tcp /proc/net/tcp6 2>/dev/null \
+      && log "$OK Java restart OK — port $SERVER_PORT listen (PID=$JAVA_PID)" \
+      || { log "$FAIL Java lên nhưng port $SERVER_PORT vẫn đóng!"; tail -20 "$LOG_GAME" || true; }
   fi
 
   # ── Full backup định kỳ (local + GitHub) ──

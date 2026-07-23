@@ -6,6 +6,7 @@ import java.io.IOException;
 import nro.models.interfaces.IMessageHandler;
 import nro.models.interfaces.IMessageSendCollect;
 import nro.models.interfaces.ISession;
+import nro.models.utils.Logger;
 import nro.models.data.DataGame;
 
 public final class Collector
@@ -34,9 +35,12 @@ public final class Collector
         try {
             while (this.session != null && this.session.isConnected()) {
                 Message msg = this.collect.readMessage(this.session, this.dis);
+                Logger.warning("[PROTO] ip=" + this.session.getIP()
+                        + " cmd=" + msg.command
+                        + " bytes=" + (msg.getData() == null ? 0 : msg.getData().length)
+                        + " key=" + this.session.sentKey() + "\n");
                 if (msg.command == -27) {
                     this.session.sendKey();
-                    DataGame.sendVersionRes(this.session);
                 } else {
                     this.messageHandler.onMessage(this.session, msg);
                 }

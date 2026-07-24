@@ -1,20 +1,28 @@
 {
-  "ts": "2026-07-24 13:50:51 UTC",
+  "ts": "2026-07-24 15:27:22 UTC",
   "target": "bore.pub:20445",
-  "status": "FAIL",
+  "status": "WARN",
   "results": {
     "DNS": {
       "ok": true,
       "data": "159.223.110.159"
     },
     "TCP": {
+      "ok": true,
+      "data": "78ms"
+    },
+    "ServerKey": {
       "ok": false,
-      "error": "[Errno 111] Connection refused"
+      "error": "no greeting from server"
+    },
+    "Login": {
+      "ok": true,
+      "data": "timeout (server ignored)"
     },
     "JAR": {
       "ok": true,
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Client không vào được server do lỗi TCP (kết nối mạng). DNS và JAR tải thành công. Cần kiểm tra firewall, cấu hình port 20445 hoặc địa chỉ IP để khắc phục lỗi kết nối mạng."
+  "ai": "Client chưa vào được server do lỗi ServerKey (không nhận greeting) và Login (timeout). Nguyên nhân thường là cấu hình NRO không khớp hoặc server chưa khởi động đúng. Cần kiểm tra file config, đảm bảo server đang chạy và lắng nghe trên cổng 20445, đồng thời xác nhận thông tin xác thực và khóa máy chủ đã chính xác."
 }

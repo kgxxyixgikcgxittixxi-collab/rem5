@@ -4,3 +4,4 @@
 2026-07-24 09:56:58 UTC | FAIL | bore.pub:20445 | Client không vào được do lỗi TCP. DNS và JAR tải thành công, nhưng kết nối mạng thất bại. 
 2026-07-24 11:47:51 UTC | FAIL | bore.pub:20445 | Client không vào được do lỗi TCP. JAR tải thành công nhưng kết nối mạng thất bại. Cần kiểm
 2026-07-24 13:50:51 UTC | FAIL | bore.pub:20445 | Client không vào được server do lỗi TCP (kết nối mạng). DNS và JAR tải thành công. Cần kiể
+2026-07-24 15:27:22 UTC | WARN | bore.pub:20445 | Client chưa vào được server do lỗi ServerKey (không nhận greeting) và Login (timeout). Ngu

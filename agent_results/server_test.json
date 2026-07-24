@@ -1,9 +1,12 @@
 {
-  "ts": "2026-07-24 04:34:42 UTC",
-  "target": "bore.pub:20445",
+  "ts": "2026-07-24 04:37:29 UTC",
+  "target": "bore.pub:20446",
   "results": {
-    "connected": false,
-    "error": "ConnectionRefused"
+    "latency_ms": 155,
+    "connected": true,
+    "greeting_hex": "",
+    "greeting_len": 0,
+    "login_resp": "timeout"
   },
-  "ai": "AI err: HTTP Error 503: Service Unavailable"
+  "ai": "Server đang chạy (status=RUNNING). Lỗi do timeout khi chờ phản hồi đăng nhập, có thể do mạng chậm hoặc server quá tải. Cần kiểm tra cấu hình mạng, tăng thời gian chờ hoặc tối ưu hiệu năng server để xử lý kết nối nhanh hơn."
 }

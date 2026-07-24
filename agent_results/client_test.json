@@ -1,6 +1,6 @@
 {
-  "ts": "2026-07-24 04:47:31 UTC",
-  "target": "bore.pub:20446",
+  "ts": "2026-07-24 07:20:03 UTC",
+  "target": "bore.pub:20445",
   "status": "WARN",
   "results": {
     "DNS": {
@@ -9,7 +9,7 @@
     },
     "TCP": {
       "ok": true,
-      "data": "12ms"
+      "data": "75ms"
     },
     "ServerKey": {
       "ok": false,
@@ -24,5 +24,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Client chưa vào được do lỗi ServerKey (không nhận greeting) và Login (timeout). Nguyên nhân có thể là server chưa khởi động đúng, cấu hình SSL/TLS sai hoặc firewall chặn. Cần kiểm tra log server, xác nhận cổng 20446 mở và cấu hình bảo mật đồng bộ giữa client-server."
+  "ai": "Client chưa vào được server do lỗi ServerKey (không nhận greeting) và Login (timeout). Nguyên nhân thường là cấu hình SSL/TLS không khớp hoặc server chưa khởi động đúng. Cần kiểm tra file cấu hình kết nối, xác thực chứng chỉ và đảm bảo server đang lắng nghe trên cổng 20445."
 }

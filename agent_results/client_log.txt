@@ -1,2 +1,3 @@
 2026-07-24 04:34:50 UTC | FAIL | bore.pub:20445 | AI err:HTTP Error 503: Service Unavailable
 2026-07-24 04:47:31 UTC | WARN | bore.pub:20446 | Client chưa vào được do lỗi ServerKey (không nhận greeting) và Login (timeout). Nguyên nhâ
+2026-07-24 07:20:03 UTC | WARN | bore.pub:20445 | Client chưa vào được server do lỗi ServerKey (không nhận greeting) và Login (timeout). Ngu

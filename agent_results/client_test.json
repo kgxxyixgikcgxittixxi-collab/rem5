@@ -1,20 +1,28 @@
 {
-  "ts": "2026-07-24 04:34:50 UTC",
-  "target": "bore.pub:20445",
-  "status": "FAIL",
+  "ts": "2026-07-24 04:47:31 UTC",
+  "target": "bore.pub:20446",
+  "status": "WARN",
   "results": {
     "DNS": {
       "ok": true,
       "data": "159.223.110.159"
     },
     "TCP": {
+      "ok": true,
+      "data": "12ms"
+    },
+    "ServerKey": {
       "ok": false,
-      "error": "[Errno 111] Connection refused"
+      "error": "no greeting from server"
+    },
+    "Login": {
+      "ok": true,
+      "data": "timeout (server ignored)"
     },
     "JAR": {
       "ok": true,
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "AI err:HTTP Error 503: Service Unavailable"
+  "ai": "Client chưa vào được do lỗi ServerKey (không nhận greeting) và Login (timeout). Nguyên nhân có thể là server chưa khởi động đúng, cấu hình SSL/TLS sai hoặc firewall chặn. Cần kiểm tra log server, xác nhận cổng 20446 mở và cấu hình bảo mật đồng bộ giữa client-server."
 }

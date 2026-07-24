@@ -1,45 +1,45 @@
 {
-  "ts": "2026-07-24 14:47:05 UTC",
+  "ts": "2026-07-24 17:51:16 UTC",
   "target": "bore.pub:20445",
-  "any_connected": true,
+  "any_connected": false,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": true,
-      "lat": 83,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "login_cmd1": {
-      "ok": true,
-      "lat": 44,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "version_ff": {
-      "ok": true,
-      "lat": 39,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "empty_pkt": {
-      "ok": true,
-      "lat": 35,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "cmd_neg101": {
-      "ok": true,
-      "lat": 38,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     }
   },
-  "ai_diagnosis": "1. Có, server chấp nhận kết nối (tất cả `ok: true`, `err: null`).\n2. Không có gói nào phản hồi dữ liệu (`rx: \"\"`), tất cả đều trống.\n3. Protocol bắt đầu bằng Server gửi trước (`server_first`), client chờ phản hồi.\n4. Kiểm tra logic timeout và buffer đọc của client. Đảm bảo client thực sự đọc dữ liệu trả về sau khi gửi lệnh, thay vì chỉ kiểm tra trạng thái kết nối TCP. Debug sâu vào hàm xử lý phản hồi binary."
+  "ai_diagnosis": "1. Không, lỗi `ConnectionRefused` cho thấy server/tunnel không chấp nhận kết nối TCP.\n2. Không có protocol nào phản hồi (`rx` rỗng).\n3. NRO J2ME thường client gửi trước (handshake/login).\n4. Kiểm tra firewall, xác nhận tunnel bore.pub hoạt động đúng và server Java đang lắng nghe chính xác port 14445."
 }

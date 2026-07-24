@@ -3,3 +3,4 @@
 2026-07-24 04:39:38 UTC | OK | bore.pub:20446 | Server đang chạy (status=RUNNING, latency 15ms). Lỗi ở bước login do không nhận được phản 
 2026-07-24 07:14:55 UTC | OK | bore.pub:20445 | no_response | 1. Có, server chấp nhận kết nối (lat ổn định, không lỗi).
 2. Không có gói nào tr
+2026-07-24 09:37:42 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi `ConnectionRefused` cho thấy server từ chối kết nối TCP (có thể fi

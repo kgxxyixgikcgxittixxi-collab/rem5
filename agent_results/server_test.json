@@ -1,0 +1,9 @@
+{
+  "ts": "2026-07-24 04:34:42 UTC",
+  "target": "bore.pub:20445",
+  "results": {
+    "connected": false,
+    "error": "ConnectionRefused"
+  },
+  "ai": "AI err: HTTP Error 503: Service Unavailable"
+}

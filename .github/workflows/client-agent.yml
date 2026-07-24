@@ -1,6 +1,8 @@
 name: AI Agent - Client JAR Tester
 
 on:
+  repository_dispatch:
+    types: [run-client-agent]
   schedule:
     - cron: '*/15 * * * *'   # mỗi 15 phút
   workflow_dispatch:

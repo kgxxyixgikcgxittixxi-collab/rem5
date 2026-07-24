@@ -1,6 +1,8 @@
 name: AI Agent - Server Monitor
 
 on:
+  repository_dispatch:
+    types: [run-server-agent]
   schedule:
     - cron: '*/5 * * * *'   # mỗi 5 phút
   workflow_dispatch:

@@ -1,0 +1,9 @@
+name: test-trigger
+on:
+  repository_dispatch:
+    types: [ping]
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "OK"

@@ -1,12 +1,45 @@
 {
-  "ts": "2026-07-24 04:39:38 UTC",
-  "target": "bore.pub:20446",
-  "results": {
-    "latency_ms": 15,
-    "connected": true,
-    "server_resp_hex": "",
-    "server_resp_len": 0,
-    "login_resp": "no_response"
+  "ts": "2026-07-24 07:14:55 UTC",
+  "target": "bore.pub:20445",
+  "any_connected": true,
+  "any_response": false,
+  "best_probe": null,
+  "probes": {
+    "server_first": {
+      "ok": true,
+      "lat": 89,
+      "rx": "",
+      "err": null,
+      "mode": "sent_first"
+    },
+    "login_cmd1": {
+      "ok": true,
+      "lat": 74,
+      "rx": "",
+      "err": null,
+      "mode": "sent_first"
+    },
+    "version_ff": {
+      "ok": true,
+      "lat": 75,
+      "rx": "",
+      "err": null,
+      "mode": "sent_first"
+    },
+    "empty_pkt": {
+      "ok": true,
+      "lat": 74,
+      "rx": "",
+      "err": null,
+      "mode": "sent_first"
+    },
+    "cmd_neg101": {
+      "ok": true,
+      "lat": 74,
+      "rx": "",
+      "err": null,
+      "mode": "sent_first"
+    }
   },
-  "ai": "Server đang chạy (status=RUNNING, latency 15ms). Lỗi ở bước login do không nhận được phản hồi (no_response), có thể do cấu hình xác thực sai hoặc firewall chặn. Cần kiểm tra file config server và mở cổng giao tiếp tương ứng."
+  "ai_diagnosis": "1. Có, server chấp nhận kết nối (lat ổn định, không lỗi).\n2. Không có gói nào trả về dữ liệu (`rx` rỗng), tất cả đều \"ok\" nhưng không nhận payload.\n3. NRO J2ME thường do **Server gửi trước** (chào hỏi/chữ ký) sau khi TCP handshake thành công.\n4. Fix: Bỏ `login_cmd1`/`version_ff` hiện tại. Chờ server gửi gói chào đầu tiên (thường là byte đầu tiên khác 0x00 hoặc cấu trúc đặc biệt). Chỉ xử lý phản hồi server trước khi gửi lệnh client. Kiểm tra log server xem nó có gửi gì ngay sau connect không."
 }

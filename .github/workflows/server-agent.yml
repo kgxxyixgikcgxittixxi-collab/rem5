@@ -1,204 +1,28 @@
 name: AI Agent - Server Monitor
-
 on:
   repository_dispatch:
     types: [run-server-agent]
   schedule:
-    - cron: '*/5 * * * *'   # mỗi 5 phút
-  workflow_dispatch:
-
-concurrency:
-  group: server-agent
-  cancel-in-progress: true
-
+    - cron: '*/5 * * * *'
 permissions:
   contents: write
-  issues: write
-
 jobs:
-  test-server:
+  test:
     runs-on: ubuntu-latest
     timeout-minutes: 4
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Test server & AI analysis
+      - uses: actions/checkout@v4
+      - name: Run
         env:
           AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
           GH_PUSH_TOKEN: ${{ secrets.GH_PUSH_TOKEN }}
-        run: |
-          python3 << 'PYEOF'
-          import socket, time, json, os, subprocess, urllib.request, datetime
-
-          # ── 1. Đọc host/port từ SERVER_IP.txt ──────────────────────────────
-          host = "bore.pub"
-          port = 20446
-          status_info = "unknown"
-          try:
-              with open("SERVER_IP.txt") as f:
-                  for line in f:
-                      k, _, v = line.strip().partition("=")
-                      if k == "HOST": host = v
-                      elif k == "PORT": port = int(v)
-                      elif k == "STATUS": status_info = v
-          except Exception as e:
-              print(f"[WARN] Không đọc được SERVER_IP.txt: {e}")
-
-          print(f"[INFO] Target: {host}:{port} (status={status_info})")
-
-          # ── 2. Thử kết nối TCP ─────────────────────────────────────────────
-          results = {}
-          raw_bytes_hex = ""
-          error_detail  = ""
-          connected      = False
-          server_greeting = ""
-
-          try:
-              sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-              sock.settimeout(10)
-              t0 = time.time()
-              sock.connect((host, port))
-              latency_ms = int((time.time() - t0) * 1000)
-              connected = True
-              print(f"[OK] TCP connect thành công ({latency_ms}ms)")
-
-              # Đọc greeting từ server (tối đa 256 bytes, timeout 8s)
-              sock.settimeout(8)
-              data = b""
-              try:
-                  while len(data) < 256:
-                      chunk = sock.recv(256 - len(data))
-                      if not chunk:
-                          break
-                      data += chunk
-                      if len(data) >= 4:
-                          break
-              except socket.timeout:
-                  pass
-
-              raw_bytes_hex = data.hex() if data else ""
-              server_greeting = f"{len(data)} bytes: {raw_bytes_hex[:64]}"
-              print(f"[INFO] Server greeting: {server_greeting}")
-
-              # Gửi client hello (NRO J2ME gửi 2 bytes đầu để bắt đầu auth)
-              # byte[0] = version, byte[1] = command type
-              try:
-                  sock.sendall(bytes([0x00, 0x00, 0x00, 0x02, 0xFF, 0x01]))
-                  sock.settimeout(5)
-                  response = sock.recv(64)
-                  results["client_hello_response"] = response.hex() if response else "empty"
-                  print(f"[INFO] Hello response: {results['client_hello_response']}")
-              except Exception as e:
-                  results["client_hello_error"] = str(e)
-
-              sock.close()
-
-              results["connected"] = True
-              results["latency_ms"] = latency_ms
-              results["greeting_bytes"] = raw_bytes_hex
-              results["greeting_len"] = len(data)
-
-          except ConnectionRefusedError:
-              error_detail = "ConnectionRefused — bore tunnel không hoạt động hoặc Java server chưa chạy"
-              print(f"[FAIL] {error_detail}")
-              results["connected"] = False
-              results["error"] = error_detail
-          except socket.timeout:
-              error_detail = f"Timeout (10s) — bore.pub:{port} không phản hồi"
-              print(f"[FAIL] {error_detail}")
-              results["connected"] = False
-              results["error"] = error_detail
-          except Exception as e:
-              error_detail = str(e)
-              print(f"[FAIL] Lỗi: {e}")
-              results["connected"] = False
-              results["error"] = error_detail
-
-          # ── 3. Gọi AI phân tích ────────────────────────────────────────────
-          api_key = os.environ.get("AGNES_API_KEY", "")
-          diagnosis = "AI không khả dụng"
-
-          if api_key:
-              prompt = f"""Bạn là chuyên gia debug NRO (Ngọc Rồng Online) game server.
-
-Kết quả test kết nối server bore.pub:{port}:
-- Kết nối thành công: {results.get('connected', False)}
-- Latency: {results.get('latency_ms', 'N/A')}ms  
-- Server greeting ({results.get('greeting_len', 0)} bytes): {results.get('greeting_bytes', 'none')}
-- Client hello response: {results.get('client_hello_response', results.get('client_hello_error', 'N/A'))}
-- Lỗi: {results.get('error', 'none')}
-- SERVER_IP.txt status: {status_info}
-
-Phân tích ngắn gọn (tối đa 150 từ):
-1. Server có đang chạy bình thường không?
-2. Nếu lỗi: nguyên nhân cụ thể là gì?
-3. Cách khắc phục nhanh nhất?"""
-
-              try:
-                  payload = json.dumps({
-                      "model": "gpt-4o-mini",
-                      "messages": [{"role": "user", "content": prompt}],
-                      "max_tokens": 300,
-                      "temperature": 0.3
-                  }).encode()
-
-                  req = urllib.request.Request(
-                      "https://apihub.agnes-ai.com/v1/chat/completions",
-                      data=payload,
-                      headers={
-                          "Authorization": f"Bearer {api_key}",
-                          "Content-Type": "application/json"
-                      },
-                      method="POST"
-                  )
-                  req.timeout = 30
-                  with urllib.request.urlopen(req, timeout=30) as resp:
-                      ai_resp = json.loads(resp.read())
-                      diagnosis = ai_resp["choices"][0]["message"]["content"].strip()
-                      print(f"[AI] {diagnosis[:200]}")
-              except Exception as e:
-                  diagnosis = f"AI error: {e}"
-                  print(f"[WARN] AI call failed: {e}")
-
-          # ── 4. Ghi kết quả vào agent_results/server_test.json ──────────────
-          os.makedirs("agent_results", exist_ok=True)
-          now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
-          report = {
-              "timestamp": now,
-              "target": f"{host}:{port}",
-              "results": results,
-              "ai_diagnosis": diagnosis
-          }
-
-          with open("agent_results/server_test.json", "w") as f:
-              json.dump(report, f, ensure_ascii=False, indent=2)
-
-          # Ghi log ngắn
-          status_emoji = "✅" if results.get("connected") else "❌"
-          log_line = f"{now} | {status_emoji} {host}:{port} | {diagnosis[:100]}\n"
-          with open("agent_results/server_log.txt", "a") as f:
-              f.write(log_line)
-
-          # Giữ log <= 500 dòng
-          try:
-              with open("agent_results/server_log.txt") as f:
-                  lines = f.readlines()
-              if len(lines) > 500:
-                  with open("agent_results/server_log.txt", "w") as f:
-                      f.writelines(lines[-500:])
-          except: pass
-
-          print(f"[DONE] Kết quả: {status_emoji}")
-          PYEOF
-
-      - name: Push results
-        run: |
-          git config user.name "NRO Server Agent"
-          git config user.email "agent@nro.test"
-          git remote set-url origin "https://x-access-token:${GH_PUSH_TOKEN}@github.com/kgxxyixgikcgxittixxi-collab/rem5.git"
-          git add agent_results/ || true
-          git diff --cached --quiet && echo "No changes" || git commit -m "[server-agent] $(date -u '+%H:%M UTC') [skip ci]" && git push origin main
+        run: python3 agent_scripts/server_agent.py
+      - name: Push
         env:
           GH_PUSH_TOKEN: ${{ secrets.GH_PUSH_TOKEN }}
+        run: |
+          git config user.name "server-agent" && git config user.email "bot@nro"
+          git remote set-url origin "https://x-access-token:${GH_PUSH_TOKEN}@github.com/kgxxyixgikcgxittixxi-collab/rem5.git"
+          git pull --rebase origin main 2>/dev/null || true
+          git add agent_results/
+          git diff --cached --quiet || git commit -m "[server-agent] $(date -u +%H:%M) [skip ci]" && git push origin main || true

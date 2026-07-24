@@ -1,45 +1,45 @@
 {
-  "ts": "2026-07-24 12:52:59 UTC",
+  "ts": "2026-07-24 14:47:05 UTC",
   "target": "bore.pub:20445",
-  "any_connected": false,
+  "any_connected": true,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 83,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "login_cmd1": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 44,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "version_ff": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 39,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "empty_pkt": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 35,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "cmd_neg101": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 38,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "1. Không, lỗi `ConnectionRefused` cho thấy server không lắng nghe hoặc tunnel sai.\n2. Không có protocol nào phản hồi vì kết nối thất bại ngay từ đầu.\n3. NRO J2ME thường client gửi trước (handshake/login).\n4. Fix: Kiểm tra firewall/port 14445 trên server Java, xác nhận bore tunnel đang bind đúng port và forward đến localhost:14445. Đảm bảo service Java đã start."
+  "ai_diagnosis": "1. Có, server chấp nhận kết nối (tất cả `ok: true`, `err: null`).\n2. Không có gói nào phản hồi dữ liệu (`rx: \"\"`), tất cả đều trống.\n3. Protocol bắt đầu bằng Server gửi trước (`server_first`), client chờ phản hồi.\n4. Kiểm tra logic timeout và buffer đọc của client. Đảm bảo client thực sự đọc dữ liệu trả về sau khi gửi lệnh, thay vì chỉ kiểm tra trạng thái kết nối TCP. Debug sâu vào hàm xử lý phản hồi binary."
 }

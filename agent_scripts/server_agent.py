@@ -21,6 +21,16 @@ try:
     results["connected"] = True
     print(f"[OK] TCP connect {results['latency_ms']}ms")
 
+    import struct
+    # NRO protocol: client-first. Gửi login packet trước, đọc response sau
+    # Packet: [2B len big-endian][cmd=0x01][username\0][password\0]
+    login_payload = bytes([0x01]) + b"test_agent\x00test123\x00"
+    pkt = struct.pack(">H", len(login_payload)) + login_payload
+    sock.settimeout(5)
+    sock.sendall(pkt)
+    print(f"[INFO] Sent {len(pkt)}B login packet")
+
+    # Đọc server response
     sock.settimeout(8)
     data = b""
     deadline = time.time() + 8
@@ -29,23 +39,12 @@ try:
             chunk = sock.recv(64-len(data))
             if not chunk: break
             data += chunk
-            if len(data) >= 4: break
+            if len(data) >= 2: break
         except socket.timeout: break
-
-    results["greeting_hex"] = data.hex()
-    results["greeting_len"] = len(data)
-    print(f"[INFO] Greeting: {len(data)}B = 0x{data.hex()[:32]}")
-
-    import struct
-    login_payload = bytes([0x01]) + b"test_agent\x00test123\x00"
-    pkt = struct.pack(">H", len(login_payload)) + login_payload
-    sock.settimeout(5)
-    sock.sendall(pkt)
-    try:
-        resp = sock.recv(64)
-        results["login_resp"] = resp.hex()
-        print(f"[INFO] Login resp: 0x{resp.hex()[:32]}")
-    except: results["login_resp"] = "timeout"
+    results["server_resp_hex"] = data.hex()
+    results["server_resp_len"] = len(data)
+    results["login_resp"] = data.hex() if data else "no_response"
+    print(f"[INFO] Server resp: {len(data)}B = 0x{data.hex()[:32]}")
     sock.close()
 except ConnectionRefusedError:
     results["connected"] = False; results["error"] = "ConnectionRefused"

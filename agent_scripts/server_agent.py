@@ -67,7 +67,7 @@ login_resp=0x{results.get('login_resp','')}
 error={results.get('error','none')} SERVER_IP_status={status_info}
 Phan tich ngan (max 100 tu): server co chay khong? neu loi nguyen nhan + fix?"""
     try:
-        payload = json.dumps({"model":"gpt-4o-mini","messages":[{"role":"user","content":prompt}],"max_tokens":200,"temperature":0.3}).encode()
+        payload = json.dumps({"model":"agnes-2.0-flash","messages":[{"role":"user","content":prompt}],"max_tokens":200,"temperature":0.3}).encode()
         req = urllib.request.Request("https://apihub.agnes-ai.com/v1/chat/completions", data=payload,
             headers={"Authorization":f"Bearer {api_key}","Content-Type":"application/json"})
         with urllib.request.urlopen(req, timeout=30) as r:

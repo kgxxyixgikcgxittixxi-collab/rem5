@@ -74,7 +74,7 @@ Login:{results.get('Login',{}).get('data') or results.get('Login',{}).get('error
 JAR:{results.get('JAR',{}).get('data') or results.get('JAR',{}).get('error','N/A')}
 Phan tich (max 100 tu): client co vao duoc server khong? loi o dau? fix sao?"""
     try:
-        pl=json.dumps({"model":"gpt-4o-mini","messages":[{"role":"user","content":prompt}],"max_tokens":200,"temperature":0.3}).encode()
+        pl=json.dumps({"model":"agnes-2.0-flash","messages":[{"role":"user","content":prompt}],"max_tokens":200,"temperature":0.3}).encode()
         req=urllib.request.Request("https://apihub.agnes-ai.com/v1/chat/completions",data=pl,
             headers={"Authorization":f"Bearer {api_key}","Content-Type":"application/json"})
         with urllib.request.urlopen(req,timeout=30) as r:

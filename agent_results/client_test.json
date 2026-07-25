@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-25 19:35:50 UTC",
+  "ts": "2026-07-25 20:33:10 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Client vào được server (DNS/JAR OK) nhưng fail TCP. Lỗi ở kết nối mạng hoặc firewall chặn port 20445. Fix: kiểm tra firewall, đảm bảo server đang chạy và mở port, xác nhận IP/port đúng."
+  "ai": "Client kết nối được DNS/JAR nhưng fail TCP, nghĩa là không thiết lập được kết nối mạng. Lỗi nằm ở cổng 20445 bị chặn hoặc server chưa mở. Fix: kiểm tra firewall router/server, đảm bảo port 20445 được mở và forward đúng đến IP server."
 }

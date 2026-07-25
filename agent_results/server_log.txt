@@ -19,3 +19,4 @@
 2. Không có protocol nào p
 2026-07-25 09:05:11 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi `ConnectionRefused` chứng tỏ server không nghe hoặc tunnel sai.
 2.
+2026-07-25 10:41:48 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi `ConnectionRefused` cho thấy server không lắng nghe hoặc firewall 

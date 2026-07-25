@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-25 16:31:22 UTC",
+  "ts": "2026-07-25 17:35:14 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. Không, lỗi `ConnectionRefused` cho thấy server không lắng nghe hoặc tunnel sai.\n2. Không có protocol nào phản hồi đúng vì kết nối thất bại ngay từ đầu.\n3. Server gửi trước (`server_first`).\n4. Kiểm tra firewall/port 14445 trên server Java. Xác minh bore tunnel đang forward chính xác từ 20445 (public) về 14445 (local). Đảm bảo service NRO đã khởi động và bind đúng interface."
+  "ai_diagnosis": "1. Không, lỗi ConnectionRefused cho thấy server từ chối kết nối TCP.\n2. Không có protocol nào phản hồi đúng vì không kết nối được.\n3. Protocol NRO do Server gửi tin nhắn chào mừng (server_first) trước.\n4. Kiểm tra firewall, cấu hình bore tunnel và đảm bảo server Java đang lắng nghe chính xác trên port 14445."
 }

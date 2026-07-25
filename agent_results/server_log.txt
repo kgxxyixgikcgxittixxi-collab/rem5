@@ -17,3 +17,5 @@
 2026-07-25 04:31:37 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi `ConnectionRefused` cho thấy server/tunnel không chấp nhận kết nối
 2026-07-25 06:58:38 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, server từ chối kết nối (ConnectionRefused).
 2. Không có protocol nào p
+2026-07-25 09:05:11 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi `ConnectionRefused` chứng tỏ server không nghe hoặc tunnel sai.
+2.

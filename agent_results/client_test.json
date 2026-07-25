@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-25 11:35:42 UTC",
+  "ts": "2026-07-25 12:45:45 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Client chưa kết nối được do lỗi TCP. DNS và JAR tải thành công, nhưng cổng 20445 bị chặn hoặc server không phản hồi. Cần kiểm tra tường lửa (firewall) trên server/client, xác nhận dịch vụ NetRun đang chạy đúng cổng, và thử ping/nc để debug kết nối mạng."
+  "ai": "Client chưa vào được server do lỗi kết nối TCP. DNS và JAR tải thành công, nhưng cổng 20445 bị chặn hoặc server không phản hồi. Cần kiểm tra tường lửa (firewall), cấu hình router NAT, hoặc xác nhận server đang chạy đúng cổng. Đảm bảo IP và port mở trên cả client lẫn server."
 }

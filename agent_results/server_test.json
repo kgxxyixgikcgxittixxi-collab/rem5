@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-25 12:50:06 UTC",
+  "ts": "2026-07-25 14:23:22 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. Không, server từ chối kết nối (ConnectionRefused).\n2. Không có protocol nào phản hồi đúng; tất cả đều lỗi kết nối.\n3. Protocol bắt đầu bằng server gửi dữ liệu trước (server_first).\n4. Kiểm tra cấu hình firewall, xác nhận bore tunnel hoạt động ổn định và dịch vụ Java đang lắng nghe đúng cổng 14445."
+  "ai_diagnosis": "1. Không, server từ chối kết nối (ConnectionRefused).\n2. Không có protocol nào phản hồi đúng vì đều lỗi kết nối.\n3. Server gửi trước (server_first).\n4. Kiểm tra firewall, xác nhận bore tunnel đang hoạt động và port 20445 được map chính xác tới 14445 trên server Java."
 }

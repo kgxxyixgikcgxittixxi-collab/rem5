@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-25 15:47:37 UTC",
+  "ts": "2026-07-25 17:02:21 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Client không vào được server do lỗi TCP. JAR tải thành công nhưng kết nối mạng thất bại. Cần kiểm tra tường lửa, port 20445 có mở chưa, và cấu hình IP/hostname của client/server."
+  "ai": "Client chưa kết nối được do lỗi TCP. Nguyên nhân là cổng 20445 bị chặn hoặc server không lắng nghe. Cần kiểm tra tường lửa (firewall) trên server, xác nhận dịch vụ đang chạy và mở cổng 20445 cho cả inbound/outbound."
 }

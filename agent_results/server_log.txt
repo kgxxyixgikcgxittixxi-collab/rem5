@@ -33,3 +33,4 @@
 2026-07-25 18:34:53 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, server từ chối kết nối (ConnectionRefused).
 2. Không có protocol nào p
 2026-07-25 19:50:32 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi `ConnectionRefused` cho thấy server từ chối kết nối TCP (có thể do
+2026-07-25 20:37:39 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi `ConnectionRefused` cho thấy server từ chối kết nối TCP. Có thể po

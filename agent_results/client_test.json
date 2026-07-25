@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-25 02:52:40 UTC",
+  "ts": "2026-07-25 05:45:31 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "AI err:HTTP Error 500: Internal Server Error"
+  "ai": "Client chưa vào được server do lỗi TCP. Nguyên nhân có thể là firewall chặn cổng 20445 hoặc server chưa mở kết nối. Cần kiểm tra cấu hình mạng, đảm bảo cổng 20445 trên server đang lắng nghe và không bị tường lửa ngăn cản."
 }

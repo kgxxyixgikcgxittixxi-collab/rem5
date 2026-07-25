@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-24 23:46:52 UTC",
+  "ts": "2026-07-25 02:52:40 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Client vào được server (DNS/JAR OK), lỗi ở TCP kết nối. Nguyên nhân có thể do firewall chặn port 20445 hoặc server chưa mở cổng. Fix: kiểm tra firewall máy chủ, đảm bảo port 20445 đang listen và mở trên router nếu cần NAT."
+  "ai": "AI err:HTTP Error 500: Internal Server Error"
 }

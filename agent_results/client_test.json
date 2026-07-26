@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-26 18:46:18 UTC",
+  "ts": "2026-07-26 20:11:32 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Client không vào được server do lỗi TCP. Cần kiểm tra firewall, port 20445 có mở chưa và dịch vụ NRO có đang chạy ổn định trên server."
+  "ai": "Client không vào được server do lỗi kết nối TCP. DNS và JAR tải thành công, nhưng cổng 20445 bị chặn hoặc server chưa khởi động. Cần kiểm tra tường lửa (firewall), đảm bảo cổng mở và dịch vụ NetRun đang chạy trên server."
 }

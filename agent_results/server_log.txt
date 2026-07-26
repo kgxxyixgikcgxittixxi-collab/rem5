@@ -49,3 +49,4 @@
 2026-07-26 15:13:10 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi ConnectionRefused nghĩa server từ chối kết nối TCP (port không mở 
 2026-07-26 16:15:07 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi `ConnectionRefused` cho thấy server từ chối kết nối TCP tại port 2
 2026-07-26 17:26:47 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi `ConnectionRefused` chứng tỏ server từ chối kết nối TCP tại port 2
+2026-07-26 18:32:54 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi `ConnectionRefused` cho thấy server không lắng nghe hoặc tunnel sa

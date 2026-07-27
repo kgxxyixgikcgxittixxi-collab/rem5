@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-26 23:42:01 UTC",
+  "ts": "2026-07-27 01:19:12 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. Không, lỗi `ConnectionRefused` cho thấy server từ chối kết nối TCP hoặc tunnel không hoạt động.\n2. Không có protocol nào thành công; tất cả đều trả về lỗi kết nối.\n3. NRO J2ME thường do client gửi gói chào hỏi (handshake) đầu tiên, không phải server gửi trước.\n4. Kiểm tra firewall, xác nhận tunnel bore.pub hoạt động đúng và server đang lắng nghe chính xác trên port 14445."
+  "ai_diagnosis": "1. Không, lỗi `ConnectionRefused` chứng tỏ server không lắng nghe hoặc firewall chặn port 20445.\n2. Không có protocol nào phản hồi đúng vì kết nối thất bại ngay từ đầu.\n3. NRO J2ME thường client gửi trước (login/version). `server_first` là logic test sai.\n4. Kiểm tra cấu hình bore tunnel và firewall đảm bảo port 20445 được forward chính xác đến 14445. Xác minh server Java đang chạy và bind đúng interface."
 }

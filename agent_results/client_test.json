@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-27 17:02:39 UTC",
+  "ts": "2026-07-27 18:48:44 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Khong the ket noi duoc server do loi TCP. DNS va JAR OK, neu file jar dung va DNS dung thi can kiem tra:  \n- Server co hat hang hoac port 20445 blocked khong?  \n- Client co ket noi mang duoc server (ping, telnet)?  \n- Phai fix firewall, ket noi mang hoac dat lai port server."
+  "ai": "Không thể kết nối do lỗi TCP. Kiểm tra địa chỉ máy chủ, cổng (20445) và tường lửa. JAR ok, không liên quan đến lỗi kết nối."
 }

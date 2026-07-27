@@ -48,3 +48,4 @@
 2026-07-27 14:56:50 UTC | FAIL | bore.pub:20445 | Khong the ket noi duoc server do loi TCP. Can kiem tra ket noi mang, port 20445 va firewal
 2026-07-27 17:02:39 UTC | FAIL | bore.pub:20445 | Khong the ket noi duoc server do loi TCP. DNS va JAR OK, neu file jar dung va DNS dung thi
 2026-07-27 18:48:44 UTC | FAIL | bore.pub:20445 | Không thể kết nối do lỗi TCP. Kiểm tra địa chỉ máy chủ, cổng (20445) và tường lửa. JAR ok,
+2026-07-27 20:25:47 UTC | FAIL | bore.pub:20445 | Khong the ket noi voi server do loi TCP. DNS va JAR OK. Can kiem tra ket noi mang, dien th

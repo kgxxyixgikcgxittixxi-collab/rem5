@@ -45,3 +45,4 @@
 2026-07-27 04:55:35 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server vi loi TCP. Can kiem tra ket noi mang, dien thoai server, hoac c
 2026-07-27 08:34:07 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server vi loi TCP. Can kiem tra ket noai mang, port 20445 va firewall.
 2026-07-27 11:59:21 UTC | FAIL | bore.pub:20445 | AI err:The read operation timed out
+2026-07-27 14:56:50 UTC | FAIL | bore.pub:20445 | Khong the ket noi duoc server do loi TCP. Can kiem tra ket noi mang, port 20445 va firewal

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-27 14:34:32 UTC",
+  "ts": "2026-07-27 16:48:03 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. Server **KHONG** chấp nhận kết nối (ConnectionRefused). Bore tunnel có thể sai port hoặc server Java không listening đúng địa chỉ.\n2. Không protocol nào hoạt động vì kết nối thất bại ngay từ đầu.\n3. Protocol NRO J2ME thường **client gửi trước** (gửi packet init/login), server phản hồi sau.\n4. **Fix tiếp:** Kiểm tra bore tunnel mapping (port 20445 → 14445), đảm bảo server Java bind đúng IP (0.0.0.0), dùng `telnet bore.pub 20445` test connectivity trước khi debug protocol."
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

@@ -64,3 +64,4 @@
 2026-07-27 11:56:06 UTC | FAIL | bore.pub:20445 | no_response | 1. Server không chấp nhận kết nối (ConnectionRefused).  
 2. Không có protocol nà
 2026-07-27 14:34:32 UTC | FAIL | bore.pub:20445 | no_response | 1. Server **KHONG** chấp nhận kết nối (ConnectionRefused). Bore tunnel có thể sa
+2026-07-27 16:48:03 UTC | FAIL | bore.pub:20445 | no_response | AI_ERR:The read operation timed out

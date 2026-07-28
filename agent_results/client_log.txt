@@ -52,3 +52,4 @@
 2026-07-27 21:40:39 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server do loi TCP. Can kiem tra mang, firewall, hoac server dang tat.
 2026-07-27 22:43:23 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server do loi TCP. Can kiem tra mang, firewall, hoac port 20445 co hoat
 2026-07-27 23:48:29 UTC | FAIL | bore.pub:20445 | Khong the ket noi den server do loi TCP. DNS va JAR OK. Can kiem tra mang, firewall, hoac 
+2026-07-28 02:44:35 UTC | FAIL | bore.pub:20445 | Khong the ket noi den server do loi TCP. DNS va JAR ok, nen can kiem tra mang, dien thoai 

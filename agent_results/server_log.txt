@@ -77,3 +77,5 @@
 2. **Không**
 2026-07-28 04:19:40 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không**, server không chấp nhận kết nối (ConnectionRefused).  
 2. **Không c
+2026-07-28 06:46:29 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không**, server không chấp nhận kết nối (ConnectionRefused).  
+2. **Không c

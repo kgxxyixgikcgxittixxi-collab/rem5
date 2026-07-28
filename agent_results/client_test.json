@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-28 05:34:57 UTC",
+  "ts": "2026-07-28 08:06:49 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Khong ket noi duoc server, loi o TCP. Can kiem tra mang, port 20445, firewall, hoac server khong chay. Fix: kiem tra ket noi mang, khoi dong lai server, dat firewall cho port 20445."
+  "ai": "Khong ket noi duoc server vi loi TCP. Can kiem tra ket noi mang, port server, firewall."
 }

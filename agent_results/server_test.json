@@ -1,45 +1,45 @@
 {
-  "ts": "2026-07-28 15:39:10 UTC",
+  "ts": "2026-07-28 17:08:15 UTC",
   "target": "bore.pub:20445",
-  "any_connected": true,
+  "any_connected": false,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": true,
-      "lat": 191,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "login_cmd1": {
-      "ok": true,
-      "lat": 7,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "version_ff": {
-      "ok": true,
-      "lat": 7,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "empty_pkt": {
-      "ok": true,
-      "lat": 7,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "cmd_neg101": {
-      "ok": true,
-      "lat": 7,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Server đang chấp nhận kết nối?**  \nCó, tất cả các gói tin đều nhận được phản hồi `ok: true`, cho thấy kết nối TCP và handshake cơ bản hoạt động tốt.\n\n2. **Protocol nào đúng nhất / server phản hồi không rỗng?**  \nKhông có gói tin nào có `rx` khác rỗng → chưa có phản hồi thực tế từ server. Có thể server chưa xử lý đúng format hoặc missing init step.\n\n3. **Protocol NRO bắt đầu bằng gì?**  \nClient phải gửi `server_first` trước (theo doc), nhưng server chỉ reply nếu client gửi đúng trigger. Thử gửi `version_ff` hoặc `login_cmd1` ngay sau khi connect để kích hoạt phản hồi.\n\n4. **Buộc fix tiếp theo?**  \n- Kiểm tra cấu hình bore tunnel: port 20445 có forward đúng 14445?  \n- Thử gửi `login_cmd1` với format chính xác: `[2B len][0x01][user\\0][pass\\0]` – đảm bảo length bao gồm cả null terminator.  \n- Dùng Wireshark/tcpdump để xem gói tin thực tế trên port 20445 so với server.  \n- Nếu server reply sau `login_cmd1`, thì đó là điểm bắt đầu protocol thực sự."
+  "ai_diagnosis": "1. Không, server không chấp nhận kết nối (ConnectionRefused).\n2. Không protocol nào hoạt động – tất cả đều fail trước khi gửi dữ liệu.\n3. Protocol bắt đầu từ client (client gửi request đầu tiên).\n4. Kiểm tra bore tunnel có forward đúng port 14445 lên 20445, server Java đang listen đúng địa chỉ/port, firewall không chặn."
 }

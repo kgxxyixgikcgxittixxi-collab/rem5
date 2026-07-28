@@ -86,3 +86,5 @@
 
 2026-07-28 15:39:10 UTC | OK | bore.pub:20445 | no_response | 1. **Server đang chấp nhận kết nối?**  
 Có, tất cả các gói tin đều nhận được phả
+2026-07-28 17:08:15 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, server không chấp nhận kết nối (ConnectionRefused).
+2. Không protocol 

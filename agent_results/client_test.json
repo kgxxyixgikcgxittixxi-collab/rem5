@@ -1,28 +1,20 @@
 {
-  "ts": "2026-07-28 15:25:39 UTC",
+  "ts": "2026-07-28 17:00:00 UTC",
   "target": "bore.pub:20445",
-  "status": "WARN",
+  "status": "FAIL",
   "results": {
     "DNS": {
       "ok": true,
       "data": "159.223.110.159"
     },
     "TCP": {
-      "ok": true,
-      "data": "35ms"
-    },
-    "ServerKey": {
       "ok": false,
-      "error": "no greeting from server"
-    },
-    "Login": {
-      "ok": true,
-      "data": "timeout (server ignored)"
+      "error": "[Errno 111] Connection refused"
     },
     "JAR": {
       "ok": true,
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Không thể kết nối do lỗi ServerKey (không có lời chào từ server) và Login (timeout). Fix: Kiểm tra cấu hình server, đảm bảo server đang chạy và cổng 20445 mở."
+  "ai": "Khong ket noi duoc server vi loi TCP. DNS va OK, nhng ket noi TCP bi fail. Can kiem tra:  \n- Server co hoat dong khong?  \n- Cong 20445 co mo va khong bi firewall can?  \n- Cai dat client dung dia chi va cong server?  \nFix: Kiem tra mang, server, va cai dat ket noi."
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-28 11:36:48 UTC",
+  "ts": "2026-07-28 13:17:30 UTC",
   "target": "bore.pub:20445",
   "any_connected": true,
   "any_response": false,
@@ -7,14 +7,14 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 469,
+      "lat": 192,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 7,
+      "lat": 8,
       "rx": "",
       "err": null,
       "mode": "sent_first"
@@ -35,11 +35,11 @@
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 8,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "1. **Có**, server đang chấp nhận kết nối (tất cả test đều `ok: true`).\n2. **Không có protocol nào phản hồi** (`rx` trống). Tất cả gói tin client đều không nhận được response từ server.\n3. Protocol NRO J2ME **bắt đầu bằng client gửi request đầu tiên** (thường là `version_ff` hoặc `login_cmd1`), server chỉ phản hồi sau khi nhận được request hợp lệ.\n4. **Buộc fix tiếp theo**: \n   - Kiểm tra lại cấu hình bore tunnel (có thể packet bị drop, không đến server Java).\n   - Verify port server Java (14445) đang listen đúng và không blocking.\n   - Thử gửi gói `version_ff` trực tiếp lên port 14445 (bypass bore) để kiểm tra server có phản hồi hay không."
+  "ai_diagnosis": "1. Server đang chấp nhận kết nối (tất cả gói tin đều thành công, không có lỗi).\n2. Không có gói tin nào có dữ liệu phản hồi (`rx` rỗng), nên chưa xác định được protocol nào \"đúng\" từ phía server.\n3. Protocol bắt đầu bằng **server gửi trước** (theo `server_first`), nhưng cần kiểm tra nội dung gói đầu tiên để xác định cấu trúc thực tế.\n4. Buộc fix tiếp: Ghi lại và phân tích gói `server_first` (nội dung 2 byte đầu tiên), sau đó so sánh với tài liệu hoặc mẫu gói đã biết để xác định command, version, hoặc seed mã hóa."
 }

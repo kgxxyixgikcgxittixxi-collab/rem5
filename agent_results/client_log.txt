@@ -59,3 +59,4 @@
 2026-07-28 15:25:39 UTC | WARN | bore.pub:20445 | Không thể kết nối do lỗi ServerKey (không có lời chào từ server) và Login (timeout). Fix: 
 2026-07-28 17:00:00 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server vi loi TCP. DNS va OK, nhng ket noi TCP bi fail. Can kiem tra:  
 2026-07-28 18:22:32 UTC | FAIL | bore.pub:20445 | Không thể kết nối do lỗi TCP. Kiểm tra firewall, cổng server (20445) và cấu hình mạng. JAR
+2026-07-28 20:02:26 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server do loi TCP. Can kiem tra mang, firewall, hoac server dang tat.

@@ -84,3 +84,5 @@
 2. **Khôn
 2026-07-28 13:17:30 UTC | OK | bore.pub:20445 | no_response | 1. Server đang chấp nhận kết nối (tất cả gói tin đều thành công, không có lỗi).
 
+2026-07-28 15:39:10 UTC | OK | bore.pub:20445 | no_response | 1. **Server đang chấp nhận kết nối?**  
+Có, tất cả các gói tin đều nhận được phả

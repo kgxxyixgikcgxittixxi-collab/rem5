@@ -1,45 +1,45 @@
 {
-  "ts": "2026-07-28 09:28:47 UTC",
+  "ts": "2026-07-28 11:36:48 UTC",
   "target": "bore.pub:20445",
-  "any_connected": false,
+  "any_connected": true,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 469,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "login_cmd1": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 7,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "version_ff": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 8,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "empty_pkt": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 7,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "cmd_neg101": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 8,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "1. **Không**, server không chấp nhận kết nối (ConnectionRefused). Bore tunnel có thể không định hướng đúng port hoặc server Java không listening trên 20445.\n2. **Không có protocol nào hoạt động** vì tất cả đều fail ngay ở bước kết nối (ConnectionRefused). Không có response từ server.\n3. Protocol NRO J2ME thường **client gửi packet đầu tiên** (thường là `server_first` hoặc handshake), nhưng ở đây server không phản hồi do kết nối thất bại.\n4. **Fix tiếp theo**: \n   - Kiểm tra bore tunnel: `bore.pub --listen 20445 localhost:14445` (đúng direction).\n   - Kiểm tra server Java đang listen trên `0.0.0.0:14445` (không phải `localhost`).\n   - Dùng `telnet bore.pub 20445` hoặc `nc -zv bore.pub 20445` để test connectivity trước khi debug protocol."
+  "ai_diagnosis": "1. **Có**, server đang chấp nhận kết nối (tất cả test đều `ok: true`).\n2. **Không có protocol nào phản hồi** (`rx` trống). Tất cả gói tin client đều không nhận được response từ server.\n3. Protocol NRO J2ME **bắt đầu bằng client gửi request đầu tiên** (thường là `version_ff` hoặc `login_cmd1`), server chỉ phản hồi sau khi nhận được request hợp lệ.\n4. **Buộc fix tiếp theo**: \n   - Kiểm tra lại cấu hình bore tunnel (có thể packet bị drop, không đến server Java).\n   - Verify port server Java (14445) đang listen đúng và không blocking.\n   - Thử gửi gói `version_ff` trực tiếp lên port 14445 (bypass bore) để kiểm tra server có phản hồi hay không."
 }

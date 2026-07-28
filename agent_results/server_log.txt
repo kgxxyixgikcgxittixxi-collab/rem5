@@ -80,3 +80,5 @@
 2026-07-28 06:46:29 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không**, server không chấp nhận kết nối (ConnectionRefused).  
 2. **Không c
 2026-07-28 09:28:47 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không**, server không chấp nhận kết nối (ConnectionRefused). Bore tunnel có
+2026-07-28 11:36:48 UTC | OK | bore.pub:20445 | no_response | 1. **Có**, server đang chấp nhận kết nối (tất cả test đều `ok: true`).
+2. **Khôn

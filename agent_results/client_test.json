@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-28 22:42:53 UTC",
+  "ts": "2026-07-28 23:43:38 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Khong ket noi duoc server. Loi o TCP, can kiem tra ket noi mang, dien thoai server, firewall."
+  "ai": "Khong ket noi duoc server. Tai lieu khong du de phan tich chi tiet."
 }

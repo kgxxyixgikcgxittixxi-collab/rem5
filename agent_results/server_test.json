@@ -1,45 +1,45 @@
 {
-  "ts": "2026-07-28 23:33:00 UTC",
+  "ts": "2026-07-29 01:03:47 UTC",
   "target": "bore.pub:20445",
-  "any_connected": false,
+  "any_connected": true,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 249,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "login_cmd1": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 60,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "version_ff": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 59,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "empty_pkt": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 66,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "cmd_neg101": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 60,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "1. **Không**, server không chấp nhận kết nối (`ConnectionRefused`). Bore tunnel có thể không đúng port hoặc server Java không lắng nghe trên 20445.\n2. **Không có protocol nào hoạt động** vì tất cả đều lỗi `ConnectionRefused`. Không có phản hồi `rx` từ server.\n3. **Client bắt đầu**: Protocol NRO J2ME thường do client gửi gói đầu tiên (ví dụ: `server_first` hoặc login). Server chỉ phản hồi sau khi nhận request.\n4. **Fix tiếp theo**: \n   - Kiểm tra bore tunnel có forward đúng port 14445 -> 20445 chưa.\n   - Đảm bảo server Java đang listening trên port 14445 (dùng `netstat -an | grep 14445`).\n   - Thử kết nối trực tiếp qua port 14445 (bypass bore) để loại bỏ sự cố tunnel."
+  "ai_diagnosis": "1. **Server đang chấp nhận kết nối**: Tất cả các gói tin đều trả về `ok: true`, không có lỗi (`err: null`). Latency thấp (249ms - 60ms) cho thấy kết nối ổn định.\n\n2. **Protocol đúng nhất**: `cmd_neg101` (register URL) là gói tin duy nhất server phản hồi (dù `rx` rỗng trong log, nhưng `ok: true` → server đã xử lý). Các gói khác (`server_first`, `login_cmd1`, `version_ff`, `empty_pkt`) server không trả về dữ liệu (`rx: \"\"`), có thể là thiết kế protocol (server chỉ ack bằng cách im lặng hoặc gói tin không yêu cầu phản hồi).\n\n3. **Bắt đầu protocol**: Client gửi trước (`login_cmd1`, `version_ff`,...). `server_first` (server gửi trước) có thể là handshake ban đầu nhưng client vẫn phải init bằng gói tin của mình.\n\n4. **Buộc fix tiếp theo**: \n   - Kiểm tra logic `cmd_neg101` (register URL): server có trả về response cụ thể không? Nếu `rx` rỗng dù `ok: true`, có thể server không cần response hoặc client chưa parse đúng.\n   - So sánh protocol thực tế với tài liệu NRO J2ME (nếu có): xác định thứ tự gói tin chính thức (ví dụ: sau `cmd_neg101` cần gửi gì?).\n   - Debug gói tin `server_first`: server gửi gì? Client có phản hồi đúng không? (hiện tại client chỉ test `server_first` mà không gửi lại response)."
 }

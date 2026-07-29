@@ -68,3 +68,4 @@
 2026-07-29 07:32:16 UTC | WARN | bore.pub:20445 | Khong the ket noi duoc server do server khong gui greeting ban can kiem tra server da chay
 2026-07-29 10:19:12 UTC | FAIL | bore.pub:20445 | AI err:The read operation timed out
 2026-07-29 12:30:32 UTC | FAIL | bore.pub:20445 | Khong vao duoc server. Loi o ket no TCP (DNS va JAR OK). Fix: kiem tra firewall, port 2044
+2026-07-29 14:55:54 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server do loi TCP. Can kiem tra ket noi mang, port 20445 va firewall.

@@ -1,45 +1,45 @@
 {
-  "ts": "2026-07-29 01:03:47 UTC",
+  "ts": "2026-07-29 04:24:46 UTC",
   "target": "bore.pub:20445",
-  "any_connected": true,
+  "any_connected": false,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": true,
-      "lat": 249,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "login_cmd1": {
-      "ok": true,
-      "lat": 60,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "version_ff": {
-      "ok": true,
-      "lat": 59,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "empty_pkt": {
-      "ok": true,
-      "lat": 66,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "cmd_neg101": {
-      "ok": true,
-      "lat": 60,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Server đang chấp nhận kết nối**: Tất cả các gói tin đều trả về `ok: true`, không có lỗi (`err: null`). Latency thấp (249ms - 60ms) cho thấy kết nối ổn định.\n\n2. **Protocol đúng nhất**: `cmd_neg101` (register URL) là gói tin duy nhất server phản hồi (dù `rx` rỗng trong log, nhưng `ok: true` → server đã xử lý). Các gói khác (`server_first`, `login_cmd1`, `version_ff`, `empty_pkt`) server không trả về dữ liệu (`rx: \"\"`), có thể là thiết kế protocol (server chỉ ack bằng cách im lặng hoặc gói tin không yêu cầu phản hồi).\n\n3. **Bắt đầu protocol**: Client gửi trước (`login_cmd1`, `version_ff`,...). `server_first` (server gửi trước) có thể là handshake ban đầu nhưng client vẫn phải init bằng gói tin của mình.\n\n4. **Buộc fix tiếp theo**: \n   - Kiểm tra logic `cmd_neg101` (register URL): server có trả về response cụ thể không? Nếu `rx` rỗng dù `ok: true`, có thể server không cần response hoặc client chưa parse đúng.\n   - So sánh protocol thực tế với tài liệu NRO J2ME (nếu có): xác định thứ tự gói tin chính thức (ví dụ: sau `cmd_neg101` cần gửi gì?).\n   - Debug gói tin `server_first`: server gửi gì? Client có phản hồi đúng không? (hiện tại client chỉ test `server_first` mà không gửi lại response)."
+  "ai_diagnosis": "1. **Không**, server không chấp nhận kết nối (ConnectionRefused).  \n2. **Không có protocol nào hoạt động** – tất cả đều fail cùng lỗi.  \n3. **Client phải gửi gói đầu tiên** (thường là `server_first` hoặc handshake), nhưng server không phản hồi vì không lắng nghe trên port 20445.  \n4. **Kiểm tra bore tunnel**: Đảm bảo forward đúng port 14445 → 20445, server Java đang chạy và bind đúng interface (0.0.0.0), không firewall chặn. Dùng `telnet bore.pub 20445` để test connectivity."
 }

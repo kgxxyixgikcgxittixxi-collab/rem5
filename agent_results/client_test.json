@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-29 19:21:26 UTC",
+  "ts": "2026-07-29 20:31:48 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Khong ket noi duoc server vi loi TCP. Can kiem tra ket noi mang, port 20445, firewall, hoac server khong hoat dong."
+  "ai": "Khong the ket noi duoc server do loi TCP. DNS va JAR OK. Can kiem tra:  \n- Server co hoat dong tai port 20445?  \n- Firewall/ mang phong tr阻拦 ket noi?  \n- Cai dat client dung port va dia chi server?  \n\nFix: Kiem tra tinh trang server, mang va cai dat ket noi."
 }

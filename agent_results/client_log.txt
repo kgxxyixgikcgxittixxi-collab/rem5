@@ -71,3 +71,4 @@
 2026-07-29 14:55:54 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server do loi TCP. Can kiem tra ket noi mang, port 20445 va firewall.
 2026-07-29 16:24:49 UTC | FAIL | bore.pub:20445 | Không thể kết nối do lỗi TCP. Kiểm tra firewall, cổng server (20445) và cấu hình mạng. JAR
 2026-07-29 17:49:39 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server. Loi o TCP, can kiem tra ket noi mang, dien thoai server, firewa
+2026-07-29 19:21:26 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server vi loi TCP. Can kiem tra ket noi mang, port 20445, firewall, hoa

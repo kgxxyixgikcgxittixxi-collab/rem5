@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-29 07:17:28 UTC",
+  "ts": "2026-07-29 10:01:20 UTC",
   "target": "bore.pub:20445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 181,
+      "lat": 221,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 12,
+      "lat": 69,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 12,
+      "lat": 68,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 11,
+      "lat": 69,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 12,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "1. Server đang chấp nhận kết nối (all `ok: true`).\n2. Không có protocol nào phản hồi `rx` (rỗng), tất cả đều thành công nhưng không nhận dữ liệu.\n3. Protocol bắt đầu từ **client** (sau khi server_first thành công).\n4. Kiểm tra cấu hình `server_first` (server có gửi gói đầu tiên không?), sau đó thử resend `login_cmd1` với định dạng byte chính xác (độ dài 2B, ký tự null terminator)."
+  "ai_diagnosis": "1. Server đang chấp nhận kết nối (all `ok: true`).\n2. Không có protocol nào nhận được phản hồi (`rx: \"\"`).\n3. Protocol bắt đầu bằng **client** gửi `server_first` (server reply trong 2s).\n4. Fix: Kiểm tra cấu trúc gói `server_first` (có thể cần parse binary response), đảm bảo client chờ phản hồi trước khi gửi login/version."
 }

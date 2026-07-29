@@ -101,3 +101,5 @@ Có, tất cả các gói tin đều nhận được phả
 2. **Không c
 2026-07-29 07:17:28 UTC | OK | bore.pub:20445 | no_response | 1. Server đang chấp nhận kết nối (all `ok: true`).
 2. Không có protocol nào phản
+2026-07-29 10:01:20 UTC | OK | bore.pub:20445 | no_response | 1. Server đang chấp nhận kết nối (all `ok: true`).
+2. Không có protocol nào nhận

@@ -1,28 +1,20 @@
 {
-  "ts": "2026-07-29 07:32:16 UTC",
+  "ts": "2026-07-29 10:19:12 UTC",
   "target": "bore.pub:20445",
-  "status": "WARN",
+  "status": "FAIL",
   "results": {
     "DNS": {
       "ok": true,
       "data": "159.223.110.159"
     },
     "TCP": {
-      "ok": true,
-      "data": "74ms"
-    },
-    "ServerKey": {
       "ok": false,
-      "error": "no greeting from server"
-    },
-    "Login": {
-      "ok": true,
-      "data": "timeout (server ignored)"
+      "error": "[Errno 111] Connection refused"
     },
     "JAR": {
       "ok": true,
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Khong the ket noi duoc server do server khong gui greeting ban can kiem tra server da chay chua, port dung khong, firewall can kim tra."
+  "ai": "AI err:The read operation timed out"
 }

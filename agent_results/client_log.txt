@@ -66,3 +66,4 @@
 2026-07-29 01:12:15 UTC | WARN | bore.pub:20445 | Khong the ket noi duoc server. Loi o ServerKey (khong co greeting) va Login (timeout). Can
 2026-07-29 04:33:00 UTC | FAIL | bore.pub:20445 | Khong the ket noi vung server vi loi TCP. DNS va OK, neu JAR dung thi can kiem tra firewal
 2026-07-29 07:32:16 UTC | WARN | bore.pub:20445 | Khong the ket noi duoc server do server khong gui greeting ban can kiem tra server da chay
+2026-07-29 10:19:12 UTC | FAIL | bore.pub:20445 | AI err:The read operation timed out

@@ -63,3 +63,4 @@
 2026-07-28 21:33:05 UTC | FAIL | bore.pub:20445 | Khong the ket noi duoc server do loi TCP. DNS va OK, nen van de co le o ket noi mang hoac 
 2026-07-28 22:42:53 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server. Loi o TCP, can kiem tra ket noi mang, dien thoai server, firewa
 2026-07-28 23:43:38 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server. Tai lieu khong du de phan tich chi tiet.
+2026-07-29 01:12:15 UTC | WARN | bore.pub:20445 | Khong the ket noi duoc server. Loi o ServerKey (khong co greeting) va Login (timeout). Can

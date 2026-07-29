@@ -1,45 +1,45 @@
 {
-  "ts": "2026-07-29 04:24:46 UTC",
+  "ts": "2026-07-29 07:17:28 UTC",
   "target": "bore.pub:20445",
-  "any_connected": false,
+  "any_connected": true,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 181,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "login_cmd1": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 12,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "version_ff": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 12,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "empty_pkt": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 11,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "cmd_neg101": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 12,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "1. **Không**, server không chấp nhận kết nối (ConnectionRefused).  \n2. **Không có protocol nào hoạt động** – tất cả đều fail cùng lỗi.  \n3. **Client phải gửi gói đầu tiên** (thường là `server_first` hoặc handshake), nhưng server không phản hồi vì không lắng nghe trên port 20445.  \n4. **Kiểm tra bore tunnel**: Đảm bảo forward đúng port 14445 → 20445, server Java đang chạy và bind đúng interface (0.0.0.0), không firewall chặn. Dùng `telnet bore.pub 20445` để test connectivity."
+  "ai_diagnosis": "1. Server đang chấp nhận kết nối (all `ok: true`).\n2. Không có protocol nào phản hồi `rx` (rỗng), tất cả đều thành công nhưng không nhận dữ liệu.\n3. Protocol bắt đầu từ **client** (sau khi server_first thành công).\n4. Kiểm tra cấu hình `server_first` (server có gửi gói đầu tiên không?), sau đó thử resend `login_cmd1` với định dạng byte chính xác (độ dài 2B, ký tự null terminator)."
 }

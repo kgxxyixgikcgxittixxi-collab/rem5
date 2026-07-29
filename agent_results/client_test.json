@@ -1,20 +1,28 @@
 {
-  "ts": "2026-07-29 04:33:00 UTC",
+  "ts": "2026-07-29 07:32:16 UTC",
   "target": "bore.pub:20445",
-  "status": "FAIL",
+  "status": "WARN",
   "results": {
     "DNS": {
       "ok": true,
       "data": "159.223.110.159"
     },
     "TCP": {
+      "ok": true,
+      "data": "74ms"
+    },
+    "ServerKey": {
       "ok": false,
-      "error": "[Errno 111] Connection refused"
+      "error": "no greeting from server"
+    },
+    "Login": {
+      "ok": true,
+      "data": "timeout (server ignored)"
     },
     "JAR": {
       "ok": true,
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Khong the ket noi vung server vi loi TCP. DNS va OK, neu JAR dung thi can kiem tra firewall, port 20445 hoac config server."
+  "ai": "Khong the ket noi duoc server do server khong gui greeting ban can kiem tra server da chay chua, port dung khong, firewall can kim tra."
 }

@@ -82,3 +82,4 @@
 2026-07-30 07:14:45 UTC | FAIL | bore.pub:20445 | Không thể kết nối do lỗi TCP. Kiểm tra firewall, cổng server (20445) và cấu hình mạng. JAR
 2026-07-30 09:46:52 UTC | FAIL | bore.pub:20445 | AI err:The read operation timed out
 2026-07-30 11:55:08 UTC | WARN | bore.pub:20445 | AI err:The read operation timed out
+2026-07-30 14:09:00 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server vi loi TCP. Can kiem tra mang, port 20445 va firewall.

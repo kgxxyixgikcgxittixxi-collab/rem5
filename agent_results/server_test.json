@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-30 12:27:00 UTC",
+  "ts": "2026-07-30 14:42:36 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không**, server không chấp nhận kết nối (ConnectionRefused). Bore tunnel có thể không đúng port hoặc server Java không listening trên 20445.\n2. **Không có protocol nào hoạt động** vì tất cả đều fail ở bước kết nối TCP đầu tiên (`server_first`).\n3. Protocol NRO J2ME thường **client gửi gói đầu tiên** (ví dụ: `version_ff` hoặc `login_cmd1`) sau khi kết nối TCP thành công. Server không gửi trước.\n4. **Fix tiếp theo**: \n   - Kiểm tra bore tunnel: `bore.pub` có forward đúng port `14445 -> 20445`? \n   - Test kết nối trực tiếp IP+port server Java (loại bore) để xác định server có listening không.\n   - Dùng Wireshark/tcpdump trên client/server để xem gói tin có được gửi/receive hay không."
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

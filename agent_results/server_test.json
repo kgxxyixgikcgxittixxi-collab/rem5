@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-30 17:53:24 UTC",
+  "ts": "2026-07-30 19:13:34 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. Server **khong chap nhan ket noi** (ConnectionRefused).  \n2. **Khong protocol nao co rx** – tat ca deu loi ket noi.  \n3. NRO J2ME **bat dau bang client gui request** (thuong la `server_first` hay `login_cmd1`).  \n4. **Fix tiep theo**:  \n   - Kiem tra bore tunnel co forward dung port 14445 -> 20445?  \n   - Kiem tra server Java co listening o 0.0.0.0:14445 (khong chi localhost)?  \n   - Kiem tra firewall/antivirus can ket noi?  \n   - Thu ket noi truc tiep o port 14445 (neu co) de loai bo bore."
+  "ai_diagnosis": "1. Không, server không chấp nhận kết nối (ConnectionRefused).\n2. Không protocol nào hoạt động — tất cả đều fail trước khi gửi data.\n3. Protocol bắt đầu bằng client gửi `server_first` (2s timeout), server phản hồi nếu alive.\n4. Kiểm tra bore tunnel có forward đúng port 14445 → 20445; test kết nối trực tiếp server Java (14445) bằng telnet/netcat; đảm bảo server J2ME đang listen đúng interface/port."
 }

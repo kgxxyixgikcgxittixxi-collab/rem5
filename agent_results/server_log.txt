@@ -134,3 +134,5 @@ Có, tất cả các gói tin đều nhận được phả
 2026-07-30 16:16:22 UTC | FAIL | bore.pub:20445 | no_response | AI_ERR:The read operation timed out
 2026-07-30 17:53:24 UTC | FAIL | bore.pub:20445 | no_response | 1. Server **khong chap nhan ket noi** (ConnectionRefused).  
 2. **Khong protocol
+2026-07-30 19:13:34 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, server không chấp nhận kết nối (ConnectionRefused).
+2. Không protocol 

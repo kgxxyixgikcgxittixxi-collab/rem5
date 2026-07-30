@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-30 22:08:40 UTC",
+  "ts": "2026-07-30 23:18:31 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Không thể kết nối do lỗi TCP. DNS và JAR ok. Kiểm tra firewall, cổng server, hoặc mạng."
+  "ai": "Khong the ket noi vung server. Loi o muc TCP, co the do server dang cham dung hoac firewall can trut. Can kiem tra trang thai server va cai dat mang."
 }

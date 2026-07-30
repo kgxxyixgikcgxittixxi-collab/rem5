@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-30 06:07:04 UTC",
+  "ts": "2026-07-30 08:46:27 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không**, server không chấp nhận kết nối (ConnectionRefused).  \n2. **Không có protocol nào hoạt động** – tất cả đều fail ở bước kết nối TCP.  \n3. **Client phải gửi packet đầu tiên** (thường là `server_first` hoặc handshake), nhưng server không phản hồi vì không listener trên port 20445.  \n4. **Fix ngay**: Kiểm tra bore tunnel có mapping đúng port 14445 → 20445 chưa; verify server Java đang listen trên 0.0.0.0:14445; dùng `telnet bore.pub 20445` test connectivity."
+  "ai_diagnosis": "1. Server không chấp nhận kết nối (ConnectionRefused).\n2. Không có protocol nào hoạt động (tất cả đều ConnectionRefused).\n3. Protocol bắt đầu từ client (client gửi request trước).\n4. Kiểm tra bore tunnel, đảm bảo port 20445 forward đúng đến server Java (14445)."
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-30 20:47:23 UTC",
+  "ts": "2026-07-30 22:08:40 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Khong the ket noi voi server do loi TCP. DNS va JAR OK. Can kiem tra ket noi mang, port 20445, firewall, hoac server khong hoat dong. Fix: kiem tra cai dat mang, khoi dong lai server, hoac moi port neu bi phong."
+  "ai": "Không thể kết nối do lỗi TCP. DNS và JAR ok. Kiểm tra firewall, cổng server, hoặc mạng."
 }

@@ -128,3 +128,4 @@ Có, tất cả các gói tin đều nhận được phả
 2. **Không c
 2026-07-30 08:46:27 UTC | FAIL | bore.pub:20445 | no_response | 1. Server không chấp nhận kết nối (ConnectionRefused).
 2. Không có protocol nào 
+2026-07-30 10:54:14 UTC | FAIL | bore.pub:20445 | no_response | AI_ERR:The read operation timed out

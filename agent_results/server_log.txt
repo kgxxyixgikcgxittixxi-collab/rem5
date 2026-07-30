@@ -121,3 +121,4 @@ Có, tất cả các gói tin đều nhận được phả
 2. **Không**
 2026-07-29 23:07:04 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không**, server không chấp nhận kết nối (ConnectionRefused).  
 2. **Không c
+2026-07-30 00:09:00 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không**, server không chấp nhận kết nối (ConnectionRefused). Bore tunnel có

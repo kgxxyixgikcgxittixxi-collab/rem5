@@ -146,3 +146,5 @@ Có, tất cả các gói tin đều nhận được phả
 2. Không protocol 
 2026-07-31 01:18:29 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không**, server không chấp nhận kết nối (ConnectionRefused).  
 2. **Không c
+2026-07-31 04:48:09 UTC | FAIL | bore.pub:20445 | no_response | 1. Server không chấp nhận kết nối (ConnectionRefused).  
+2. Không có protocol nà

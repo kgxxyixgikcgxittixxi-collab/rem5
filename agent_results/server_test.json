@@ -1,45 +1,45 @@
 {
-  "ts": "2026-07-31 12:21:58 UTC",
+  "ts": "2026-07-31 14:44:48 UTC",
   "target": "bore.pub:20445",
-  "any_connected": true,
+  "any_connected": false,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": true,
-      "lat": 77,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "login_cmd1": {
-      "ok": true,
-      "lat": 34,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "version_ff": {
-      "ok": true,
-      "lat": 40,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "empty_pkt": {
-      "ok": true,
-      "lat": 38,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "cmd_neg101": {
-      "ok": true,
-      "lat": 35,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → TCP handshake thất bại ngay từ đầu. Có thể do: bore tunnel chưa hoạt động, firewall chặn, hoặc server Java chưa bind đúng port.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào đúng vì **không có kết nối TCP thành công**. Cần fix connectivity trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nThông thường J2ME game server **client gửi trước** (login/version). `server_first` chờ server gửi trước là sai → cần gửi packet khởi tạo từ client.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel: `bore local 20445 --remote bore.pub:20445` có đang chạy không\n- Test TCP: `nc -vz bore.pub 20445`\n- Kiểm tra server Java bind: `netstat -tlnp | grep 14445`\n- Xác nhận client NRO kết nối đến `bore.pub:20445` đúng cách"
 }

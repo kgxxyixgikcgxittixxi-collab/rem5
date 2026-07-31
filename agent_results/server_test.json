@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-31 04:48:09 UTC",
+  "ts": "2026-07-31 07:40:16 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. Server không chấp nhận kết nối (ConnectionRefused).  \n2. Không có protocol nào phản hồi – tất cả đều fail.  \n3. Protocol bắt đầu từ client (client gửi request đầu tiên).  \n4. Kiểm tra bore tunnel có đúng forward port 14445 → 20445, server Java đang listen đúng địa chỉ/port."
+  "ai_diagnosis": "1. Server **khong chap nhan ket noi** (ConnectionRefused). Bore tunnel hoac server Java khong ket noi dung, hoac port 20445 khong duoc forward dung ve port 14445.\n2. **Khong co protocol nao hoat dong** – tat ca deu fail o muc ket noi TCP, chua den muc gui/phan hoi protocol.\n3. Protocol NRO J2ME **bat dau bang client gui request** (thuong la `server_first` hay `login_cmd1`), server tra loi sau.\n4. **Buoc fix tiep theo**: \n   - Kiem tra bore tunnel: `bore pub -l 20445 -r 14445` co hoat dong khong?\n   - Kiem tra server Java co listening o port 14445 khong (`netstat -an | grep 14445`).\n   - Kiem tra firewall/ACL co cho phep ket noi qua port 20445 khong.\n   - Thuc thi ket noi tu client (J2ME) ve bore.pub:20445 de xac minh ket noi TCP co thanh cong khong."
 }

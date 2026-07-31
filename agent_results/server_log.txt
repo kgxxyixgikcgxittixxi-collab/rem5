@@ -148,3 +148,4 @@ Có, tất cả các gói tin đều nhận được phả
 2. **Không c
 2026-07-31 04:48:09 UTC | FAIL | bore.pub:20445 | no_response | 1. Server không chấp nhận kết nối (ConnectionRefused).  
 2. Không có protocol nà
+2026-07-31 07:40:16 UTC | FAIL | bore.pub:20445 | no_response | 1. Server **khong chap nhan ket noi** (ConnectionRefused). Bore tunnel hoac serv

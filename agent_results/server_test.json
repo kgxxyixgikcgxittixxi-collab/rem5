@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-31 21:52:08 UTC",
+  "ts": "2026-07-31 22:50:28 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Khong**, server khong dang chap nhan ket noi (tat ca deu `ConnectionRefused`). Co the do tunnel bore, firewall, hoac server Java chua bind dung port.\n\n2. **Khong co protocol nao**, tat ca deu loi ket noi nen `rx` trong.\n\n3. **Server gui truoc**. NRO J2ME protocol la **server-first**: server se gui packet khoi dau (thuong la header + version) sau khi client ket noi thanh cong.\n\n4. **Fix tiep theo**:\n   - Kiem tra Java dang chay tren port **14445** (khong phai 20445).\n   - Kiem tra bore tunnel da forward dung tu 20445 -> 14445 chua.\n   - `netstat -tlnp` de xac thuc port dang open.\n   - Kiem tra firewall cho port 20445."
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — bore tunnel hoặc server Java chưa lắng nghe đúng port. Cần kiểm tra bore đã bind 20445 → 14445 chưa, và server Java có đang chạy trên 14445.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi (`rx` rỗng toàn bộ) vì chưa nối được. Không thể đánh giá.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nClient gửi trước — NRO J2ME client khởi tạo kết nối TCP rồi gửi `login_cmd1` (username/password) trước. Server không gửi dữ liệu trước (trừ handshake ban đầu).\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore: `bore local 20445 -- remote bore.pub:20445` (hoặc đúng cú pháp bore)\n- Kiểm tra server Java: `netstat -tlnp | grep 14445`\n- Test trực tiếp: `nc localhost 14445` để xác định server có accept không\n- Nếu bore đúng mà vẫn refused → server Java chưa start hoặc bind sai interface"
 }

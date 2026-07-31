@@ -92,3 +92,4 @@
 2026-07-31 01:06:25 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc do loi TCP. Can kiem tra mang, firewall, hoac port 20445 khong hoat don
 2026-07-31 04:42:54 UTC | FAIL | bore.pub:20445 | Khong the ket noi den server do loi TCP. Can kiem tra ket noi mang, port va firewall.
 2026-07-31 07:37:54 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc do loi TCP. Can kiem tra firewall, port 20445 hoac server khong chay.
+2026-07-31 10:18:41 UTC | WARN | bore.pub:20445 | 

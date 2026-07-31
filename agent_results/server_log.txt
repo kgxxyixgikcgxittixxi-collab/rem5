@@ -155,3 +155,6 @@ Có, tất cả các gói tin đều nhận được phả
 2026-07-31 12:21:58 UTC | OK | bore.pub:20445 | no_response | 
 2026-07-31 14:44:48 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả đều `ConnectionRefu
+2026-07-31 16:27:08 UTC | FAIL | bore.pub:20445 | no_response | ## Kết quả debug:
+
+1. **Không** — Tất cả 5 lệnh đều `ConnectionRefused`, server/

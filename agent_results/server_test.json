@@ -1,45 +1,45 @@
 {
-  "ts": "2026-07-31 22:50:28 UTC",
+  "ts": "2026-07-31 23:48:02 UTC",
   "target": "bore.pub:20445",
-  "any_connected": false,
+  "any_connected": true,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 242,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "login_cmd1": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 35,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "version_ff": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 37,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "empty_pkt": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 27,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "cmd_neg101": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 25,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — bore tunnel hoặc server Java chưa lắng nghe đúng port. Cần kiểm tra bore đã bind 20445 → 14445 chưa, và server Java có đang chạy trên 14445.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi (`rx` rỗng toàn bộ) vì chưa nối được. Không thể đánh giá.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nClient gửi trước — NRO J2ME client khởi tạo kết nối TCP rồi gửi `login_cmd1` (username/password) trước. Server không gửi dữ liệu trước (trừ handshake ban đầu).\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore: `bore local 20445 -- remote bore.pub:20445` (hoặc đúng cú pháp bore)\n- Kiểm tra server Java: `netstat -tlnp | grep 14445`\n- Test trực tiếp: `nc localhost 14445` để xác định server có accept không\n- Nếu bore đúng mà vẫn refused → server Java chưa start hoặc bind sai interface"
+  "ai_diagnosis": ""
 }

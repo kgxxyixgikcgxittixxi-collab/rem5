@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-31 19:48:21 UTC",
+  "ts": "2026-07-31 20:48:21 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả lệnh đều `ConnectionRefused` → server không lắng nghe hoặc tunnel không hoạt động.\n\n**2. Protocol nào đúng nhất?**\nKhông có protocol nào phản hồi. Tất cả đều lỗi kết nối ở tầng TCP, chưa đến tầng ứng dụng.\n\n**3. Protocol NRO bắt đầu bằng client hay server gửi trước?**\nKhó xác định vì không có phản hồi nào. Tuy nhiên, `server_first` (chờ server gửi trước 2s) cũng lỗi kết nối → vấn đề nằm ở connectivity, không phải protocol flow.\n\n**4. Bước fix tiếp theo:**\n-"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả test đều `ConnectionRefused` → server không accept được từ bore tunnel.\n\n**2. Protocol nào đúng / server phản hồi?**\nChưa có protocol nào đúng vì chưa kết nối được. Cần fix connectivity trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nTheo đặc tả J2ME NRO: **client gửi trước** (login handshake), không phải server gửi trước. `server_first` timeout là đúng vì server không chủ động gửi.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel: `bore client --addr :2"
 }

@@ -186,3 +186,6 @@ Không. Tất cả đều `ConnectionRefu
 
 **1. Server có đang chấp nhận kết nối không?**
 → **
+2026-08-01 15:47:27 UTC | FAIL | bore.pub:20445 | no_response | Tôi không phải chuyên gia debug NRO, nhưng dựa trên log bạn cung cấp:
+
+**1. Serv

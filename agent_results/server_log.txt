@@ -195,3 +195,5 @@ Không. Tất cả đều `ConnectionRefu
 Không. Tất cả đều `ConnectionRefu
 2026-08-01 18:43:03 UTC | FAIL | bore.pub:20445 | no_response | 1. **Khong**, server tu choi ket noi (ConnectionRefused) tai ca 5 lenh.
 2. **Kho
+2026-08-01 19:57:40 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
+Không. Tất cả đều `ConnectionRefu

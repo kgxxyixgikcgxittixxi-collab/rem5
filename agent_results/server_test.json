@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-01 18:43:03 UTC",
+  "ts": "2026-08-01 19:57:40 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Khong**, server tu choi ket noi (ConnectionRefused) tai ca 5 lenh.\n2. **Khong co protocol nao dung**, vi khong co ket noi TCP duoc tao ra.\n3. **Khong the xac dinh** do ket noi bi tu choi, nhung thong thuong NRO client gui lenh dau tien.\n4. **Fix tiep theo**:\n   - Kiem tra server Java da chay chua tren port 14445.\n   - Kiem tra bore tunnel da forward dung port 20445 chua.\n   - Kiem tra firewall/iptables co cho phep ket noi den 20445 khong."
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — bore tunnel có thể chưa hoạt động hoặc server Java chưa bind đúng port 14445. Kiểm tra: `netstat -an | grep 14445` và log bore tunnel.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi (`rx` rỗng hết). Không thể xác định được.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nServer gửi trước. Packet `server_first` (chờ server gửi trong 2s) là đúng hướng.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel đang chạy: `bore local 14445 --remote bore.pub:20445`\n- Xác nhận server Java bind `0.0.0.0:14445` (không phải `127.0.0.1`)\n- Test trực tiếp: `nc localhost 14445` từ máy chạy server\n- Nếu được, thử `bore client bore.pub:20445 localhost:14445` (ngược lại)"
 }

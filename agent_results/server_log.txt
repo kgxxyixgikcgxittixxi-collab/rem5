@@ -191,3 +191,5 @@ Không. Tất cả đều `ConnectionRefu
 **1. Serv
 2026-08-01 16:41:50 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả đều `ConnectionRefu
+2026-08-01 17:43:59 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
+Không. Tất cả đều `ConnectionRefu

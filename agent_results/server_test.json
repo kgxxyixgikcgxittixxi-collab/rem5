@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-01 17:43:59 UTC",
+  "ts": "2026-08-01 18:43:03 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → TCP handshake thất bại ngay từ đầu. Có thể bore tunnel chưa forward đúng, server Java chưa bind port 14445, hoặc firewall chặn.\n\n**2. Protocol nào đúng nhất?**\nKhông có packet nào nhận được phản hồi (`rx` rỗng hết). Chưa thể xác định protocol đúng khi chưa có kết nối TCP thành công.\n\n**3. NRO protocol bắt đầu bằng ai?**\nDựa trên test `server_first` (chờ"
+  "ai_diagnosis": "1. **Khong**, server tu choi ket noi (ConnectionRefused) tai ca 5 lenh.\n2. **Khong co protocol nao dung**, vi khong co ket noi TCP duoc tao ra.\n3. **Khong the xac dinh** do ket noi bi tu choi, nhung thong thuong NRO client gui lenh dau tien.\n4. **Fix tiep theo**:\n   - Kiem tra server Java da chay chua tren port 14445.\n   - Kiem tra bore tunnel da forward dung port 20445 chua.\n   - Kiem tra firewall/iptables co cho phep ket noi den 20445 khong."
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-02 17:26:26 UTC",
+  "ts": "2026-08-02 18:32:39 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": ""
+  "ai": "**Client không vào được server.** Lỗi nằm ở **TCP** — kết nối mạng đến cổng `20445` thất bại, nên DNS và JAR không thể kiểm tra tiếp (ServerKey/Login hiện N/A).\n\n**Nguyên nhân có thể:**\n1. Server chưa khởi động hoặc đã tắt.\n2. Tường lửa (firewall) chặn cổng `20445`.\n3"
 }

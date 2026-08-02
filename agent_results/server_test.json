@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-02 08:42:31 UTC",
+  "ts": "2026-08-02 10:21:11 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả test đều `ConnectionRefused` → server không chấp nhận connection nào trên port 20445. Có thể do bore tunnel chưa hoạt động hoặc server Java chưa listen đúng port 14445.\n\n**2. Protocol nào có vẻ đúng nhất?**\nKhông có protocol nào nhận được phản hồi (`rx` rỗng hết). Nhưng `server_first` là cách tiếp cận đúng về mặt protocol — chờ server gửi trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nServer gửi trước. Client"
+  "ai_diagnosis": "## Debug NRO J2ME - bore.pub:20445\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **Không.** Tất cả 5 lệnh đều `ConnectionRefused` → không có TCP handshake nào thành công.\n\n**2. Protocol nào đúng nhất?**\n→ **Không có** lệnh nào nhận được phản hồi (`rx` rỗng hết). Cần fix connectivity trước.\n\n**3. Protocol NRO bắt đầu bằng ai?**\n→ **Server gửi trước** (thấy lệnh `server_first` chờ server gửi gói đầu tiên trong 2s). Đây là pattern phổ biến của NRO J2ME: server gửi welcome/handshake packet trước"
 }

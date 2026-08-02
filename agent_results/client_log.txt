@@ -127,3 +127,4 @@
 2026-08-02 17:26:26 UTC | FAIL | bore.pub:20445 | 
 2026-08-02 18:32:39 UTC | FAIL | bore.pub:20445 | **Client không vào được server.** Lỗi nằm ở **TCP** — kết nối mạng đến cổng `20445` thất b
 2026-08-02 19:55:36 UTC | FAIL | bore.pub:20445 | 
+2026-08-02 20:58:58 UTC | FAIL | bore.pub:20445 | 

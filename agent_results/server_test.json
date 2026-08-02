@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-02 12:42:19 UTC",
+  "ts": "2026-08-02 14:15:15 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "1. **Không.** Tất cả 5 lệnh đều `ConnectionRefused` → TCP không thiết lập được connection.\n\n2. **Không có.** Tất cả `rx` đều rỗng vì không kết nối được.\n\n3. **Không chắc.** Cần reverse thêm. Một số game J2ME server gửi welcome packet trước, một số client gửi trước.\n\n4. **Các bước fix:**\n   - Kiểm tra bore tunnel đang chạy: `bore client --local-addr 20445 --remote-addr bore.pub:20445`"
 }

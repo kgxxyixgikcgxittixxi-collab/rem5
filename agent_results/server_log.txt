@@ -202,3 +202,6 @@ Không. Tất cả đều `ConnectionRefu
 Không. Tất cả test đều `Connectio
 2026-08-01 23:03:45 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả đều `ConnectionRefu
+2026-08-02 00:07:23 UTC | FAIL | bore.pub:20445 | no_response | ## Debug NRO J2ME - bore.pub:20445
+
+**1. Server có đang chấp nhận kết nối không?

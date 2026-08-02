@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-02 18:38:18 UTC",
+  "ts": "2026-08-02 19:51:38 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả test đều `ConnectionRefused` → server không nghe trên port 20445 (bore tunnel có thể chưa chạy, server Java chưa khởi động, hoặc firewall chặn).\n\n**2. Protocol nào có vẻ đúng nhất / rx không rỗng?**\nKhông có protocol nào nhận được phản hồi (tất cả `rx: \"\"`). Vấn đề nằm ở tầng kết nối TCP, chưa đến tầng protocol.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nServer gửi trước (server-first). Test `server_first` (chờ 2s) là đúng hướng, nhưng không thể test được vì kết nối bị từ chối.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra server Java có đang chạy và listen trên `14445` không (`netstat -tlnp | grep 14445`).\n- Kiểm tra bore tunnel đang forward đúng chiều `20445"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả 5 lệnh đều `ConnectionRefused` → server không nghe trên port 20445 (bore tunnel có thể chưa hoạt động hoặc server Java chưa bind đúng port).\n\n**2. Protocol nào đúng / server phản hồi rx khác rỗng?**\nKhông có. Tất cả đều lỗi ConnectionRefused, chưa có gói nào đến được server.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?**\nServer gửi trước. Lệnh `server_first` (chờ server gửi gói chào trong 2s) là đúng hướng, nhưng vì connection bị từ chối nên chưa test được.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel: `bore client --local-port 20445 --remote-host <server> --remote-port"
 }

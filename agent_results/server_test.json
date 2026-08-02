@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-02 11:39:04 UTC",
+  "ts": "2026-08-02 12:42:19 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → server/tunnel không nghe trên port 20445.\n\n**2. Protocol nào có vẻ đúng?**\nKhông có protocol nào. Tất cả đều lỗi ở tầng TCP, chưa tới bước gửi/nhận dữ liệu.\n\n**3. NRO protocol bắt đầu bằng ai?**\n**Server gửi trước** (`server_first`). Client chờ packet đầu tiên từ server (thường là handshake/version).\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel có đang chạy và forward đúng `20445 → 14445` không: `ss -tln"
+  "ai_diagnosis": ""
 }

@@ -233,3 +233,6 @@ Không. Tất cả test đều `Connectio
 Không. Tất cả 5 lệnh đều `Connect
 2026-08-02 20:41:05 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả test đều `Connectio
+2026-08-02 21:37:37 UTC | FAIL | bore.pub:20445 | no_response | ## Debug NRO J2ME - bore.pub:20445
+
+### 1. Server có đang chấp nhận kết nối khôn

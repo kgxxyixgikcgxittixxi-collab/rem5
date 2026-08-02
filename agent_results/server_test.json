@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-02 20:41:05 UTC",
+  "ts": "2026-08-02 21:37:37 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả test đều `ConnectionRefused` → bore tunnel hoặc server Java không hoạt động đúng.\n\n**2. Protocol nào đúng / server phản hồi rx không rỗng?**\nKhông có protocol nào — tất cả đều lỗi ConnectionRefused, chưa có gói nào đến được server.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?**\nServer gửi trước (thường là gói chào mừng/version ~10-20 byte). Client chỉ phản hồi sau khi nhận được.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel: `bore local 20445 --to bore.pub:14445` (hoặc ngược lại tùy config)."
+  "ai_diagnosis": "## Debug NRO J2ME - bore.pub:20445\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả 5 lệnh đều `ConnectionRefused` → không có TCP handshake nào thành công. Vấn đề nằm ở **mức độ kết nối**, chưa đến mức protocol.\n\n### 2. Protocol nào đúng nhất?\n**Không có** — tất cả"
 }

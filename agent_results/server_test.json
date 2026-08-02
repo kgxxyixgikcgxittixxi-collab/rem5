@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-02 16:31:44 UTC",
+  "ts": "2026-08-02 17:36:42 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả đều `ConnectionRefused` → bore tunnel **không forward** từ 20445 về 14445, hoặc server Java chưa bind đúng port.\n\n### 2. Protocol nào đúng / rx không rỗng?\n**Không có.** Tất cả đều refused, chưa có packet nào đến được server.\n\n### 3. NRO protocol bắt đầu bằng gì? Client hay server gửi trước?\n**Server gửi trước.** Packet `server_first` (timeout 2s chờ server) là bước chuẩn — server sẽ gửi handshake/version trước, client mới phản hồi.\n\n### 4. Bước fix tiếp theo cụ thể?\n```bash\n# 1. Kiểm tra bore tunnel có chạy không\nps aux | grep bore\n\n# 2. Test trực"
+  "ai_diagnosis": "1. **Không**, server đang từ chối kết nối (`ConnectionRefused`) trên port 20445.\n2. **Không có protocol nào**, tất cả đều lỗi kết nối nên không có phản hồi `rx`.\n3. **Server gửi trước**: Sau khi TCP connect, server sẽ gửi gói tin chào (thường chứa version/seed) trước khi client gửi gì.\n4. **Fix tiếp theo**: Kiểm tra xem server Java có đang chạy trên port 14445 chưa, và xác nhận tunnel bore.pub đang forward đúng từ 20445 về 14445 (kiểm tra log tunnel)."
 }

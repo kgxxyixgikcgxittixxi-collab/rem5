@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-02 22:37:01 UTC",
+  "ts": "2026-08-02 23:38:28 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Khong**. Tat ca test deu tra ve `ConnectionRefused` → server/tunnel khong chap nhan ket noi TCP.\n2. **Khong co**. Tat ca `rx` deu trong.\n3. **Server gui truoc**. Test `server_first` (client cho 2s) la dung kha niem, nhung bi fail o layer ket noi.\n4. **Fix tiep**:\n   - Kiem tra Java server co dang bind port `14445` (0.0.0.0 hoac IP cu the) khong.\n   - Kiem tra bore tunnel da forward dung port `20445` va dang chay.\n   - Kiem tra firewall/ports tren host host server."
+  "ai_diagnosis": "## Debug NRO J2ME - bore.pub:20445\n\n**1. Server có đang chấp nhận kết nối không?**\n**Không.** Tất cả test đều `ConnectionRefused` → TCP handshake thất bại ngay từ đầu. Vấn đề nằm ở tầng kết nối, chưa đến tầng protocol.\n\n**2. Protocol nào đúng / server phản hồi?**\n**Không có.** Tất cả `rx` rỗng vì không kết nối được.\n\n**3. NRO protocol bắt đầu bằng ai?**\n**Server gửi trước.** Sau khi TCP connect thành công, server gửi packet khởi tạo (thường là `server_first`), client mới phản hồi. Test `server_first"
 }

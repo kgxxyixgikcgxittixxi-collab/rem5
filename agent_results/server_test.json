@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-03 20:10:29 UTC",
+  "ts": "2026-08-03 21:29:51 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không** - Tất cả đều `ConnectionRefused`, server không chấp nhận kết nối từ client.\n\n2. **Không có** - Tất cả `rx` đều trống rỗng vì không có kết nối nào thành công.\n\n3. **Server gửi trước** - `server_first` test đúng hướng (chờ server gửi), nhưng vì không kết nối được nên không có phản hồi.\n\n4. **Fix tiếp theo:**\n   - Kiểm tra bore tunnel đang chạy: `bore client --local-port 20445 --remote-host <server> --remote-port 14445`\n   - Xác nhận tunnel active: `netstat -tlnp | grep 20445`\n   - Test trực tiếp port 14445 (bỏ qua tunnel) để loại trừ bore bị lỗi\n   - Kiểm"
+  "ai_diagnosis": "1. **Không**, server đang từ chối kết nối (`ConnectionRefused`) trên port 20445.\n2. **Không có**, tất cả đều lỗi kết nối, `rx` trống rỗng.\n3. **Server gửi trước** (server-first), client chờ phản hồi trong 2s.\n4. **Kiểm tra:**\n   - Java app có bind đúng port `14445` không? (`netstat -tlnp`)\n   - Tunnel `bore` có đang chạy và forward đúng không?\n   - Firewall có chặn port `20445` không?\n   - Thử `telnet bore.pub 20445` để xác nhận TCP open."
 }

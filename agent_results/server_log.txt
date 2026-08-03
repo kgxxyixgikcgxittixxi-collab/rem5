@@ -254,3 +254,7 @@ Không. Tất cả 5 lệnh đều `Connect
 ### 1. Server có đang chấp nhận kết nối không?
 **KHÔN
 2026-08-03 16:38:29 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không** — tất cả đều `ConnectionRefused`, server/tunnel không chấp nhận kết
+2026-08-03 18:25:18 UTC | FAIL | bore.pub:20445 | no_response | ## Debug Kết Quả NRO J2ME
+
+### 1. Server có đang chấp nhận kết nối không?
+**Khôn

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-03 14:06:15 UTC",
+  "ts": "2026-08-03 16:38:29 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả 5 lệnh đều trả về `ConnectionRefused` → port 20445 đang bị từ chối kết nối TCP. Nguyên nhân có thể:\n- bore tunnel chưa chạy hoặc bị lỗi forward\n- Server Java chưa bind đúng port 14445\n- Firewall chặn port 20445\n\n### 2. Protocol nào có vẻ đúng nhất?\n**Không có protocol nào** — tất cả đều lỗi ConnectionRefused, `rx` trống rỗng. Chưa thể đánh giá protocol nào đúng vì chưa kết nối được.\n\n### 3. Protocol NRO thực sự"
+  "ai_diagnosis": "1. **Không** — tất cả đều `ConnectionRefused`, server/tunnel không chấp nhận kết nối TCP.\n\n2. **Không có protocol nào** — tất cả `rx` rỗng, chưa có gói nào đến được server.\n\n3. **Server gửi trước** — `server_first` là bước server push dữ liệu trước (client chỉ chờ 2s).\n\n4. **Bước fix:**\n   - Kiểm tra bore tunnel đang chạy: `bore client local 20445 remote bore.pub:20445` (hoặc ngược lại tùy cấu hình).\n   - Xác nhận server Java bind đúng port `14445`: `netstat -an | grep 14445`.\n   - Test trực tiếp `telnet bore.pub 20445` hoặc `nc -v bore.pub 20445`"
 }

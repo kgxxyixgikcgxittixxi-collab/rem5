@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-04 14:38:58 UTC",
+  "ts": "2026-08-04 16:32:10 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "AI_ERR:The read operation timed out"
+  "ai_diagnosis": "1. **Không** — Tất cả đều `ConnectionRefused`, server/tunnel không chấp nhận kết nối TCP.\n\n2. **Không có** — Toàn bộ `rx` trống rỗng, không packet nào được phản hồi.\n\n3. **Server gửi trước** — Test `server_first` (chờ server gửi gói đầu tiên trong 2s) là đúng hướng, nhưng vẫn bị `ConnectionRefused` nên không kiểm tra được phản hồi.\n\n4. **Bước fix:**\n   - Kiểm tra bore tunnel đang chạy: `bore local 20445 --remote bore.pub:14445` (đảm bảo forward đúng port 14445).\n   - Xác nhận server Java đang listen: `netstat -an | grep 14445`."
 }

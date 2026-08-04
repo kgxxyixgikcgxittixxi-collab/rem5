@@ -276,3 +276,4 @@ Không. Tất cả đều `ConnectionRefu
 **Kh
 2026-08-04 12:10:38 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả đều `ConnectionRefu
+2026-08-04 14:38:58 UTC | FAIL | bore.pub:20445 | no_response | AI_ERR:The read operation timed out

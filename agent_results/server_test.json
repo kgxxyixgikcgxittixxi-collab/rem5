@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-03 23:43:12 UTC",
+  "ts": "2026-08-04 01:08:22 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không.** Tất cả `ConnectionRefused` → server/tunnel không chấp nhận kết nối TCP. Cần kiểm tra bore tunnel đang chạy, server Java bind đúng interface (0.0.0.0 hay 127.0.0.1), và firewall.\n\n2. **Không có protocol nào.** Tất cả `rx` đều rỗng vì không kết nối được.\n\n3. **Server gửi trước.** Test `server_first` (timeout 2s chờ server gửi gói đầu) là đúng hướng — NRO J2ME protocol thường server khởi tạo handshake.\n\n4. **Bước fix:**\n   - Kiểm tra bore"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — bore tunnel hoặc server Java chưa nghe đúng port.\n\n**2. Protocol nào đúng / có rx?**\nKhông có protocol nào phản hồi. Lỗi nằm ở tầng TCP connect, chưa tới xử lý protocol.\n\n**3. NRO J2ME bắt đầu bằng gì?**\nServer gửi trước (server-first). Client chỉ phản hồi sau khi nhận packet mở kết nối từ server.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel có đang chạy và forward đúng `127.0.0.1:"
 }

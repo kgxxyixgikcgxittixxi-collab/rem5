@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-05 21:38:22 UTC",
+  "ts": "2026-08-05 22:41:20 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Khong.** Tat ca test deu tra ve `ConnectionRefused` → server/tunnel dang bi treo hoac port 20445 khong dang duoc listen.\n2. **Khong co protocol nao.** Tat ca deu loi ket noi nen `rx` deu trong.\n3. **Server gui truoc.** Protocol NRO J2ME la server-first (server gui packet khoi tao dau tien).\n4. **Fix tiep:**\n   - Kiem tra log server Java xem co loi start port 14445 khong.\n   - Kiem tra bore tunnel: `bore local 20445 --to your-server:14445` co dang chay va connect thanh cong khong.\n   - Kiem tra firewall/iptables cho port 20445."
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → TCP handshake bị từ chối ngay từ đầu. Có thể bore tunnel chưa chạy, server Java không listen port 14445, hoặc firewall chặn.\n\n**2. Protocol nào đúng nhất?**\nKhông có protocol nào phản hồi (`rx` rỗng hết). Vấn đề nằm ở tầng kết nối TCP, chưa cần xét protocol."
 }

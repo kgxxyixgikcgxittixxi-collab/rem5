@@ -314,3 +314,5 @@ Không. Tất cả `Connection
 2026-08-05 21:38:22 UTC | FAIL | bore.pub:20445 | no_response | 1. **Khong.** Tat ca test deu tra ve `ConnectionRefused` → server/tunnel dang bi
 2026-08-05 22:41:20 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả đều `ConnectionRefu
+2026-08-05 23:39:01 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
+Không. Tất cả đều `ConnectionRefu

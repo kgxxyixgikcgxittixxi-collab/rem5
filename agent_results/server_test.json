@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-05 11:47:42 UTC",
+  "ts": "2026-08-05 13:26:33 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → server/tunnel không chấp nhận kết nối TCP nào.\n\n**2. Protocol nào đúng / có rx khác rỗng?**\nKhông có protocol nào. Tất cả `rx: \"\"` vì không kết nối được.\n\n**3. NRO J2ME protocol bắt đầu bằng ai?**\n**Client gửi trước.** NRO J2ME là client-initiated — client phải gửi `server_first` (thường là handshake/identify packet) trước, server mới phản hồi.\n\n**"
+  "ai_diagnosis": ""
 }

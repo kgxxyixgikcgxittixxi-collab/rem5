@@ -303,3 +303,7 @@ Không. Tấ
 Không. Tất cả test đều `Connectio
 2026-08-05 17:09:33 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả `Connection
+2026-08-05 18:49:36 UTC | FAIL | bore.pub:20445 | no_response | ## Kết quả debug NRO J2ME
+
+**1. Server có đang chấp nhận kết nối không?**
+→ **Kh

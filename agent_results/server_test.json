@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-05 04:20:55 UTC",
+  "ts": "2026-08-05 07:07:42 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không.** Tất cả đều `ConnectionRefused` → server/tunnel không chấp nhận kết nối TCP.\n\n2. **Không có protocol nào.** Mọi lệnh đều lỗi ở tầng TCP, chưa đến lúc nhận `rx`.\n\n3. **Client gửi trước.** Các lệnh `login_cmd1`, `version_ff`, `empty_pkt`, `cmd_neg101` đều là client chủ động gửi. `server_first` chỉ là test chờ server gửi trước — thường không đúng với NRO J2ME.\n\n4. **Fix tiếp theo:**\n   - Kiểm tra bore tunnel đang chạy: `bore client --local-port 20445 --remote-host <server> --remote-port 1444"
+  "ai_diagnosis": "1. **Không**, server đang từ chối kết nối (`ConnectionRefused`) trên cổng 20445.\n2. **Không có**, tất cả đều lỗi kết nối nên `rx` đều trống.\n3. **Server gửi trước**. Client chờ server gửi gói `server_first` (timeout 2s).\n4. **Kiểm tra bore tunnel** đang chạy và forward đúng cổng 14445 → 20445. Xác nhận server Java đang listen trên 14445 và firewall cho phép cổng 20445."
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-05 09:46:46 UTC",
+  "ts": "2026-08-05 11:47:42 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Khong** – `ConnectionRefused` tai ca 5 lenh, port 20445 dang bi tu choi ket noi (bore tunnel co the dang dung hoac server chua listen).\n\n2. **`server_first`** – day la protocol dung nhat theo thiet ke NRO J2ME (server gui truoc), nhung hien tai `rx` rong do ket noi bi tu choi.\n\n3. **Server gui truoc** – NRO J2ME protocol la server-initiated: sau khi TCP connect thanh cong, server"
+  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → server/tunnel không chấp nhận kết nối TCP nào.\n\n**2. Protocol nào đúng / có rx khác rỗng?**\nKhông có protocol nào. Tất cả `rx: \"\"` vì không kết nối được.\n\n**3. NRO J2ME protocol bắt đầu bằng ai?**\n**Client gửi trước.** NRO J2ME là client-initiated — client phải gửi `server_first` (thường là handshake/identify packet) trước, server mới phản hồi.\n\n**"
 }

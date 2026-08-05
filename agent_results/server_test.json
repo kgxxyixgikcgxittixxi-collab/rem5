@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-05 07:07:42 UTC",
+  "ts": "2026-08-05 09:46:46 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không**, server đang từ chối kết nối (`ConnectionRefused`) trên cổng 20445.\n2. **Không có**, tất cả đều lỗi kết nối nên `rx` đều trống.\n3. **Server gửi trước**. Client chờ server gửi gói `server_first` (timeout 2s).\n4. **Kiểm tra bore tunnel** đang chạy và forward đúng cổng 14445 → 20445. Xác nhận server Java đang listen trên 14445 và firewall cho phép cổng 20445."
+  "ai_diagnosis": "1. **Khong** – `ConnectionRefused` tai ca 5 lenh, port 20445 dang bi tu choi ket noi (bore tunnel co the dang dung hoac server chua listen).\n\n2. **`server_first`** – day la protocol dung nhat theo thiet ke NRO J2ME (server gui truoc), nhung hien tai `rx` rong do ket noi bi tu choi.\n\n3. **Server gui truoc** – NRO J2ME protocol la server-initiated: sau khi TCP connect thanh cong, server"
 }

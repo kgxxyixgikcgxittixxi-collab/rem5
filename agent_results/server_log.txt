@@ -293,3 +293,4 @@ Không. Tất cả đều `ConnectionRefu
 → **KHÔNG.** T
 2026-08-05 04:20:55 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không.** Tất cả đều `ConnectionRefused` → server/tunnel không chấp nhận kết
 2026-08-05 07:07:42 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không**, server đang từ chối kết nối (`ConnectionRefused`) trên cổng 20445.
+2026-08-05 09:46:46 UTC | FAIL | bore.pub:20445 | no_response | 1. **Khong** – `ConnectionRefused` tai ca 5 lenh, port 20445 dang bi tu choi ket

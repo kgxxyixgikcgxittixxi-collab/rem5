@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-05 23:39:01 UTC",
+  "ts": "2026-08-06 01:03:43 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — bore tunnel hoặc server Java chưa bind đúng, hoặc firewall chặn.\n\n**2. Protocol nào đúng nhất?**\nKhông có protocol nào phản hồi (`rx` rỗng toàn bộ). Cần sửa kết nối trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nServer gửi trước (`server_first`). Client chờ packet khởi tạo từ server.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel: `bore connect --local-port 20445 --remote-host <server> --remote-port 14445`\n- Xác nhận server Java listen đúng port 14445: `netstat -tlnp | grep 14445`\n- Test trực tiếp TCP đến port 14445 (bỏ bore) để loại trừ tunnel.\n- Kiểm tra firewall cho phép cả 2 port."
+  "ai_diagnosis": "## Debug NRO J2ME - bore.pub:20445\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả 5 lệnh đều `ConnectionRefused` — lỗi ở tầng TCP, chưa kịp gửi protocol. Nguyên nhân có thể:\n- bore tunnel chưa chạy hoặc bị disconnect\n- Server Java trên port 14445 không lắng nghe (`bind` sai interface/đóng)\n- Firewall chặn port 20445\n\n### 2. Protocol nào đúng nhất / rx không rỗng?\n**Không có lệnh nào** — tất cả đều fail ở bước connect. Chưa đạt đến tầng protocol.\n\n###"
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-06 10:01:52 UTC",
+  "ts": "2026-08-06 12:10:20 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nChưa. Tất cả đều `ConnectionRefused` → TCP handshake thất bại ngay từ đầu. Có thể:\n- bore tunnel chưa chạy hoặc bind sai\n- Server Java chưa listen trên 14445\n- Firewall chặn port 20445\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào được kiểm tra vì không kết nối được. Khi kết nối thành công, `server_first` (server gửi trước) là khả dĩ nhất.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nThường **server gửi trước** (welcome/hello packet) sau khi TCP connect thành công. Client không nên gửi gì đầu tiên.\n\n**4. Bước fix tiếp theo:**\n```bash\n# Kiểm tra bore tunnel\nbore list\n\n# Kiểm tra server Java có listen không\nnetstat -tlnp | grep 14445\n\n# Test TCP trực tiếp\nnc -v bore.pub 20445\n```\nXác nhận tunnel hoạt động → server Java chạy → mới test protocol."
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — bore tunnel hoặc server Java không hoạt động.\n\n**2. Protocol nào đúng / server phản hồi?**\nKhông có protocol nào. Tất cả đều lỗi ở tầng TCP connect.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nKhông xác định được vì không kết nối được. Tuy nhiên, `server_first` (server gửi trước) là pattern phổ biến của J2ME MMO protocol — client chỉ connect rồi chờ packet đầu từ server.\n\n**4. Bước fix tiếp theo cụ thể"
 }

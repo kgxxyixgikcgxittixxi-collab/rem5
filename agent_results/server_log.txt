@@ -328,3 +328,5 @@ Không. Tất cả đều `ConnectionRefu
 1. **Server KHÔNG chấp nhận kết nối** — tất cả lệnh đều 
 2026-08-06 10:01:52 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Chưa. Tất cả đều `ConnectionRefus
+2026-08-06 12:10:20 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
+Không. Tất cả đều `ConnectionRefu

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-06 07:15:04 UTC",
+  "ts": "2026-08-06 10:01:52 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n1. **Server KHÔNG chấp nhận kết nối** — tất cả lệnh đều `ConnectionRefused`, nghĩa là TCP handshake không thể thiết lập.\n\n2. **Không có protocol nào** — tất cả `rx` đều rỗng vì không kết nối được.\n\n3. **Protocol NRO thực sự bắt đầu bằng client gửi trước.** Lệnh `server_first` (chờ"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nChưa. Tất cả đều `ConnectionRefused` → TCP handshake thất bại ngay từ đầu. Có thể:\n- bore tunnel chưa chạy hoặc bind sai\n- Server Java chưa listen trên 14445\n- Firewall chặn port 20445\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào được kiểm tra vì không kết nối được. Khi kết nối thành công, `server_first` (server gửi trước) là khả dĩ nhất.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nThường **server gửi trước** (welcome/hello packet) sau khi TCP connect thành công. Client không nên gửi gì đầu tiên.\n\n**4. Bước fix tiếp theo:**\n```bash\n# Kiểm tra bore tunnel\nbore list\n\n# Kiểm tra server Java có listen không\nnetstat -tlnp | grep 14445\n\n# Test TCP trực tiếp\nnc -v bore.pub 20445\n```\nXác nhận tunnel hoạt động → server Java chạy → mới test protocol."
 }

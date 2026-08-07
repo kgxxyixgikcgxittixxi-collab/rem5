@@ -185,3 +185,4 @@
 2026-08-07 17:01:55 UTC | FAIL | bore.pub:20445 | Client chưa vào được server do lỗi TCP. Cần kiểm tra kết nối mạng, tường lửa hoặc cổng 204
 2026-08-07 18:03:00 UTC | FAIL | bore.pub:20445 | Client chưa vào được server do lỗi TCP. Nguyên nhân: kết nối mạng thất bại trước khi gửi y
 2026-08-07 19:16:45 UTC | FAIL | bore.pub:20445 | Client chưa vào được server do lỗi TCP. Nguyên nhân: kết nối mạng thất bại trước khi gửi y
+2026-08-07 20:06:59 UTC | FAIL | bore.pub:20445 | Client chưa vào được server do lỗi TCP. Cần kiểm tra kết nối mạng, firewall hoặc port 2044

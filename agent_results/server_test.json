@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-06 14:34:22 UTC",
+  "ts": "2026-08-07 00:14:04 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả 5 lệnh đều `ConnectionRefused` → bore tunnel hoặc server Java chưa accept được connection từ client.\n\n**2. Protocol nào có vẻ đúng nhất?**\nKhông có lệnh nào nhận được phản hồi (`rx` rỗng hết). Cần fix tunnel trước.\n\n**3. NRO J2ME protocol bắt đầu bằng ai?**\nServer gửi trước. Lệnh `server_first`"
+  "ai_diagnosis": "## Kết quả debug:\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **KHÔNG.** Tất cả 5 lệnh đều `ConnectionRefused`. Bore tunnel hoặc server Java chưa bind đúng. Cần kiểm tra:\n- `ss -tlnp | grep 14445` trên server\n- bore tunnel đang chạy và forward đúng chiều `server --local-addr 20445 --remote-addr bore.pub:20445`\n\n**2. Protocol nào đúng nhất?**\n→ Không có response nào (`rx: \"\"` vì chưa nối được). Nhưng **`server_first`** là đúng hướng nhất — NRO J2ME thường **server gửi trước** một packet khởi tạo (thường là `0x00 0x00` hoặc version/nonce).\n\n**3"
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-07 15:59:39 UTC",
+  "ts": "2026-08-07 17:01:55 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "AI err:The read operation timed out"
+  "ai": "Client chưa vào được server do lỗi TCP. Cần kiểm tra kết nối mạng, tường lửa hoặc cổng 20445. JAR và DNS đều OK."
 }

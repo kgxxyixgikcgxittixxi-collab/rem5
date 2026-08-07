@@ -183,3 +183,4 @@
 2026-08-07 14:56:04 UTC | FAIL | bore.pub:20445 | AI err:The read operation timed out
 2026-08-07 15:59:39 UTC | FAIL | bore.pub:20445 | AI err:The read operation timed out
 2026-08-07 17:01:55 UTC | FAIL | bore.pub:20445 | Client chưa vào được server do lỗi TCP. Cần kiểm tra kết nối mạng, tường lửa hoặc cổng 204
+2026-08-07 18:03:00 UTC | FAIL | bore.pub:20445 | Client chưa vào được server do lỗi TCP. Nguyên nhân: kết nối mạng thất bại trước khi gửi y

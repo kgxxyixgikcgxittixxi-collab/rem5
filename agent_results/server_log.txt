@@ -350,3 +350,4 @@ Không. Tất cả đều `ConnectionRefu
 2026-08-07 10:34:41 UTC | FAIL | bore.pub:20445 | no_response | 1. Không. Tất cả đều `ConnectionRefused`, server đang từ chối kết nối TCP.
 2. Kh
 2026-08-07 11:27:57 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, server đang từ chối kết nối (`ConnectionRefused`). Tunnel hoặc server 
+2026-08-07 12:10:46 UTC | FAIL | bore.pub:20445 | no_response | AI_ERR:The read operation timed out

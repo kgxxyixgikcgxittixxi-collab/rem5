@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-07 06:16:52 UTC",
+  "ts": "2026-08-07 07:47:11 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → không có TCP connection nào thành công. Có thể bore tunnel chưa chạy, server Java chưa listen, hoặc firewall chặn.\n\n**2. Protocol nào đúng / server phản hồi?**\nChưa xác định được vì chưa có kết nối nào thành công. Cần fix connectivity trước.\n\n**3. Protocol NRO bắt đầu bằng ai?**\nThường **client gửi trước** (login handshake). `server_first` test giả định server gửi trước — nếu đúng là client-first thì test này sẽ luôn fail, đó không phải lỗi."
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

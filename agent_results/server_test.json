@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-07 23:29:00 UTC",
+  "ts": "2026-08-08 00:01:27 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. Không, server đang từ chối kết nối (ConnectionRefused). Tunnel 20445 không trỏ đúng hoặc server Java chưa bind đúng port.\n2. Không có protocol nào phản hồi (`rx` trống).\n3. Protocol NRO thực sự do **Server gửi trước** (server-first). Client chờ gói tin chào mừng từ server.\n4. Fix tunnel: Kiểm tra `bore local 20445 --remote bore.pub:14445` (hoặc port tương ứng). Đảm bảo server Java bind `0.0.0.0:14445`. Sau đó test lại `server_first` với timeout đủ dài (2s)."
+  "ai_diagnosis": "1. Không. Tất cả đều lỗi `ConnectionRefused` (bị từ chối kết nối), nghĩa là không có process nào đang lắng nghe trên port 20445.\n2. Không có protocol nào phản hồi (`rx` rỗng).\n3. NRO J2ME thường **client gửi trước** (handshake/version), không phải server gửi trước.\n4. Kiểm tra tunnel bore: xác nhận bore đang chạy, port 20445 đã được bind và forward đúng về 14445. Dùng `netstat -tlnp` để kiểm tra listener."
 }

@@ -440,3 +440,4 @@ Không. Tất cả đều `ConnectionRefu
 → **Không.** Tất cả 
 2026-08-08 22:09:53 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Chưa. Tất cả đều `ConnectionRefus
+2026-08-08 22:46:23 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không** — tất cả đều `ConnectionRefused`, bore tunnel hoặc server Java chưa

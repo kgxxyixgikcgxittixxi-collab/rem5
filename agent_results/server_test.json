@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-08 17:50:24 UTC",
+  "ts": "2026-08-08 18:16:52 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **Không.** Tất cả đều `ConnectionRefused` — server hoặc tunnel chưa nghe trên port 20445.\n\n**2. Protocol nào đúng nhất?**\n→ **Chưa có phản hồi nào** (tất cả `rx: \"\"`). Không thể đánh giá cho đến khi kết nối thành công.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\n→ Dựa trên test"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel chưa hoạt động hoặc server Java chưa bind đúng port 14445. Kiểm tra: `bore local 20445 --server bore.pub:27015` có chạy không, và server Java có đang listen port 14445 (`netstat -an | grep 14445`).\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi (rx rỗng hết). Vấn đề nằm ở connectivity, chưa đến bước phân tích protocol.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nServer gửi trước. `server_first` (chờ server gửi gói đầu trong 2s) là đúng hướng. NRO J2ME thường server gửi welcome packet trước khi client login.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Xác nhận bore tunnel đang chạy: `curl http://localhost:20445` hoặc test bằng `nc localhost 20445`\n- Kiểm tra server Java log có lỗi bind port không\n- Thử kết nối trực tiếp `bore.pub:14445` (bỏ tunnel) để loại trừ bore\n- Khi kết nối được, bật Wi"
 }

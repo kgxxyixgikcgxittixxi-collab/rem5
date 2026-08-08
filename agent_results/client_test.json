@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-08 04:59:52 UTC",
+  "ts": "2026-08-08 05:51:11 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "Client chưa vào được server do lỗi TCP. Nguyên nhân: kết nối mạng thất bại trước khi gửi yêu cầu JAR. Khắc phục: kiểm tra firewall, port 20445, và trạng thái server đang chạy. DNS và JAR đều OK, chỉ cần sửa kết nối TCP là xong."
+  "ai": "Client chưa vào được server do lỗi TCP (nối thất bại). Nguyên nhân có thể do firewall chặn port 20445 hoặc server chưa khởi động. Cần kiểm tra kết nối mạng và đảm bảo server đang hoạt động trước khi thử lại."
 }

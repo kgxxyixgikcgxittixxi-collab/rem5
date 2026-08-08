@@ -400,3 +400,7 @@ Không. Tất cả test đều `Connectio
 2026-08-08 14:00:41 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả đều `ConnectionRefu
 2026-08-08 14:40:26 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không** - Tất cả đều `ConnectionRefused`, bore tunnel hoặc server Java đang
+2026-08-08 15:04:02 UTC | FAIL | bore.pub:20445 | no_response | ## Debug NRO J2ME Protocol
+
+### 1. Server có đang chấp nhận kết nối không?
+**Khô

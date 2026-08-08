@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-08 06:06:05 UTC",
+  "ts": "2026-08-08 07:10:49 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKHÔNG. Tất cả test đều `ConnectionRefused` — server bore.pub:20445 đang đóng hoặc tunnel chưa hoạt động.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có kết quả nào vì không kết nối được. Cần fix connectivity trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nThông thường J2ME game protocol: **client gửi trước** (client-first). Server không gửi `server_first` trước.\n\n**4. Bước fix tiếp theo cụ thể:**\n```bash\n# Kiểm tra tunnel\ncurl -v telnet://bore.pub:20445\n# Hoặc kiểm tra server Java\nnetstat -tlnp | grep 14445\n# Test TCP trực tiếp\nnc -v bore.pub 20445\n```\n\nSau khi kết nối được, test theo thứ tự:\n1. `login_cmd1` (client gửi login)\n2. `version_ff` (client gửi version)\n3. `empty_pkt` (client gửi empty)"
+  "ai_diagnosis": "1. Không, server đang từ chối kết nối (`ConnectionRefused`). Tunnel bore có thể chưa hoạt động hoặc port 20445 chưa được mở/khớp với process Java.\n\n2. Không có protocol nào phản hồi (`rx` trống). Tất cả đều lỗi kết nối ngay từ đầu.\n\n3. NRO J2ME thường do **Server gửi trước** (handshake/version). Bạn đang chờ `server_first` là đúng hướng, nhưng không bao giờ đạt được do lỗi mạng.\n\n4. **Fix tiếp theo:**\n   - Kiểm tra bore tunnel: `bore status` hoặc log bore xem port 20445 có đang listen không.\n   - Kiểm tra server Java: `netstat -an | findstr 14445` (local) và `20445` (remote tunnel).\n   - Đảm bảo firewall cho phép port 20445.\n   - Thử `telnet bore.pub 20445` từ máy client để xác nhận connectivity."
 }

@@ -370,3 +370,4 @@ Không. Tất cả đều `ConnectionRefu
 2026-08-08 05:25:47 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, server đang từ chối kết nối (ConnectionRefused). Tunnel hoặc server Ja
 2026-08-08 06:06:05 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 KHÔNG. Tất cả test đều `Connectio
+2026-08-08 07:10:49 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, server đang từ chối kết nối (`ConnectionRefused`). Tunnel bore có thể 

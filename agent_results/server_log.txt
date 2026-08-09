@@ -452,3 +452,7 @@ Chưa. Tất cả đều `ConnectionRefus
 
 **1. Server có đang chấp nhận kết nối không?**
 **Khôn
+2026-08-09 02:49:00 UTC | FAIL | bore.pub:20445 | no_response | ## Kết quả debug:
+
+**1. Server có đang chấp nhận kết nối không?**
+→ **KHÔNG.** T

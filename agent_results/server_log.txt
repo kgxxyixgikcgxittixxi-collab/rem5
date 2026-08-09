@@ -485,3 +485,7 @@ Không. Tất cả test đều `Connectio
 2026-08-09 12:20:41 UTC | FAIL | bore.pub:20445 | no_response | **Phân tích kết quả test:**
 
 1. **Server KHÔNG chấp nhận kết nối** — Tất cả 5 lệ
+2026-08-09 13:27:12 UTC | FAIL | bore.pub:20445 | no_response | Dựa trên kết quả test:
+
+**1. Server có đang chấp nhận kết nối không?**
+Không. Tấ

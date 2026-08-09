@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-09 10:09:10 UTC",
+  "ts": "2026-08-09 10:51:56 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel hoặc server Java không hoạt động đúng. Cần kiểm tra bore tunnel đang chạy và server Java bind đúng port 14445.\n\n**2. Protocol nào có vẻ đúng / server phản hồi rx không rỗng?**\nKhông có protocol nào — tất cả đều lỗi kết nối ngay từ đầu. Chưa có gói nào đến được bước phản hồi.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?**\nDựa trên test `"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel có thể chưa chạy, hoặc forward sai port (14445 ≠ 20445).\n\n**2. Protocol nào đúng?**\nKhông có protocol nào phản hồi (`rx` rỗng hết). Chưa có gói nào tới được server.\n\n**3. NRO protocol bắt đầu bằng ai?**\nThông thường **client gửi trước** (login/version), không phải server gửi trước. `server_first` timeout là bình thường.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel đang chạy: `bore local 14445 --to bore.pub:20445`\n- Verify tunnel: `nc -v bore.pub 20445`\n- Kiểm tra server Java thực sự listen port 14445: `netstat -an | grep 14445`"
 }

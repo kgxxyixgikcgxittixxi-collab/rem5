@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-10 22:27:36 UTC",
+  "ts": "2026-08-10 23:07:46 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n1. **Không** — Tất cả đều `ConnectionRefused`, bore tunnel không forward được từ 20445 → 14445.\n\n2. **Không có protocol nào** — Không có gói nào nhận được phản hồi (`rx` rỗng).\n\n3. **Server gửi trước** — `server_first` test chờ server gửi gói đầu tiên trong 2s, đây là pattern phổ biến của NRO J2ME.\n\n4. **Bước fix:**\n   - Kiểm tra bore tunnel đang chạy: `bore client --local-addr 0.0.0.0:20445 --remote-addr bore.pub:20445`\n   - Xác nhận server Java bind đúng port 14445: `netstat -"
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả đều `ConnectionRefused` — nghĩa là TCP handshake bị từ chối ngay từ đầu, chưa đến tầng protocol. Vấn đề nằm ở **mạng/kết nối**, không phải protocol.\n\n### 2. Protocol nào có phản hồi?\n**Không có protocol nào.** `rx` trống rỗng toàn bộ → không packet nào được nhận.\n\n### 3. NRO bắt đầu bằng ai gửi trước?\nTheo thiết kế test `server_first` (server gửi trước, client chờ 2s) → **Server gửi trước**. Đây là đặc trưng J2ME MMO thường gặp.\n\n### 4. Bước fix tiếp theo\n\n| Bước | Hành động |\n|------"
 }

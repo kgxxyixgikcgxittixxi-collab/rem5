@@ -1,7 +1,3 @@
-2. Không có protocol nào phản
-2026-07-29 10:01:20 UTC | OK | bore.pub:20445 | no_response | 1. Server đang chấp nhận kết nối (all `ok: true`).
-2. Không có protocol nào nhận
-2026-07-29 12:10:21 UTC | FAIL | bore.pub:20445 | no_response | 1. Server không chấp nhận kết nối (ConnectionRefused).  
 2. Không có protocol nà
 2026-07-29 14:31:22 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không**, server không chấp nhận kết nối (ConnectionRefused).  
 2. **Không**
@@ -498,3 +494,7 @@ Không. Tất cả đều `ConnectionRefu
 2026-08-10 22:27:36 UTC | FAIL | bore.pub:20445 | no_response | Dựa trên kết quả test:
 
 1. **Không** — Tất cả đều `ConnectionRefused`, bore tunn
+2026-08-10 23:07:46 UTC | FAIL | bore.pub:20445 | no_response | ## Phân tích debug NRO J2ME
+
+### 1. Server có đang chấp nhận kết nối không?
+**Kh

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-10 19:43:09 UTC",
+  "ts": "2026-08-10 20:25:34 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": ""
+  "ai": "**Client KHÔNG vào được server.** Lỗi ở **"
 }

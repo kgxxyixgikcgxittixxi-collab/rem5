@@ -1,5 +1,3 @@
-2. Không protocol 
-2026-07-28 18:43:31 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không**, server không chấp nhận kết nối (ConnectionRefused).  
 2. **Không c
 2026-07-28 20:07:26 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, server không chấp nhận kết nối (ConnectionRefused).
 2. Không có protoc
@@ -498,3 +496,5 @@ Không.
 
 **1. Server có đang chấp nhận kết nối không?**
 Khôn
+2026-08-10 19:30:56 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
+Không. Tất cả test đều `Connectio

@@ -1,6 +1,3 @@
-2. **Không c
-2026-07-28 20:07:26 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, server không chấp nhận kết nối (ConnectionRefused).
-2. Không có protoc
 2026-07-28 21:20:45 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, server không chấp nhận kết nối (ConnectionRefused).
 2. Không protocol 
 2026-07-28 22:30:00 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không**, server không chấp nhận kết nối (`ConnectionRefused`). Bore tunnel 
@@ -498,3 +495,6 @@ Không.
 Khôn
 2026-08-10 19:30:56 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả test đều `Connectio
+2026-08-10 20:10:53 UTC | FAIL | bore.pub:20445 | no_response | ## Phân tích kết quả test NRO J2ME
+
+### 1. Server có đang chấp nhận kết nối khôn

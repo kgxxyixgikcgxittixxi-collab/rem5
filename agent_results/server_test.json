@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-10 02:09:43 UTC",
+  "ts": "2026-08-10 04:06:21 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel có thể chưa hoạt động, hoặc server Java chưa bind đúng port. Kiểm tra `bore client` đang chạy và `netstat -an` trên server.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào phản hồi (`rx` rỗng toàn bộ). Cần fix connectivity trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nClient gửi trước. Thông thường J2ME game TCP bắt đầu bằng handshake/version request (như `version_ff` - `0xFF 0x00 0x00 0x01`) hoặc login packet. `server_first` (server gửi trước) thường không đúng với game J2ME.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel: `bore local 14445 --to bore.pub:20445` có đang chạy không\n- Test trực tiếp `telnet bore.pub 20445`\n- Kiểm tra firewall cho port 20445\n- Xác nhận server Java bind `0.0.0.0:14445` (không phải `127.0"
+  "ai_diagnosis": "## Debug NRO J2ME Protocol\n\n### 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả 5 test đều `ConnectionRefused` — TCP handshake không thể thiết lập ở tầng transport. Vấn đề nằm trước cả protocol.\n\n### 2. Protocol nào đúng / có rx?\n**Không có protocol nào** — `rx` rỗng toàn bộ vì không có kết nối TCP nào thành công"
 }

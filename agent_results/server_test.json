@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-09 23:57:56 UTC",
+  "ts": "2026-08-10 02:09:43 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — bore tunnel hoặc server Java chưa lắng nghe đúng port. Kiểm tra bore đã bind đúng và server Java đang chạy trên 14445.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi — tất cả đều từ chối kết nối ở tầng TCP.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nServer gửi trước (`server_first`). Client chờ server khởi tạo kết nối.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore: `bore client --local-port 20445 --remote-host <server> --remote-port 14445`\n- Xác nhận server Java bind đúng interface (0.0.0.0, không phải 127.0.0.1)\n- Test `nc bore.pub 20445` để xác nhận tunnel hoạt động\n- Nếu được, dùng Wireshark bắt packet tại client để xem TCP SYN có đến server không"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel có thể chưa hoạt động, hoặc server Java chưa bind đúng port. Kiểm tra `bore client` đang chạy và `netstat -an` trên server.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào phản hồi (`rx` rỗng toàn bộ). Cần fix connectivity trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nClient gửi trước. Thông thường J2ME game TCP bắt đầu bằng handshake/version request (như `version_ff` - `0xFF 0x00 0x00 0x01`) hoặc login packet. `server_first` (server gửi trước) thường không đúng với game J2ME.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel: `bore local 14445 --to bore.pub:20445` có đang chạy không\n- Test trực tiếp `telnet bore.pub 20445`\n- Kiểm tra firewall cho port 20445\n- Xác nhận server Java bind `0.0.0.0:14445` (không phải `127.0"
 }

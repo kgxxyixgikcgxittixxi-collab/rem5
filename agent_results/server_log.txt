@@ -1,7 +1,3 @@
-2026-07-26 16:15:07 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi `ConnectionRefused` cho thấy server từ chối kết nối TCP tại port 2
-2026-07-26 17:26:47 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi `ConnectionRefused` chứng tỏ server từ chối kết nối TCP tại port 2
-2026-07-26 18:32:54 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, lỗi `ConnectionRefused` cho thấy server không lắng nghe hoặc tunnel sa
-2026-07-26 19:47:42 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, server từ chối kết nối (ConnectionRefused).
 2. Không có protocol nào p
 2026-07-26 20:41:10 UTC | FAIL | bore.pub:20445 | no_response | 1. Không, server từ chối kết nối (ConnectionRefused).
 2. Không có protocol nào p
@@ -498,3 +494,7 @@ Không. Tất cả đều `ConnectionRefu
 **KHÔ
 2026-08-10 05:41:33 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả đều `ConnectionRefu
+2026-08-10 06:57:05 UTC | FAIL | bore.pub:20445 | no_response | ## Trả lời:
+
+**1. Server có đang chấp nhận kết nối không?**
+→ **Không.** Tất cả 

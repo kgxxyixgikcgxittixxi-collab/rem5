@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-10 17:29:36 UTC",
+  "ts": "2026-08-10 18:26:22 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Kết quả debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **KHÔNG.** Tất cả đều `ConnectionRefused` — không có gì đang lắng nghe trên `bore.pub:20445`.\n\n**2. Protocol nào đúng / có rx khác rỗng?**\n→ **Không có.** Toàn bộ `rx: \"\"`, lỗi ở tầng TCP connect, chưa kịp trao đổi payload.\n\n**3. NRO protocol bắt đầu bằng ai?**\n→ **Server gửi trước.** `server_first` (server gửi packet khởi tạo trong 2s) là bước chuẩn của nhiều game J2ME TCP. Client chỉ phản hồi sau khi nhận được."
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả 5 lệnh đều `ConnectionRefused` — không có gói nào đến được server. Vấn đề nằm ở tầng kết nối TCP, chưa phải protocol.\n\n**2. Protocol nào có phản hồi?**\nKhông có protocol nào. `rx` trống rỗng cho mọi lệnh → chưa có byte nào nhận về.\n\n**3. NRO J2ME bắt đầu bằng gì?**\nServer gửi trước (`server_first`). Client chờ ~2s để nhận gói mở đầu từ server, mới gửi login/hiệu lệnh sau.\n\n**4. Bước fix tiếp theo:**\n\n- **Kiểm tra bore tunnel:** `bore local 20445 --remote bore.pub:20445` có đang chạy không? Test bằng `nc -zv bore.pub"
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-10 16:32:01 UTC",
+  "ts": "2026-08-10 17:29:36 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Kết quả debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — bore tunnel `20445 → 14445` không hoạt động. Cần kiểm tra:\n- Server Java có đang listen trên `0.0.0.0:14445` không?\n- Bore tunnel đã chạy đúng chiều (`bore client --remote-port 20445 --local-port 14445`)?\n- Firewall/iptables có block port 20445 không?\n\n**2. Protocol nào đúng / có rx?**\nKhông có protocol nào phản hồi — tất cả `rx"
+  "ai_diagnosis": "## Kết quả debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **KHÔNG.** Tất cả đều `ConnectionRefused` — không có gì đang lắng nghe trên `bore.pub:20445`.\n\n**2. Protocol nào đúng / có rx khác rỗng?**\n→ **Không có.** Toàn bộ `rx: \"\"`, lỗi ở tầng TCP connect, chưa kịp trao đổi payload.\n\n**3. NRO protocol bắt đầu bằng ai?**\n→ **Server gửi trước.** `server_first` (server gửi packet khởi tạo trong 2s) là bước chuẩn của nhiều game J2ME TCP. Client chỉ phản hồi sau khi nhận được."
 }

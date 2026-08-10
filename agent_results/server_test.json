@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-10 15:40:08 UTC",
+  "ts": "2026-08-10 16:32:01 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Kết quả debug\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **KHÔNG.** Tất cả 5 lệnh đều `ConnectionRefused` với `lat:0`, nghĩa là TCP handshake không thành. Server hoặc tunnel đang không nghe ở `bore.pub:20445`.\n\n**2. Protocol nào đúng / server phản hồi?**\n→ **Không có protocol nào.** Tất cả `rx: \"\"`. Không có gói nào đến được server để phản hồi.\n\n**3. NRO J2ME protocol"
+  "ai_diagnosis": "## Kết quả debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — bore tunnel `20445 → 14445` không hoạt động. Cần kiểm tra:\n- Server Java có đang listen trên `0.0.0.0:14445` không?\n- Bore tunnel đã chạy đúng chiều (`bore client --remote-port 20445 --local-port 14445`)?\n- Firewall/iptables có block port 20445 không?\n\n**2. Protocol nào đúng / có rx?**\nKhông có protocol nào phản hồi — tất cả `rx"
 }

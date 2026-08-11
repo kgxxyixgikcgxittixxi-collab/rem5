@@ -290,3 +290,7 @@
 2026-08-11 19:47:41 UTC | FAIL | bore.pub:20445 | 
 2026-08-11 20:49:25 UTC | FAIL | bore.pub:20445 | 
 2026-08-11 21:51:58 UTC | FAIL | bore.pub:20445 | 
+2026-08-11 22:46:17 UTC | FAIL | bore.pub:20445 | **Phân tích:**
+
+- **DNS OK** → Tên miền resolve đúng.
+- **JAR OK** → File jar tải về thành

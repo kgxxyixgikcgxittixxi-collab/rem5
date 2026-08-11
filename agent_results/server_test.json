@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-11 23:00:31 UTC",
+  "ts": "2026-08-11 23:52:13 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả 5 lệnh đều `ConnectionRefused` → bore tunnel không forward được tới server Java port 14445. Cần kiểm tra bore tunnel đang chạy, port 20445 đã được expose đúng chưa, và server Java có listen đúng port 14445 không.\n\n**2. Protocol nào đúng / server phản hồi rx không rỗng?**\nKhông có protocol nào. Tất cả đều lỗi ConnectionRefused, chưa có gói nào tới được server.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?**\nTheo test `server_first` (client chờ server gửi trước trong 2s) → **server gửi trước**. Đây là handshake ban đầu. Nếu server không gửi"
+  "ai_diagnosis": "1. **Khong.** Tat ca test deu `ConnectionRefused` → server/tunnel khong chap nhan ket noi.\n2. **Khong co protocol nao.** Tat ca `rx` deu trong, khong co phan hoi nao tu server.\n3. **Client gui truoc.** NRO J2ME thuong client gui lenh dau tien (login/version) sau khi ket noi TCP thanh.\n4. **Fix tiep theo:**\n   - Kiem tra bore tunnel da chay va forward dung port 14445 → 20445 chua.\n   - Kiem tra server Java dang nghe tren port 14445 (`netstat -an | grep 14445`).\n   - Kiem tra firewall/ports cho phep ket noi den bore.pub:20445.\n   - Thử ket noi TCP thuan tuyet den bore.pub:20445 bang `telnet` hoac `nc` de loai trù vān de protocol."
 }

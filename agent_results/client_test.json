@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-11 22:46:17 UTC",
+  "ts": "2026-08-11 23:43:08 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "**Phân tích:**\n\n- **DNS OK** → Tên miền resolve đúng.\n- **JAR OK** → File jar tải về thành công.\n- **TCP FAIL** → **Lỗi chính**: Client không kết nối được TCP đến server.\n\n**Nguyên nhân:** Port `204"
+  "ai": ""
 }

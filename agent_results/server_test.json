@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-11 09:38:19 UTC",
+  "ts": "2026-08-11 10:32:27 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Kết quả debug:\n\n**1. Server có đang chấp nhận kết nối không?**\n**Không.** Tất cả 5 lệnh đều trả về `ConnectionRefused` — bore tunnel hoặc server Java không chấp nhận kết nối TCP nào.\n\n**2. Protocol nào đúng / có phản hồi?**\n**Không có.** Tất cả `rx` đều rỗng vì không kết nối được.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nDựa trên test `server_first` (client chờ server gửi trước), **server là bên khởi tạo** — client chỉ connect rồi chờ packet đầu tiên từ server.\n\n**4. Bước"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → không có gì nghe trên port 20445.\n\n**2. Protocol nào đúng nhất?**\nKhông có protocol nào phản hồi (`rx` rỗng hết). Vấn đề nằm ở tầng kết nối, chưa đến tầng ứng dụng.\n\n**3. NRO protocol bắt đầu bằng ai?**\nThường **client gửi trước** (login/handshake). `server_first`"
 }

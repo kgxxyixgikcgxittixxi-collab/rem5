@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-11 05:21:17 UTC",
+  "ts": "2026-08-11 06:11:42 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel hoặc server Java chưa bind đúng port 20445.\n\n**2. Protocol nào đúng / có rx khác rỗng?**\nKhông có packet nào phản hồi. Cần fix connectivity trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nTheo test `server_first` (client chờ server gửi trước trong 2s) → **server gửi trước**. Đây là pattern phổ biến của J2ME MMO protocol.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel: `bore local --port 20445 --to localhost:14445` có đang chạy"
+  "ai_diagnosis": "## Debug NRO J2ME Protocol\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → không có TCP handshake nào thành công. Có thể:\n- Bore tunnel chưa chạy hoặc bị sập\n- Server Java không listen trên port 14445\n- Firewall chặn port 20445\n\n**2. Protocol nào đúng?**\nChưa biết được — tất cả đều lỗi ở tầng TCP, chưa đến tầng ứng dụng.\n\n**3. NRO protocol bắt đầu bằng ai?**\nTheo test `server_first` (client chờ server gửi trước trong 2s) → **Server gửi trước**. Đây là đặc trưng của nhiều game J2ME VN (Z"
 }

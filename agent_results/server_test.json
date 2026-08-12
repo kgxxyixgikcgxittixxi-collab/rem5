@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-12 03:27:08 UTC",
+  "ts": "2026-08-12 05:14:47 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Debug NRO J2ME Protocol\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả 5 test đều `ConnectionRefused` → bore tunnel không forward được, hoặc server Java chưa chạy trên port 14445. Cần kiểm tra:\n- `bore client` đã chạy chưa: `bore client --local-addr 14445 --remote-addr bore.pub:20445`\n- Server Java đang listen port 14445: `netstat -tlnp | grep 14445`\n\n### 2. Protocol nào đúng nhất?\n**Chưa có protocol nào phản hồi** — tất cả đều lỗi kết nối ở tầng TCP. Khi fix được bore tunnel, cần test lần lượt. Protocol `server_first` (server gửi trước) thường đúng với J2ME NRO.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\n**Server gửi trước.** NRO J2ME protocol là **server-initiated**: client kết nối TCP → server gửi packet khởi tạo → client mới phản hồi login/version.\n\n### 4. Bước fix tiếp theo cụ thể?\n```bash\n# 1. Kiểm tra bore tunnel\nbore client --local-addr 14445 --remote-addr bore.pub:20445\n\n# 2. Kiểm tra server Java\nnetstat -"
+  "ai_diagnosis": "## Kết quả debug NRO J2ME\n\n### 1. Server có đang chấp"
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-12 12:08:54 UTC",
+  "ts": "2026-08-12 13:44:13 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test, đây là phân tích:\n\n## 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả 5 lệnh đều trả về `ConnectionRefused` → server **không nghe** trên port 20445 (tunnel) hoặc 14445 (Java). Cần kiểm tra:\n- Tunnel bore.pub có đang chạy không?\n- Server Java có bind đúng port 14445 không?\n- Firewall có chặn không?\n\n## 2. Protocol nào đúng nhất?\n**Chưa có protocol nào đúng** vì không có kết nối nào thành công. Khi server đã accept, `server_first` (server gửi trước) là protocol hợp lý nhất cho NRO J2ME"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả 5 lệnh đều `ConnectionRefused` — server/tunnel không nghe trên port 20445.\n\n**2. Protocol nào đúng?**\nChưa xác định được vì không có phản hồi nào. Cần sửa kết nối trước.\n\n**3. NRO protocol bắt đầu bằng ai?**\nClient gửi trước — handshake login do client khởi tạo ("
 }

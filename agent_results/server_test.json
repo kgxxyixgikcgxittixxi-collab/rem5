@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-12 06:45:07 UTC",
+  "ts": "2026-08-12 09:22:01 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel không hoạt động hoặc server Java chưa bind đúng port 14445. Kiểm tra: `bore local 14445 --to bore.pub:20445` có đang chạy không, và server Java có listen trên 0.0.0.0:14445 không.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi (`rx` rỗng hết). Không thể xác định được.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nTheo mô tả `server_first` (server gửi trước), server sẽ gửi packet khởi tạo trước. Client chờ trong 2s. Đây là bước handshake chuẩn.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel: `bore client --remote bore.pub:20445 local 14445`\n- Xác nhận server Java bind `0.0.0.0:14445` (không phải 127.0.0.1)\n- Test local: `nc localhost 14445`"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel không forward được hoặc server Java chưa bind đúng port 14445.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào có phản hồi (`rx` rỗng hết). Cần fix connectivity trước.\n\n**3. NRO protocol bắt đầu bằng ai?**\nServer gửi trước (`server_first`): client chờ 2s nhận packet mở đầu. Đây là pattern phổ biến của J2ME MMO.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel: `bore connect 14445` có running không?\n- Test trực tiếp: `telnet bore.pub 20445` hoặc `nc -v bore.pub 20445`\n- Xác nhận server Java đang listen: `netstat -an | grep 14445`\n- Nếu bore ổn, sniff packet từ client chính thức để so sánh handshake."
 }

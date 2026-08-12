@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-12 20:25:27 UTC",
+  "ts": "2026-08-12 21:13:39 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel **không hoạt động** hoặc server Java chưa bind đúng port 14445. Cần kiểm tra bore tunnel status và `netstat -tlnp` trên server.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi (`rx` trống hết). Không thể xác định được cho đến khi kết nối thành công.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nThường **client gửi trước** trong J2ME MMO (login handshake), không phải server push. `server_first` timeout 2s là đúng vì server không chủ động gửi.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel: `bore status` hoặc log bore\n- Xác nhận server Java bind 0.0.0.0:14445 (không phải 127.0.0.1)\n- Test nội bộ: `nc localhost 14445` để xác nhận server phản hồi\n- Kiểm tra firewall mở port 20445"
+  "ai_diagnosis": "1. **Không** — Tất cả `ConnectionRefused` cho thấy bore tunnel không forward đúng, hoặc server Java chưa bind port 14445. Kiểm tra bore tunnel log và `netstat -an | grep 14445`.\n\n2. **Không có protocol nào** — Tất cả `rx` trống vì chưa kết nối được.\n\n3. **Server gửi trước** — `server_first` là handshake server-init (thường là version/seed packet). Client phải chờ nhận trước khi gửi login.\n\n4. **Fix bore tunnel trước:**\n   - Xác nhận server Java đang listen: `netstat -tlnp | grep 14445`\n   - Kiểm tra bore tunnel chạy đúng chiều: `bore client --local-port 20445 --remote-host <server> --remote-port 14445`\n   - Test TCP thuần: `nc -v <host> 20445`\n   - Sau khi kết nối được, mới debug protocol handshake."
 }

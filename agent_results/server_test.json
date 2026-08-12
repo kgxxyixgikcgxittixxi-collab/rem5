@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-12 10:32:24 UTC",
+  "ts": "2026-08-12 11:25:17 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả 5 lệnh đều trả về `ConnectionRefused` — nghĩa là TCP handshake không thể thiết lập. Vấn đề nằm ở **mạng/tunnel**, không phải protocol.\n\n### 2. Protocol nào đúng / có phản hồi?\n**Không có protocol nào** — tất cả đều fail ở tầng TCP. Chưa đến mức nhận/gửi dữ liệu ứng dụng.\n\n### 3."
+  "ai_diagnosis": "1. **Không** – Tất cả đều `ConnectionRefused`, server/tunnel đang từ chối kết nối TCP trên port 20445.\n\n2. **Không có protocol nào** – Không có `rx` nào trả về vì kết nối không thành lập được ở tầng TCP.\n\n3. **Client gửi trước** – NRO J2ME client là bên khởi tạo handshake (thường gửi version/hello packet đầu tiên), server phản hồi sau.\n\n4. **Fix tiếp theo**:\n   - Kiểm tra Java server có đang listen trên `14445` không: `netstat -an | grep 14445`\n   - Xác nhận bore tunnel đang chạy và forward đúng chiều: `localhost:20445 → server:14445`\n   - Kiểm tra firewall/local port binding (server có bind `0.0.0.0` hay chỉ `127.0.0.1`?)\n   - Test trực tiếp `telnet bore.pub 20445` hoặc `nc -v bore.pub 20445` để xác nhận port mở."
 }

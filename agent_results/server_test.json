@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-12 17:40:00 UTC",
+  "ts": "2026-08-12 18:35:56 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n**Không.** Tất cả 5 lệnh đều `ConnectionRefused` — lỗi ở tầng TCP, chưa kịp trao đổi protocol.\n\n**2. Protocol nào đúng / có phản hồi?**\n**Không có.** Tất cả `rx` rỗng vì không kết nối được.\n\n**3. NRO protocol bắt đầu bằng ai?**\nTheo test `server_first` (client chờ 2s), **server gửi trước** — đây là mô hình common của J2ME MMO (server chào hỏi trước khi client login).\n\n**4. Bước fix tiếp theo:**\n\n| Bước | Hành động |\n|------|-----------|\n| 1 | Kiểm tra bore tunnel: `bore local 20445 --remote bore.pub:"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả test đều `ConnectionRefused` → bore tunnel không forward được, hoặc server Java (14445) chưa chạy/không bind đúng.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào được kiểm tra vì không kết nối được. Cần fix connectivity trước.\n\n**3. NRO protocol bắt đầu bằng ai?**\nServer gửi trước (`server_first`). Client chờ phản hồi trong 2s timeout.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra server Java có đang chạy và bind `0.0.0.0:14445` không (`netstat -tlnp`).\n- Kiểm tra bore tunnel đã forward đúng chưa: `bore local 14445 --to bore.pub 20445`.\n- Test TCP trực tiếp: `nc -vz bore.pub 20445` hoặc `telnet bore.pub 20445`.\n- Nếu bore ổn, thử kết nối trực tiếp `14445` để loại trừ tunnel."
 }

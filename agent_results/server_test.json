@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-12 16:38:07 UTC",
+  "ts": "2026-08-12 17:40:00 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả 5 test đều `ConnectionRefused` → server/tunnel **không chấp nhận TCP connection** trên port 20445.\n\n### 2. Protocol nào đúng / server phản hồi rx không rỗng?\n**Không có** — tất cả đều rỗng vì không kết nối được.\n\n### 3. NRO protocol thực sự bắt đầu bằng gì? Client hay server gửi trước?\nTheo test `server_first` (timeout 2s, không có phản hồi) → **server KHÔNG gửi trước**. Protocol bắt đầu bằng **client gửi lệnh**.\n\n### 4. Bước fix tiếp theo"
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n**Không.** Tất cả 5 lệnh đều `ConnectionRefused` — lỗi ở tầng TCP, chưa kịp trao đổi protocol.\n\n**2. Protocol nào đúng / có phản hồi?**\n**Không có.** Tất cả `rx` rỗng vì không kết nối được.\n\n**3. NRO protocol bắt đầu bằng ai?**\nTheo test `server_first` (client chờ 2s), **server gửi trước** — đây là mô hình common của J2ME MMO (server chào hỏi trước khi client login).\n\n**4. Bước fix tiếp theo:**\n\n| Bước | Hành động |\n|------|-----------|\n| 1 | Kiểm tra bore tunnel: `bore local 20445 --remote bore.pub:"
 }

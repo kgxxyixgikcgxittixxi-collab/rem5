@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-12 14:45:52 UTC",
+  "ts": "2026-08-12 15:42:43 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không** - Tất cả đều `ConnectionRefused`, bore tunnel hoặc server Java chưa bind đúng port 20445.\n\n2. **Không có** - Mọi gói đều trống rx, chưa có gói nào chạm tới server.\n\n3. **Server gửi trước** - `server_first` (server gửi packet khởi tạo, client chờ 2s). Đây là handshake ban đầu.\n\n4. **Fix bore tunnel**: Kiểm tra `bore.pub` đang forward đúng từ 20445 → server:14445 chưa. Test trực tiếp `server:14445` xem có accept không. Nếu bore ổn, kiểm tra firewall/port binding trên server Java."
+  "ai_diagnosis": "## Debug Kết Quả NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả 5 test đều `ConnectionRefused` → TCP không thể thiết lập connection. Vấn đề nằm ở **network/infrastructure**, không phải protocol.\n\n**Nguyên nhân có thể:**\n- Bore tunnel chưa chạy hoặc died\n- Port 20445 không được listen (check: `netstat -tlnp | grep 20445`)\n- Firewall chặn port 20445\n- Server Java crash hoặc chưa bind đúng port\n\n### 2. Protocol nào có vẻ đúng nhất?\n**Không có protocol nào được test** vì không kết nối được. Khi fix được connection, nên test theo thứ tự:\n1. `server_first` (server gửi trước) - đúng nhất vì NRO J2ME thường server-init\n2. `version_ff` - handshake version phổ biến trong J2ME games\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\n**Server gửi trước.** J2ME NRO protocol thường:\n- Client connect → Server gửi packet khởi tạo (server_first)\n- Client phản hồi version/login sau\n\n### 4. Bước fix tiếp theo cụ thể?\n\n```bash\n# 1. Kiểm tra bore tunnel"
 }

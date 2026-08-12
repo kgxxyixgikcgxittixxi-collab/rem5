@@ -1,7 +1,3 @@
-Không. Tất cả đều `ConnectionRefu
-2026-08-02 12:42:19 UTC | FAIL | bore.pub:20445 | no_response | 
-2026-08-02 14:15:15 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không.** Tất cả 5 lệnh đều `ConnectionRefused` → TCP không thiết lập được c
-2026-08-02 15:32:08 UTC | FAIL | bore.pub:20445 | no_response | ## Kết quả debug NRO J2ME
 
 **1. Server có đang chấp nhận kết nối không?**
 **Khôn
@@ -498,3 +494,7 @@ Không. Tất cả test đều `Connectio
 2026-08-12 20:25:27 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả đều `ConnectionRefu
 2026-08-12 21:13:39 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không** — Tất cả `ConnectionRefused` cho thấy bore tunnel không forward đún
+2026-08-12 22:04:40 UTC | FAIL | bore.pub:20445 | no_response | ## Phân tích debug NRO J2ME
+
+### 1. Server có đang chấp nhận kết nối không?
+**Kh

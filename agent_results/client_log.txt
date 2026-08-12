@@ -1,4 +1,3 @@
-2026-07-24 18:46:37 UTC | FAIL | bore.pub:20445 | Client chưa vào được server do lỗi kết nối TCP. Nguyên nhân có thể là firewall chặn cổng 2
 2026-07-24 20:22:45 UTC | FAIL | bore.pub:20445 | Client kết nối được (DNS/JAR OK) nhưng fail TCP. Lỗi ở cổng 20445 bị chặn hoặc server khôn
 2026-07-24 21:38:21 UTC | FAIL | bore.pub:20445 | Client kết nối được DNS/JAR nhưng fail TCP, nghĩa là không thiết lập được kênh truyền dữ l
 2026-07-24 22:43:38 UTC | FAIL | bore.pub:20445 | Client chưa kết nối được do lỗi TCP. JAR tải thành công nhưng handshake thất bại. Cần kiểm
@@ -298,3 +297,4 @@
 2026-08-12 12:33:00 UTC | FAIL | bore.pub:20445 | 
 2026-08-12 14:07:06 UTC | FAIL | bore.pub:20445 | 
 2026-08-12 15:15:07 UTC | FAIL | bore.pub:20445 | 
+2026-08-12 16:13:13 UTC | FAIL | bore.pub:20445 | 

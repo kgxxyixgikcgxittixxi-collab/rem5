@@ -1,4 +1,3 @@
-**1. Server có đang chấp nhận kết nối không?**
 → **KHÔNG.** Tấ
 2026-08-04 23:37:00 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không**, server đang từ chối
 2026-08-05 01:02:10 UTC | FAIL | bore.pub:20445 | no_response | ## Kết quả debug:
@@ -498,3 +497,4 @@ Không. Tất cả đều `ConnectionRefu
 Không. Tất cả 
 2026-08-13 22:02:51 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả đều `ConnectionRefu
+2026-08-13 22:55:44 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không** — tất cả đều `ConnectionRefused`, server/tunnel không chấp nhận kết

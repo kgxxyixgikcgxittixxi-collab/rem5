@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-13 07:54:14 UTC",
+  "ts": "2026-08-13 09:15:41 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -16,5 +16,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "**Phân tích:**\n\nClient **không vào được server**. Lỗi ở **TCP connect** — DNS resolve OK nhưng không thiết lập được connection tới `bore.pub:20445`."
+  "ai": ""
 }

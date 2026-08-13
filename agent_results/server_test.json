@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-13 00:44:59 UTC",
+  "ts": "2026-08-13 03:17:01 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả 5 test đều `ConnectionRefused` → bore tunnel **không hoạt động** hoặc server Java **không chạy** trên port 14445. Cần kiểm tra:\n- `bore local 14445 --url bore.pub:20445` có đang chạy không?\n- `netstat -an | grep 14445` trên server xem có `LISTEN` không.\n\n### 2. Protocol nào đúng nhất?\nKhông có test nào có `rx` → **chưa thể kết luận**. Nhưng dựa trên cấu trúc NRO J2ME đã biết:\n- `version_ff` (`0xFF 0x00"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → server không nghe trên port 20445 (qua bore) hoặc 14445. Kiểm tra bore tunnel đang chạy, server Java bind đúng port, và firewall cho phép.\n\n**2."
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-13 08:07:24 UTC",
+  "ts": "2026-08-13 09:31:29 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả test NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả 5 lệnh đều trả về `ConnectionRefused` — nghĩa là **không có kết nối TCP nào thành công** đến `bore.pub:20445`. Vấn đề nằm ở **network/tunnel**, chưa đến mức protocol.\n\n### 2. Protocol nào đúng / có phản hồi?\n**Không có protocol nào** — `rx` trống rỗng ở mọi lệnh vì kết nối bị từ chối ngay từ đầu.\n\n### 3. NRO J2ME protocol bắt đầu bằng ai?\nTheo đặc trưng game J2ME Việt Nam thời đó (20"
+  "ai_diagnosis": "## Debug Kết Quả NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả đều `ConnectionRefused` — nghĩa là TCP handshake thất bại ngay từ đầu, chưa đến bước gửi/nhận packet.\n\n### 2. Protocol nào đúng / có rx khác rỗng?\n**Không có.** Tất cả `rx: \"\"` — không packet nào được nhận vì kết nối không thành lập.\n\n### 3. Protocol NRO thực sự bắt đầu bằng ai?\nDựa trên test `server_first` (server gửi trước, client chờ 2"
 }

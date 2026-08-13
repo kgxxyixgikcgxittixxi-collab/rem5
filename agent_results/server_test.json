@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-13 14:47:23 UTC",
+  "ts": "2026-08-13 15:43:15 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả 5 lệnh đều `ConnectionRefused` → bore tunnel không forward được hoặc server Java chưa listen đúng port.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào phản hồi (`rx` trống hết). Không thể xác định được.\n\n**3. NRO bắt đầu bằng client hay server gửi trước?**\nKhông rõ do không kết nối được. Tuy nhiên tên `server_first` gợi ý server gửi packet mở đầu trước (common trong nhiều game J2ME).\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel đang chạy: `bore client --local-port 20445 --remote-host <server> --remote-port 14445`\n- Xác nhận server Java đang listen: `netstat"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel có thể chưa forward đúng, hoặc server Java chưa bind đúng port 14445.\n\n**2. Protocol nào đúng / có phản hồi?**\nChưa có protocol nào có phản hồi (`rx` rỗng hết). Cần fix connectivity trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nThông thường J2ME game TCP: **client gửi trước** (login/handshake). Server không gửi trước. Test `server_first` timeout là đúng vì server không chủ động.\n\n**4. Bước fix tiếp theo cụ thể:**\n- Kiểm tra bore tunnel: `bore local 20445 --to 14445` có đang chạy không\n- Test trực tiếp: `nc localhost 14445` từ máy server\n- Kiểm tra firewall/port binding trên server Java\n- Xác nhận server J2ME thực sự listen trên 14445 (log server)"
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-14 21:55:38 UTC",
+  "ts": "2026-08-14 22:21:08 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **Không.** Tất cả đều `ConnectionRefused`. bore tunnel hoặc server Java chưa chạy đúng.\n\n**2. Protocol nào có vẻ đúng / server phản hồi rx không rỗng?**\n→ **Không có.** Tất cả đều lỗi ConnectionRefused, chưa tới bước trao đổi protocol.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?**\n→ **Server gửi trước.** Test `server_first` (chờ server gửi gói đầu tiên trong 2s) là bước đúng. Nhưng vì connection bị từ chối nên không bao giờ đến được bước này.\n\n**4. Bước fix tiếp theo cụ"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel không forward được hoặc server Java chưa bind đúng port.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi (`rx` rỗng hết). Cần fix connectivity trước.\n\n**3. NRO protocol bắt đầu bằng gì?**\nThông thường **server gửi trước** (`server_first`) – client chỉ chờ phản hồi, không chủ động gửi login/cmd.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel: `bore local 14445 --to bore.pub:20445` có đang chạy không?\n- Test trực tiếp: `nc -vz bore.pub 20445` hoặc `telnet bore.pub 20445`\n- Kiểm tra server Java log có bind đúng 14445 không\n- Nếu bore ổn, bỏ `login_cmd1`/`version_ff` đi – chỉ giữ `server_first` chờ phản hồi"
 }

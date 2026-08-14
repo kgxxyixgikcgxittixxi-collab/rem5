@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-14 19:28:21 UTC",
+  "ts": "2026-08-14 20:04:18 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không** — tất cả đều `ConnectionRefused`, nghĩa là không có TCP connection nào được chấp nhận. Có thể bore tunnel chưa chạy, port 14445 không listen, hoặc firewall chặn.\n\n2. **Không có protocol nào** — tất cả `rx` đều rỗng vì không kết nối được.\n\n3. **Server gửi trước** — `server_first` (server gửi packet đầu tiên trong 2s) là cách khởi động chuẩn của NRO J2ME.\n\n4. **Bước fix:**\n   - Kiểm tra bore tunnel đang chạy: `bore client --local-port 20445 --remote-host bore.pub --remote-port 20"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → không có gói nào tới được server. Lỗi nằm ở tầng mạng/tunnel, không phải protocol.\n\n**2. Protocol nào đúng nhất?**\nKhông có gói nào phản hồi (`rx` rỗng toàn bộ). Cần fix connectivity trước.\n\n**3. NRO bắt đầu bằng client hay server gửi trước?**\nDựa trên `server_first` cũng lỗi kết nối nên chưa xác định được. Tuy nhiên phần lớn game J2ME TCP **client gửi trước** (login/handshake init từ client).\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra"
 }

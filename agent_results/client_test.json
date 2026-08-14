@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-14 20:56:51 UTC",
+  "ts": "2026-08-14 21:30:18 UTC",
   "target": "bore.pub:20445",
   "status": "FAIL",
   "results": {
@@ -9,7 +9,7 @@
     },
     "TCP": {
       "ok": false,
-      "error": "timed out"
+      "error": "[Errno 111] Connection refused"
     },
     "JAR": {
       "ok": true,

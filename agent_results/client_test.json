@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-14 14:42:13 UTC",
+  "ts": "2026-08-14 15:36:24 UTC",
   "target": "bore.pub:20445",
   "status": "WARN",
   "results": {
@@ -9,15 +9,15 @@
     },
     "TCP": {
       "ok": true,
-      "data": "28ms"
+      "data": "36ms"
     },
     "ServerKey": {
       "ok": false,
       "error": "no greeting from server"
     },
     "Login": {
-      "ok": true,
-      "data": "timeout (server ignored)"
+      "ok": false,
+      "error": "[Errno 104] Connection reset by peer"
     },
     "JAR": {
       "ok": true,

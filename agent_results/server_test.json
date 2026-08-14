@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-14 20:40:45 UTC",
+  "ts": "2026-08-14 21:02:32 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông rõ. `lat: 0` + `rx: \"\"` có thể là:\n- Kết nối TCP không thành công (bị block firewall/tunnel không forward đúng)\n- Hoặc kết nối được nhưng server không phản hồi gì\n\n→ Cần kiểm tra tunnel bore.pub có thực sự forward từ 20445 → 14445"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả 5 lệnh đều timeout, nghĩa là TCP connect có thể thành công nhưng server không phản hồi gì. Có thể server không nhận được packet đúng format, hoặc bore tunnel có vấn đề.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào nhận được phản hồi (`rx` rỗng). Cần kiểm tra lại bore tunnel forwarding.\n\n**3. Protocol NRO bắt đầu bằng gì?**\nThông thường **client gửi trước** (login/version), không phải server gửi trước. `server_first` timeout là bình thường nếu server không chủ động gửi.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel: `nc -v bore.pub 20445` xem có kết nối TCP không\n- Thử kết nối trực tiếp đến port 14445 (bỏ bore) để loại trừ tunnel\n- Ghi lại raw packet bằng tcpdump/Wireshark để xem server có nhận được gì không\n- Thử gửi từng byte một thay vì combined packet"
 }

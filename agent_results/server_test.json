@@ -1,45 +1,45 @@
 {
-  "ts": "2026-08-14 12:02:12 UTC",
+  "ts": "2026-08-14 13:33:36 UTC",
   "target": "bore.pub:20445",
-  "any_connected": false,
-  "any_response": false,
-  "best_probe": null,
+  "any_connected": true,
+  "any_response": true,
+  "best_probe": "login_cmd1",
   "probes": {
     "server_first": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 280,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "login_cmd1": {
-      "ok": false,
-      "lat": 0,
-      "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "ok": true,
+      "lat": 23,
+      "rx": "485454502f312e31203430302042616420526571756573740d0a5365727665723a206e67696e782f312e32392e380d0a446174653a204672692c2031342041756720323032362031333a33333a343520474d540d0a436f6e74656e742d547970653a20746578742f68746d6c0d0a436f6e74656e742d4c656e6774683a203135",
+      "err": null,
+      "mode": "sent_first"
     },
     "version_ff": {
-      "ok": false,
-      "lat": 0,
-      "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "ok": true,
+      "lat": 25,
+      "rx": "485454502f312e31203430302042616420526571756573740d0a5365727665723a206e67696e782f312e32392e380d0a446174653a204672692c2031342041756720323032362031333a33333a343620474d540d0a436f6e74656e742d547970653a20746578742f68746d6c0d0a436f6e74656e742d4c656e6774683a203135",
+      "err": null,
+      "mode": "sent_first"
     },
     "empty_pkt": {
-      "ok": false,
-      "lat": 0,
-      "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "ok": true,
+      "lat": 23,
+      "rx": "485454502f312e31203430302042616420526571756573740d0a5365727665723a206e67696e782f312e32392e380d0a446174653a204672692c2031342041756720323032362031333a33333a343720474d540d0a436f6e74656e742d547970653a20746578742f68746d6c0d0a436f6e74656e742d4c656e6774683a203135",
+      "err": null,
+      "mode": "sent_first"
     },
     "cmd_neg101": {
-      "ok": false,
-      "lat": 0,
-      "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "ok": true,
+      "lat": 25,
+      "rx": "485454502f312e31203430302042616420526571756573740d0a5365727665723a206e67696e782f312e32392e380d0a446174653a204672692c2031342041756720323032362031333a33333a343920474d540d0a436f6e74656e742d547970653a20746578742f68746d6c0d0a436f6e74656e742d4c656e6774683a203135",
+      "err": null,
+      "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKHÔNG. Tất cả đều `ConnectionRefused` → bore tunnel có thể chưa chạy đúng, hoặc server Java chưa bind port 14445.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào được test vì không kết nối được. Nhưng cấu trúc `server_first` (server gửi trước) là hợp lý nhất cho NRO J2ME.\n\n**3. NRO protocol bắt đầu bằng ai?**\nServer gửi trước. Client chờ packet khởi tạo từ server (~2s timeout).\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel đang chạy: `bore client --local-addr 20445 --remote-addr bore.pub:20445`\n- Kiểm tra server Java bind đúng port 14445"
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nCó, TCP kết nối thành công (lat ~23-280ms). Nhưng server **không hiểu protocol** — nó trả về **HTTP 400 Bad Request** thay vì phản hồi binary game.\n\n**2. Protocol nào đúng?**\nKhông có protocol nào đúng. Tất cả đều nhận `HTTP/1.1 400 Bad`. Đây là phản hồi HTTP, không phải binary NRO."
 }

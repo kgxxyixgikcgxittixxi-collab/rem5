@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-14 10:27:01 UTC",
+  "ts": "2026-08-14 11:20:08 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả các lệnh đều trả về `ConnectionRefused` — server hoặc tunnel chưa sẵn sàng nhận kết nối TCP.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào cho phản hồi (`rx` rỗng hết). Không thể xác định được.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nKhó xác định từ test hiện tại. Thường J2ME game server **client gửi trước** (handshake/login), nhưng cần reverse engineer"
+  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **Không.** Tất cả đều `ConnectionRefused`. Tunnel bore.pub:20445 → port 14445 đang bị lỗi forward, hoặc server Java chưa bind đúng port.\n\n**2. Protocol nào có vẻ đúng nhất?**\n→ Không có packet nào nhận được phản hồi (`rx` rỗng hết). Không thể đánh giá protocol nào đúng khi chưa kết nối được.\n\n**3. NRO protocol bắt đầu bằng ai?**\n→ Theo test `server_first` (chờ server gửi trước 2s), protocol **server gửi trước** — client mở kết nối"
 }

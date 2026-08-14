@@ -1,15 +1,23 @@
 {
-  "ts": "2026-08-14 12:09:54 UTC",
+  "ts": "2026-08-14 13:44:59 UTC",
   "target": "bore.pub:20445",
-  "status": "FAIL",
+  "status": "WARN",
   "results": {
     "DNS": {
       "ok": true,
       "data": "159.223.110.159"
     },
     "TCP": {
+      "ok": true,
+      "data": "12ms"
+    },
+    "ServerKey": {
       "ok": false,
-      "error": "[Errno 111] Connection refused"
+      "error": "no greeting from server"
+    },
+    "Login": {
+      "ok": false,
+      "error": "[Errno 104] Connection reset by peer"
     },
     "JAR": {
       "ok": true,

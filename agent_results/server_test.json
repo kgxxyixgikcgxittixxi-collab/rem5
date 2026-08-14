@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-14 20:04:18 UTC",
+  "ts": "2026-08-14 20:40:45 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -9,37 +9,37 @@
       "ok": false,
       "lat": 0,
       "rx": "",
-      "err": "ConnectionRefused",
+      "err": "Timeout",
       "mode": ""
     },
     "login_cmd1": {
       "ok": false,
       "lat": 0,
       "rx": "",
-      "err": "ConnectionRefused",
+      "err": "Timeout",
       "mode": ""
     },
     "version_ff": {
       "ok": false,
       "lat": 0,
       "rx": "",
-      "err": "ConnectionRefused",
+      "err": "Timeout",
       "mode": ""
     },
     "empty_pkt": {
       "ok": false,
       "lat": 0,
       "rx": "",
-      "err": "ConnectionRefused",
+      "err": "Timeout",
       "mode": ""
     },
     "cmd_neg101": {
       "ok": false,
       "lat": 0,
       "rx": "",
-      "err": "ConnectionRefused",
+      "err": "Timeout",
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → không có gói nào tới được server. Lỗi nằm ở tầng mạng/tunnel, không phải protocol.\n\n**2. Protocol nào đúng nhất?**\nKhông có gói nào phản hồi (`rx` rỗng toàn bộ). Cần fix connectivity trước.\n\n**3. NRO bắt đầu bằng client hay server gửi trước?**\nDựa trên `server_first` cũng lỗi kết nối nên chưa xác định được. Tuy nhiên phần lớn game J2ME TCP **client gửi trước** (login/handshake init từ client).\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra"
+  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông rõ. `lat: 0` + `rx: \"\"` có thể là:\n- Kết nối TCP không thành công (bị block firewall/tunnel không forward đúng)\n- Hoặc kết nối được nhưng server không phản hồi gì\n\n→ Cần kiểm tra tunnel bore.pub có thực sự forward từ 20445 → 14445"
 }

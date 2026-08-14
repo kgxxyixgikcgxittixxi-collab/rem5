@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-14 08:01:44 UTC",
+  "ts": "2026-08-14 09:16:00 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Debug Kết Quả\n\n### 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả đều `ConnectionRefused` — TCP handshake thất bại ngay từ đầu, chưa tới tầng protocol. Vấn đề nằm ở **bore tunnel**, không phải game server.\n\n### 2. Protocol nào có phản hồi?\n**Không có protocol nào.** `rx` trống rỗng ở mọi lệnh vì kết nối bị từ chối trước khi dữ liệu được gửi/nhận.\n\n### 3. NRO protocol bắt đầu bằng ai?\nKhông thể xác định vì chưa có kết nối thành công. Tuy nhiên, lệnh `server_first` (timeout 2s, client chờ server gửi trước) cho thấy **server gửi trước** — đây là pattern phổ biến của J2ME MMO protocol."
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel có thể chưa hoạt động hoặc server Java chưa bind đúng port. Kiểm tra bore tunnel status và `netstat -an` trên server.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi vì không kết nối được. Khi fix kết nối, `server_first` (server gửi trước) thường là bước đầu tiên đúng.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nServer gửi trước. Client chờ packet đầu tiên từ server (thường là handshake/version).\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel: `bore local 14445 --to bore.pub:20445` có đang chạy không\n- Test trực tiếp: `telnet bore.pub 20445` hoặc `nc -v bore.pub 20445`\n- Xác nhận server Java bind `0.0.0.0:14445` (không phải `127.0.0.1`)\n- Kiểm tra firewall cho phép port 20445"
 }

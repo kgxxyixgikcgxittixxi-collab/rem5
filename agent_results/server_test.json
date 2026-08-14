@@ -1,45 +1,45 @@
 {
-  "ts": "2026-08-14 13:33:36 UTC",
+  "ts": "2026-08-14 14:34:31 UTC",
   "target": "bore.pub:20445",
   "any_connected": true,
-  "any_response": true,
-  "best_probe": "login_cmd1",
+  "any_response": false,
+  "best_probe": null,
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 280,
+      "lat": 34,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 23,
-      "rx": "485454502f312e31203430302042616420526571756573740d0a5365727665723a206e67696e782f312e32392e380d0a446174653a204672692c2031342041756720323032362031333a33333a343520474d540d0a436f6e74656e742d547970653a20746578742f68746d6c0d0a436f6e74656e742d4c656e6774683a203135",
+      "lat": 10,
+      "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 25,
-      "rx": "485454502f312e31203430302042616420526571756573740d0a5365727665723a206e67696e782f312e32392e380d0a446174653a204672692c2031342041756720323032362031333a33333a343620474d540d0a436f6e74656e742d547970653a20746578742f68746d6c0d0a436f6e74656e742d4c656e6774683a203135",
+      "lat": 7,
+      "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 23,
-      "rx": "485454502f312e31203430302042616420526571756573740d0a5365727665723a206e67696e782f312e32392e380d0a446174653a204672692c2031342041756720323032362031333a33333a343720474d540d0a436f6e74656e742d547970653a20746578742f68746d6c0d0a436f6e74656e742d4c656e6774683a203135",
+      "lat": 11,
+      "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 25,
-      "rx": "485454502f312e31203430302042616420526571756573740d0a5365727665723a206e67696e782f312e32392e380d0a446174653a204672692c2031342041756720323032362031333a33333a343920474d540d0a436f6e74656e742d547970653a20746578742f68746d6c0d0a436f6e74656e742d4c656e6774683a203135",
+      "lat": 14,
+      "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nCó, TCP kết nối thành công (lat ~23-280ms). Nhưng server **không hiểu protocol** — nó trả về **HTTP 400 Bad Request** thay vì phản hồi binary game.\n\n**2. Protocol nào đúng?**\nKhông có protocol nào đúng. Tất cả đều nhận `HTTP/1.1 400 Bad`. Đây là phản hồi HTTP, không phải binary NRO."
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 test đều `ok: true` — TCP handshake thành công, server không đóng kết nối.\n\n### 2. Protocol nào có phản hồi `rx` khác rỗng?\n**Không có.** Tất cả `rx: \"\"` — server **không gửi lại bất kỳ byte nào** sau khi nhận packet từ client.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\nDựa trên `server_first` (timeout 2s, `rx: \"\"`) → **Server KHÔNG gửi trước"
 }

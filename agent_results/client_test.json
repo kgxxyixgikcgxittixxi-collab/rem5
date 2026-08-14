@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-14 15:36:24 UTC",
+  "ts": "2026-08-14 16:35:05 UTC",
   "target": "bore.pub:20445",
   "status": "WARN",
   "results": {
@@ -9,19 +9,19 @@
     },
     "TCP": {
       "ok": true,
-      "data": "36ms"
+      "data": "70ms"
     },
     "ServerKey": {
       "ok": false,
       "error": "no greeting from server"
     },
     "Login": {
-      "ok": false,
-      "error": "[Errno 104] Connection reset by peer"
+      "ok": true,
+      "data": "0x485454502f312e312034303020426164"
     },
     "JAR": {
-      "ok": true,
-      "data": "nrmod_ws.jar 1639KB 223cls"
+      "ok": false,
+      "error": "Command '['jar', 'tf', 'attached_assets/nrmod_ws.jar']' timed out after 10 seconds"
     }
   },
   "ai": ""

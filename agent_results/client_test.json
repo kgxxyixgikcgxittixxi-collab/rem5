@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-14 16:35:05 UTC",
+  "ts": "2026-08-14 17:39:57 UTC",
   "target": "bore.pub:20445",
   "status": "WARN",
   "results": {
@@ -9,7 +9,7 @@
     },
     "TCP": {
       "ok": true,
-      "data": "70ms"
+      "data": "75ms"
     },
     "ServerKey": {
       "ok": false,
@@ -20,8 +20,8 @@
       "data": "0x485454502f312e312034303020426164"
     },
     "JAR": {
-      "ok": false,
-      "error": "Command '['jar', 'tf', 'attached_assets/nrmod_ws.jar']' timed out after 10 seconds"
+      "ok": true,
+      "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
   "ai": ""

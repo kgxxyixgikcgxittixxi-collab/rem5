@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-15 14:48:26 UTC",
+  "ts": "2026-08-15 15:02:29 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **KHÔNG.** Tất cả đều `ConnectionRefused`. Bore tunnel có thể chưa hoạt động đúng, hoặc server Java chưa bind đúng port 14445. Cần kiểm tra:\n- `bore.exe server --listen-tcp 0.0.0.0:20445` có đang chạy không\n- Server Java có đang listen trên `0.0.0.0:14445` hay không (`netstat -an | findstr 14445`)\n\n**2. Protocol nào có vẻ đúng nhất?**\n→ **Chưa có protocol nào**"
+  "ai_diagnosis": "## Kết quả debug:\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả 5 test đều `ConnectionRefused` — bore tunnel **không forward được** hoặc server Java **không lắng nghe** đúng port.\n\n### 2. Protocol nào có phản hồi?\n**Không có protocol nào.** Tất cả `rx: \"\"` vì chưa kết nối được.\n\n### 3. NRO J2ME protocol bắt đầu bằng ai?\nTheo tài liệu NRO J2ME cổ điển: **"
 }

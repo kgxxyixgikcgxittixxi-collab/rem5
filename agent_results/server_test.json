@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-15 02:05:23 UTC",
+  "ts": "2026-08-15 03:01:40 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Debug Kết Quả\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → không có TCP handshake nào thành công. Vấn đề ở tầng mạng, chưa đến tầng protocol.\n\n**2. Protocol nào đúng / có rx?**\nKhông có protocol nào. Tất cả `rx` rỗng vì kết nối bị từ chối ngay lập tức.\n\n**3. NRO J2ME protocol bắt đầu bằng ai?**\n**Client gửi trước.** Server NRO J2ME không gửi `server_first` — client phải chủ động gửi lệnh (thường là `login_cmd1` hoặc `version_ff` đầu tiên). Test `server_first` với timeout 2s là không cần thiết.\n\n**4. Bước fix tiếp theo:**\n\n| Bước | Hành động |\n|------|-----------|\n| 1 | Kiểm tra bore tunnel có đang chạy: `bore local"
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả 5 lệnh đều `ConnectionRefused` → bore tunnel không forward được hoặc server Java chưa listen đúng port.\n\n### 2. Protocol nào đúng / server phản hồi?\n**Không có** — tất cả `rx` trống rỗng vì không kết nối được.\n\n### 3. NRO protocol thực sự bắt đầu bằng gì?\nTheo tài liệu J2ME NRO cổ điển: **Server gửi trước** packet `server_first` (thường là version/chào hỏi). Client chờ ~2s rồi mới gửi `login_cmd1`.\n\n### 4. Bước fix tiếp theo:\n1. **Kiểm tra bore tunnel**: `bore list` xem port 20445 đã forward chưa\n2. **Test trực tiếp**: `nc -v bore.pub 20445` hoặc `telnet bore.pub"
 }

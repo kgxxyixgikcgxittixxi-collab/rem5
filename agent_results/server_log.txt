@@ -1,5 +1,3 @@
-
-**1. Server có đang chấp nhận kết nối không?**
 **KHÔNG.*
 2026-08-08 16:02:49 UTC | FAIL | bore.pub:20445 | no_response | ## Kết quả debug NRO J2ME
 
@@ -498,3 +496,5 @@ Không. Tất cả đều `ConnectionRefu
 Chưa. Tất cả test đều `Connection
 2026-08-15 08:47:45 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. `ConnectionRefused` trên c
+2026-08-15 09:11:38 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
+Không. Tất cả đều `ConnectionRefu

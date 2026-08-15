@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-15 08:47:45 UTC",
+  "ts": "2026-08-15 09:11:38 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. `ConnectionRefused` trên cả 5 lệnh chứng tỏ TCP SYN bị từ chối tại bore.pub:20445. Có thể: bore tunnel chưa active, port 20445 chưa forward đúng về 14445, hoặc firewall chặn.\n\n**2. Protocol nào đúng nhất?**\nKhông có protocol nào phản hồi (`rx` rỗng toàn bộ). Cần fix connectivity trước.\n\n**3. NRO protocol bắt đầu bằng gì?**\nServer gửi trước — `server_first` test chờ server push packet trong 2s. Đây là pattern phổ biến của NRO J2ME: server khởi tạo handshake.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel: `bore connect 14445` đã chạy chưa?\n- Test local: `nc -vz bore.pub"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → TCP handshake thất bại ngay từ đầu, chưa đến lớp protocol.\n\n**2. Protocol nào đúng / server phản hồi rx khác rỗng?**\nKhông có. Không packet nào đạt đến lớp ứng dụng vì kết nối bị từ chối trước đó.\n\n**3. Protocol NRO"
 }

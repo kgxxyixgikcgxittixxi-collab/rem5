@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-15 21:15:15 UTC",
+  "ts": "2026-08-15 21:38:49 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả 5 test đều `ConnectionRefused` → TCP handshake thất bại ngay từ đầu. Server Java hoặc bore tunnel không lắng nghe trên `20445`.\n\n### 2. Protocol nào đúng / có rx?\n**Không có protocol nào** — vì kết nối TCP chưa thành lập nên không có byte nào được gửi/nhận.\n\n### 3."
+  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **Không.** Tất cả đều `ConnectionRefused`. Vấn đề nằm ở **mạng/tunnel**, không phải protocol.\n\n**2. Protocol nào đúng / có phản hồi?**\n→ **Không có.** Tất cả `rx` rỗng vì không kết nối được.\n\n**3. NRO protocol bắt đầu bằng ai?**\n→ **Server gửi trước** (server-first). Client chờ packet đầu tiên từ server trong 2s timeout.\n\n**4. Bước fix tiếp theo:**\n\n| Bước | Hành động |\n|------|-----------|\n| 1"
 }

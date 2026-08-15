@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-15 19:28:45 UTC",
+  "ts": "2026-08-15 19:47:54 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không.** Tất cả lệnh đều `ConnectionRefused` — server/tunnel không chấp nhận kết nối TCP.\n\n2. **Không có protocol nào.** Toàn bộ `rx` trống rỗng, không có phản hồi nào từ server.\n\n3. **Server gửi trước.** Test `server_first` (2s timeout chờ server gửi gói đầu) là đúng hướng — NRO J2ME thường server chủ động gửi handshake/chào hỏi sau khi TCP connect thành công.\n\n4. **Fix bore tunnel trước:**\n   - Kiểm tra bore tunnel đã chạy: `bore client --local-port 20445 --remote-host <server> --remote-port 14445`\n   - Xác nhận server Java đang listen:"
+  "ai_diagnosis": "1. **Không** — Tất cả đều `ConnectionRefused`, server/tunnel không chấp nhận kết nối TCP.\n\n2. **Không có protocol nào** — Tất cả `rx` rỗng vì không kết nối được.\n\n3. **Server gửi trước** — Test `server_first` (chờ server gửi trong 2s) là bước chuẩn của NRO J2ME: client connect → server gửi packet khởi tạo → client mới phản hồi.\n\n4. **Fix tiếp:**\n   - Kiểm tra bore tunnel có thực sự forward từ `20445 → 14445` không: `bore client --local-port 20"
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-15 22:18:53 UTC",
+  "ts": "2026-08-15 22:43:08 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả test đều `ConnectionRefused` → không có TCP connection nào được thiết lập.\n\n**2. Protocol nào có vẻ đúng nhất?**\nKhông có protocol nào phản hồi (`rx` trống rỗng). Vấn đề nằm ở tầng kết nối, chưa đến tầng protocol.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nServer gửi trước (`server_first` - server initiates). Client chờ server gửi packet đầu tiên trong 2s timeout.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel: `bore local 14445 --remote bore.pub:20445` có đang chạy không\n- Xác nhận server Java đang listen port 14445: `netstat -tlnp"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel không forward được, hoặc server Java chưa chạy, hoặc firewall chặn port 20445.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi (`rx` rỗng). Cần fix connectivity trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nClient gửi trước. Thường là `login_cmd1` hoặc `version_ff` — server không gửi `server_first` trước.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel: `bore list` hoặc log bore server.\n- Test trực tiếp `telnet bore.pub 20445`.\n- Xác nhận server Java đang listen port 14445: `netstat -tlnp | grep 14445`.\n- Kiểm tra firewall cho phép port 20445."
 }

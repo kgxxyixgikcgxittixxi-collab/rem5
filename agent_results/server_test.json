@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-15 04:16:02 UTC",
+  "ts": "2026-08-15 04:50:33 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả test đều `ConnectionRefused` → server không nghe trên port 20445 hoặc bore tunnel chưa hoạt động.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào đúng vì chưa kết nối được. Khi kết nối thành công, cần kiểm tra `server_first` trước.\n\n**3. Protocol NRO bắt đầu bằng ai?**\nServer gửi trước (`server_first` - server initiates). Client chờ phản hồi trong 2s.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel: `bore client --url wss://bore.pub --port 14445` có đang chạy không\n- Xác nhận server Java đang listen port 14445: `netstat -tlnp | grep 14445`\n- Test trực tiếp"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả 5 lệnh đều `ConnectionRefused` → server không nghe trên port 20445 (bore tunnel) hoặc 14445.\n\n**2. Protocol nào đúng nhất?**\nKhông có protocol nào phản hồi (`rx` rỗng hết). Chưa thể xác định được.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nChưa rõ do không kết nối được. Tuy nhiên, lệnh `server_first`"
 }

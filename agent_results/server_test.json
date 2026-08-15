@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-15 11:51:16 UTC",
+  "ts": "2026-08-15 12:12:16 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả test đều `ConnectionRefused` → TCP handshake thất bại ngay từ đầu. Vấn đề nằm ở **network layer**, chưa đến protocol.\n\n### 2. Protocol nào đúng / server phản hồi?\n**Không có** - tất cả `rx` rỗng vì không kết nối được.\n\n### 3. NRO protocol bắt đầu bằng ai?\n**Server gửi trước** (server-first). Client chờ 2s để nhận packet khởi tạo từ server. Đây là pattern phổ"
 }

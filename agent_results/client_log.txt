@@ -1,4 +1,3 @@
-2026-07-28 22:42:53 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server. Loi o TCP, can kiem tra ket noi mang, dien thoai server, firewa
 2026-07-28 23:43:38 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc server. Tai lieu khong du de phan tich chi tiet.
 2026-07-29 01:12:15 UTC | WARN | bore.pub:20445 | Khong the ket noi duoc server. Loi o ServerKey (khong co greeting) va Login (timeout). Can
 2026-07-29 04:33:00 UTC | FAIL | bore.pub:20445 | Khong the ket noi vung server vi loi TCP. DNS va OK, neu JAR dung thi can kiem tra firewal
@@ -298,3 +297,4 @@ Client **không vào được server**. Lỗi ở **TCP connect** — DNS resolv
 2026-08-15 01:23:04 UTC | FAIL | bore.pub:20445 | 
 2026-08-15 02:34:48 UTC | FAIL | bore.pub:20445 | 
 2026-08-15 03:24:16 UTC | FAIL | bore.pub:20445 | 
+2026-08-15 04:04:44 UTC | FAIL | bore.pub:20445 | 

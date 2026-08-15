@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-15 16:03:40 UTC",
+  "ts": "2026-08-15 16:36:33 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — bore tunnel hoặc server Java chưa chạy đúng.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi (`rx` trống hết). Cần fix connectivity trước.\n\n**3. NRO J2ME protocol bắt đầu bằng gì?**\nThường **server gửi trước** (handshake init). Test `server_first` (timeout"
+  "ai_diagnosis": ""
 }

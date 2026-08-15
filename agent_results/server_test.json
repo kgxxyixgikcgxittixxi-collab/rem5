@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-15 06:01:33 UTC",
+  "ts": "2026-08-15 06:53:38 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không** - Tất cả đều `ConnectionRefused`, bore tunnel có thể chưa hoạt động hoặc server chưa listen đúng port.\n\n2. **Không có protocol nào** - Tất cả rx đều trống vì không kết nối được.\n\n3. **Server gửi trước** - `server_first` là bước đầu tiên, client chờ server gửi packet khởi tạo trong 2s.\n\n4. **Fix bore tunnel trước:**\n   - Kiểm tra bore server đang chạy: `bore client --local-port 20445 --remote-host <server> --remote-port 14445`\n   - Xác nhận server Java listen đúng port 14445: `netstat -tlnp | grep 14445`\n   - Test TCP thuần: `nc -v <host> 20445`\n   - Nếu bore không fix được, thử SSH tunnel thay thế: `ssh -L 20445:localhost:14445 user@server`"
+  "ai_diagnosis": "## Debug NRO J2ME - bore.pub:20445\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → TCP handshake thất bại ở tầng socket. Vấn đề không nằm ở protocol mà ở **kết nối mạng**.\n\n**2. Protocol nào đúng nhất?**\nKhông có protocol nào trả về `rx`. Chưa tới bước kiểm tra protocol.\n\n**3. Protocol NRO bắt đầu bằng ai?**\nDựa trên test `server_first` (client chờ server gửi trước trong 2s) → **Server gửi trước**. Đây là pattern phổ biến của NRO J2ME.\n\n**4. Bước fix tiếp theo:**\n\n| Bước | Hành động |\n|------|-----------|\n| 1 | Kiểm tra bore tunnel đang chạy: `bore client"
 }

@@ -1,4 +1,3 @@
-2026-07-30 20:47:23 UTC | FAIL | bore.pub:20445 | Khong the ket noi voi server do loi TCP. DNS va JAR OK. Can kiem tra ket noi mang, port 20
 2026-07-30 22:08:40 UTC | FAIL | bore.pub:20445 | Không thể kết nối do lỗi TCP. DNS và JAR ok. Kiểm tra firewall, cổng server, hoặc mạng.
 2026-07-30 23:18:31 UTC | FAIL | bore.pub:20445 | Khong the ket noi vung server. Loi o muc TCP, co the do server dang cham dung hoac firewal
 2026-07-31 01:06:25 UTC | FAIL | bore.pub:20445 | Khong ket noi duoc do loi TCP. Can kiem tra mang, firewall, hoac port 20445 khong hoat don
@@ -298,3 +297,4 @@ Client **không vào được server**. Lỗi ở **TCP connect** — DNS resolv
 2026-08-15 16:53:34 UTC | FAIL | bore.pub:20445 | 
 2026-08-15 17:22:35 UTC | FAIL | bore.pub:20445 | 
 2026-08-15 17:47:32 UTC | FAIL | bore.pub:20445 | 
+2026-08-15 18:33:52 UTC | FAIL | bore.pub:20445 | 

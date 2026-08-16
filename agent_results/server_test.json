@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-16 04:20:26 UTC",
+  "ts": "2026-08-16 04:55:22 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không** — tất cả đều `ConnectionRefused`, bore tunnel có thể chưa chạy hoặc forward sai.\n\n2. **Không có** — mọi lệnh đều lỗi ở tầng TCP, chưa tới phản hồi protocol.\n\n3. **Server gửi trước** — `server_first` là đúng hướng, NRO J2ME server thường gửi greeting packet đầu tiên.\n\n4. **Fix tiếp:**\n   - Kiểm tra bore tunnel đang chạy: `bore client --local-addr 0.0.0.0:20445 --remote-addr bore.pub:20445`\n   - Test trực tiếp: `nc -v bore.pub 20445` hoặc `telnet bore.pub 20445`\n   - Xác nhận server Java bind đúng port"
+  "ai_diagnosis": "## Kết quả debug:\n\n1. **Không** — Tất cả đều `ConnectionRefused`, nghĩa là không có TCP connection nào được chấp nhận. Vấn đề nằm ở tầng mạng, chưa đến protocol.\n\n2. **Không có protocol nào** — Tất cả `rx` đều rỗng vì connection bị từ chối ngay.\n\n3. **Server gửi trước** — Test `server_first` (chờ server gửi gói đầu tiên trong 2s) là bước khởi động chuẩn của NRO J2ME.\n\n4. **Bước fix:**\n   - Kiểm tra bore tunnel đang chạy: `bore client --"
 }

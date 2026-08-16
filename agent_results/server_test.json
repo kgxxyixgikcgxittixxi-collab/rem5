@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-16 14:52:21 UTC",
+  "ts": "2026-08-16 15:11:12 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không** - Tất cả đều `ConnectionRefused`. bore tunnel hoặc server Java chưa chạy đúng.\n\n2. **Không có** - Tất cả `rx` đều rỗng vì không kết nối được.\n\n3. **Server gửi trước** - NRO J2ME protocol server-initiated (server_first).\n\n4. **Bước fix:**\n   - Kiểm tra bore tunnel đang forward đúng port: `bore local 20445 --remote bore.pub:14445` (hay ngược lại?)\n   - Xác nhận server Java đang listen trên port **14445**: `netstat -tlnp | grep 14445`\n   - Test trực tiếp: `nc -v server_ip 14445` để loại trừ bore tunnel\n   - Nếu bore tunnel đúng, có thể server chưa bind đúng interface ("
+  "ai_diagnosis": "Tôi là Agnes, phát triển bởi Sapiens AI.\n\nDựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → server không nghe trên port 20445 (bore tunnel) hoặc 14445.\n\n**2. Protocol nào đúng?**\nChưa có protocol nào đúng — tất cả đều lỗi ở tầng TCP (chưa gửi được packet đi).\n\n**"
 }

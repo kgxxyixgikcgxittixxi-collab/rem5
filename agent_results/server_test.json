@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-16 20:52:44 UTC",
+  "ts": "2026-08-16 21:11:33 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Trả lời:\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — bore tunnel đang không forward đúng từ `20445 → 14445`. Cần kiểm tra lại cấu hình bore, xác nhận tunnel đang active và port 14445 thực sự listen được.\n\n**2. Protocol nào đúng / server phản hồi rx không rỗng?**\nKhông có protocol nào được test thực sự vì **chưa kết nối được**. Mọi gói tin đều bị từ chối ở tầng TCP.\n\n**3. NRO protocol"
+  "ai_diagnosis": "## Kết quả debug:\n\n**1. Server có đang chấp nhận kết nối không?**\n**Không.** Tất cả 5 lệnh đều `ConnectionRefused` → port 20445 đang đóng/không có gì lắng nghe. Có thể:\n- bore tunnel chưa chạy hoặc đã chết\n- bore tunnel forward sai port (cần kiểm tra `bore local 20445 --remote bore.pub:20445` có đúng không)\n- Server Java (14445) chưa bind đúng interface\n\n**2. Protocol nào có vẻ đúng nhất?**\n**Không có protocol nào** — tất cả đều không nhận được phản hồi (`rx` rỗng). Chưa thể đánh giá protocol nào đúng.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**"
 }

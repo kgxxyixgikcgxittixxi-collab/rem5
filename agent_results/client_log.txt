@@ -1,4 +1,3 @@
-2026-08-03 00:15:29 UTC | FAIL | bore.pub:20445 | 
 2026-08-03 04:01:45 UTC | FAIL | bore.pub:20445 | 
 2026-08-03 07:49:14 UTC | FAIL | bore.pub:20445 | AI err:The read operation timed out
 2026-08-03 11:28:20 UTC | FAIL | bore.pub:20445 | 
@@ -298,3 +297,4 @@ Client **không vào được server**. Lỗi ở **TCP connect** — DNS resolv
 2026-08-16 17:56:53 UTC | FAIL | bore.pub:20445 | 
 2026-08-16 18:37:51 UTC | FAIL | bore.pub:20445 | 
 2026-08-16 19:34:40 UTC | FAIL | bore.pub:20445 | 
+2026-08-16 19:56:34 UTC | FAIL | bore.pub:20445 | 

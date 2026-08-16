@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-16 19:48:02 UTC",
+  "ts": "2026-08-16 19:59:58 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả 5 test đều `ConnectionRefused` → server không nghe trên port 20445 hoặc tunnel bore không hoạt động.\n\n**2. Protocol nào có vẻ đúng nhất?**\nKhông có protocol nào phản hồi (`rx` trống hết). Chưa thể xác định.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nThông thường **client gửi trước** (login/hello packet), không phải server gửi trước. `server_first` timeout là bình thường.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel: `bore local 20445 --remote bore.pub:14445` có đang chạy không\n- Test trực tiếp: `nc -v bore.pub 20445`\n- Kiểm tra server Java có bind đúng port 14445 không\n- Thử port khác hoặc dùng tunnel khác (ngrok, localtunnel) để loại trừ bore"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → tunnel bore hoặc server Java chưa chạy/đóng.\n\n**2. Protocol nào đúng?**\nChưa có protocol nào đúng — tất cả đều lỗi kết nối ở tầng TCP, chưa tới tầng ứng dụng.\n\n**3. NRO thực sự bắt đầu bằng gì?**\nTheo protocol J2ME NRO chuẩn: **client gửi trước** (không phải server). Client mở kết nối rồi gửi `cmd_neg101` (register URL) hoặc `login_cmd1` trước.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra server Java có đang listen trên `14445` không: `netstat -tlnp | grep 14"
 }

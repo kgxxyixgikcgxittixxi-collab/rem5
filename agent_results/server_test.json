@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-16 16:45:44 UTC",
+  "ts": "2026-08-16 17:03:04 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Debug NRO J2ME - bore.pub:20445\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả 5 test đều `ConnectionRefused` — bore tunnel không forward được, hoặc server Java không listen đúng port.\n\n### 2. Protocol nào đúng nhất?\n**Chưa có protocol nào đúng** vì không có packet nào đến được server. Cần fix connectivity trước.\n\n### 3. NRO protocol bắt đầu bằng ai?\n**Client gửi trước.** J2ME NRO là client-initiated TCP. Server không gửi `server_first` — packet đầu tiên là `"
+  "ai_diagnosis": "1. **Server không chấp nhận kết nối** - Tất cả test đều `ConnectionRefused`. Có thể server đang down, port sai, hoặc firewall chặn.\n\n2. **Không có protocol nào đúng** - Tất cả đều lỗi. Cần kiểm tra lại server status.\n\n3. **NRO protocol bắt đầu bằng server** - Theo tài liệu J2ME game cổ, server thường gửi handshake trước. Test `server_first` là đúng hướng.\n\n4. **Bước fix cụ thể:**\n   - Kiểm tra Java server có chạy không: `netstat -tlnp | grep 14445`\n   - Test"
 }

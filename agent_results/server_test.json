@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-16 04:55:22 UTC",
+  "ts": "2026-08-16 05:26:12 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Kết quả debug:\n\n1. **Không** — Tất cả đều `ConnectionRefused`, nghĩa là không có TCP connection nào được chấp nhận. Vấn đề nằm ở tầng mạng, chưa đến protocol.\n\n2. **Không có protocol nào** — Tất cả `rx` đều rỗng vì connection bị từ chối ngay.\n\n3. **Server gửi trước** — Test `server_first` (chờ server gửi gói đầu tiên trong 2s) là bước khởi động chuẩn của NRO J2ME.\n\n4. **Bước fix:**\n   - Kiểm tra bore tunnel đang chạy: `bore client --"
+  "ai_diagnosis": "## Debug NRO J2ME Protocol\n\n### 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả 5 lệnh đều `ConnectionRefused` → bore tunnel **không hoạt động** hoặc server Java **không listen** trên port 14445. Cần kiểm tra:\n- `bore client --url bore.pub"
 }

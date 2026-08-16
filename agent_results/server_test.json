@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-16 10:26:21 UTC",
+  "ts": "2026-08-16 10:49:18 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả 5 lệnh đều trả về `ConnectionRefused` — server/tunnel không chấp nhận kết nối TCP nào.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào được xác nhận — tất cả đều lỗi ở tầng kết nối. Nếu phải đoán, `server_first` (server gửi trước) là mô hình phổ biến nhất của NRO J2ME.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nThường là **server gửi trước**"
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả đều `ConnectionRefused` — nghĩa là **không có gì đang lắng nghe trên port 20445**. Vấn đề nằm ở tầng TCP, chưa đến tầng protocol.\n\nNguyên nhân có thể:\n- bore tunnel chưa chạy hoặc bị disconnect\n- Server Java trên port 14445 chưa khởi động\n- Firewall chặn port 20445\n\n### 2. Protocol nào có vẻ đúng nhất?\n**Không có protocol nào** — vì không có response nào"
 }

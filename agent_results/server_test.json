@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-16 09:57:17 UTC",
+  "ts": "2026-08-16 10:26:21 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — tunnel bore.pub:20445 không forward được tới server Java port 14445. Cần kiểm tra tunnel có đang chạy và server có bind đúng port không.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có packet nào nhận được phản hồi (`rx` rỗng hết). Không thể đánh giá được.\n\n**3. NRO protocol bắt đầu bằng gì?**\nTheo mô tả `server_first` (server gửi trước, timeout 2s) — server là người khởi tạo handshake. Client chờ packet đầu tiên từ server.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra `bore tunnel` có đang active: `bore local 144"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả 5 lệnh đều trả về `ConnectionRefused` — server/tunnel không chấp nhận kết nối TCP nào.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào được xác nhận — tất cả đều lỗi ở tầng kết nối. Nếu phải đoán, `server_first` (server gửi trước) là mô hình phổ biến nhất của NRO J2ME.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nThường là **server gửi trước**"
 }

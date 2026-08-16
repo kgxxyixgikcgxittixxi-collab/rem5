@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-16 16:18:50 UTC",
+  "ts": "2026-08-16 16:45:44 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — TCP handshake không thành. Có thể:\n- bore tunnel chưa hoạt động hoặc port 20445 không được forward đúng\n- Server Java chưa bind đúng interface/port\n- Firewall chặn port 20445\n\n**2. Protocol nào đúng nhất?**\nChưa xác định được vì **không có packet nào đến được server**. Cần fix connectivity trước.\n\n**3. NRO protocol bắt đầu bằng client hay server?**\nTheo mô tả `server_first` chờ server gửi trước → **server gửi trước** (thường là welcome/handshake packet).\n\n**4. Bước fix tiếp theo:**\n```\n1. Kiểm tra bore tunnel: bore list / bore status\n2. Test trực tiếp: nc -v bore.pub 20445\n3. Kiểm tra server Java đang listen port 14445: netstat -tlnp | grep 14445\n4. Xác nhận bore forward 14445 → 20445 đúng chiều\n5. Thử kết nối từ máy khác để loại trừ firewall local\n```"
+  "ai_diagnosis": "## Debug NRO J2ME - bore.pub:20445\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả 5 test đều `ConnectionRefused` — bore tunnel không forward được, hoặc server Java không listen đúng port.\n\n### 2. Protocol nào đúng nhất?\n**Chưa có protocol nào đúng** vì không có packet nào đến được server. Cần fix connectivity trước.\n\n### 3. NRO protocol bắt đầu bằng ai?\n**Client gửi trước.** J2ME NRO là client-initiated TCP. Server không gửi `server_first` — packet đầu tiên là `"
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-16 15:35:50 UTC",
+  "ts": "2026-08-16 15:54:35 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nKHÔNG. Tất cả test đều `ConnectionRefused` - server không lắng nghe trên port 20445. Cần kiểm tra:\n- Java server có đang chạy trên port 14445 không?\n- Bore tunnel có forward đúng từ 20445 → 14445 không?\n- Firewall có chặn không?\n\n**2."
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả test đều `ConnectionRefused` → server/tunnel không lắng nghe trên port 20445.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào được xác nhận — tất cả đều lỗi kết nối ở tầng TCP.\n\n**3. NRO protocol bắt đầu bằng ai?**\nClient gửi trước. `server_first` (client chờ server gửi) là sai hướng — server không gửi gì vì không kết nối được.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel: `bore local 14"
 }

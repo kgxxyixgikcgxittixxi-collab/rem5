@@ -1,7 +1,3 @@
-2026-08-02 10:51:02 UTC | FAIL | bore.pub:20445 | 
-2026-08-02 12:05:16 UTC | FAIL | bore.pub:20445 | 
-2026-08-02 13:56:41 UTC | FAIL | bore.pub:20445 | 
-2026-08-02 15:07:39 UTC | FAIL | bore.pub:20445 | 
 2026-08-02 16:13:53 UTC | FAIL | bore.pub:20445 | 
 2026-08-02 17:26:26 UTC | FAIL | bore.pub:20445 | 
 2026-08-02 18:32:39 UTC | FAIL | bore.pub:20445 | **Client không vào được server.** Lỗi nằm ở **TCP** — kết nối mạng đến cổng `20445` thất b
@@ -298,3 +294,7 @@ Client **không vào được server**. Lỗi ở **TCP connect** — DNS resolv
 2026-08-16 14:00:14 UTC | FAIL | bore.pub:20445 | 
 2026-08-16 14:33:20 UTC | FAIL | bore.pub:20445 | 
 2026-08-16 15:00:10 UTC | FAIL | bore.pub:20445 | 
+2026-08-16 15:31:24 UTC | FAIL | bore.pub:20445 | **Phân tích:**
+
+- **Client không vào được server.**
+- **Lỗi ở TCP:** Kết nối mạng đến `bor

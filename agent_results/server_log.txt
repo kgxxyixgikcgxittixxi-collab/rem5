@@ -1,6 +1,3 @@
-2026-08-10 14:41:53 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
-Không. Tất cả 5 test đều `Connect
-2026-08-10 15:40:08 UTC | FAIL | bore.pub:20445 | no_response | ## Kết quả debug
 
 **1. Server có đang chấp nhận kết nối không?**
 → **KHÔNG.** Tấ
@@ -498,3 +495,6 @@ Không. Tất cả 5 lệnh đều trả về `
 
 **1. Server có đang chấp nhận kết nối không?**
 → **
+2026-08-16 11:31:31 UTC | FAIL | bore.pub:20445 | no_response | ## Debug NRO J2ME - bore.pub:20445
+
+### 1. Server có đang chấp nhận kết nối khôn

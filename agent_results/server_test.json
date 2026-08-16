@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-16 08:42:16 UTC",
+  "ts": "2026-08-16 09:04:01 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Kết quả debug:\n\n**1. Server có đang chấp nhận kết nối không?**\nKHÔNG. Tất cả 5 test đều `ConnectionRefused` → bore tunnel không forward được, hoặc server Java chưa chạy, hoặc port 14445 không listen.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi vì **không kết nối được**. Cần fix connectivity trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nTheo test `server_first` (client chờ server gửi trước) → **Server gửi trước**. Đây là handshake init từ server.\n\n**4. Bước fix tiếp theo cụ thể?**\n```bash\n# Kiểm tra bore tunnel\nbore list  # xem tunnel có active không\n\n# Kiểm tra server Java\nnetstat -tlnp | grep 14445\n# hoặc\nss -tlnp | grep 14445\n\n# Test kết nối trực tiếp\nnc -vz bore.pub 20445\ntelnet bore.pub 20445\n\n# Nếu server chạy local, thử connect trực tiếp port 14445\nnc -vz <server_ip> 14445\n```\n\n**Nguyên nhân có thể:** bore tunnel died, server Java crash, firewall block, hoặc bore config sai (forward từ"
+  "ai_diagnosis": "## Kết quả debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **Không.** Tất cả 5 lệnh đều `ConnectionRefused` → không có gói tin nào đến được server. Vấn đề nằm ở **mạng/tunnel**, không phải protocol.\n\n**2. Protocol nào đúng nhất?**\n→ **Không có** lệnh nào nhận được phản hồi (`rx` rỗng hết). Cần sửa kết nối trước.\n\n**3. Protocol NRO bắt đầu bằng ai?**\n→ **Server gửi trước** (thấy test `server"
 }

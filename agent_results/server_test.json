@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-16 20:32:01 UTC",
+  "ts": "2026-08-16 20:52:44 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không.** Tất cả đều `ConnectionRefused` — bore tunnel không forward được từ 20445 về 14445, hoặc server Java chưa lắng nghe đúng port.\n\n2. **Không có protocol nào.** Mọi gói tin đều bị từ chối ở tầng TCP, chưa đến bước handshake.\n\n3. **Server gửi trước.** `server_first` (server gửi gói chào mừng trong 2s) là bước đúng — NRO J2ME server luôn push packet đầu tiên sau khi TCP connect.\n\n4. **Fix bore tunnel"
+  "ai_diagnosis": "## Trả lời:\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — bore tunnel đang không forward đúng từ `20445 → 14445`. Cần kiểm tra lại cấu hình bore, xác nhận tunnel đang active và port 14445 thực sự listen được.\n\n**2. Protocol nào đúng / server phản hồi rx không rỗng?**\nKhông có protocol nào được test thực sự vì **chưa kết nối được**. Mọi gói tin đều bị từ chối ở tầng TCP.\n\n**3. NRO protocol"
 }

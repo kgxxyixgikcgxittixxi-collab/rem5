@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-16 13:58:40 UTC",
+  "ts": "2026-08-16 14:30:05 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "AI_ERR:The read operation timed out"
+  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả 5 lệnh đều `ConnectionRefused` — server/tunnel không chấp nhận kết nối TCP nào.\n\n**2. Protocol nào đúng nhất?**\nKhông có protocol nào phản hồi (`rx` rỗng hết). Không thể xác định protocol đúng từ kết quả này.\n\n**3. NRO protocol bắt đầu bằng ai?**\nDựa trên test `server_first` (server gửi trước, client chờ), protocol có vẻ **server-initiated** — server gửi packet đầu tiên sau khi TCP handshake thành công.\n\n**4. Bước"
 }

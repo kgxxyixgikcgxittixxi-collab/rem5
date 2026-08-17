@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-17 14:47:00 UTC",
+  "ts": "2026-08-17 15:11:05 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — TCP không thể thiết lập connection. Vấn đề là connectivity, không phải protocol.\n\n**2. Protocol nào đúng?**\nChưa biết được vì không có phản hồi nào. Cần fix connectivity trước.\n\n**3. Protocol bắt đầu bằng gì?**\nServer gửi trước (`server_first`). Client chờ packet đầu tiên từ server (2s timeout).\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel: `bore local 20445 --to localhost:14445` có đang chạy không?\n- Test trực tiếp: `nc -vz localhost 14445`\n- Kiểm tra server Java có bind đúng port 14445 không: `netstat -tlnp | grep 14445`\n- Nếu dùng bore public tunnel, có thể tunnel đã chết hoặc port đã bị chiếm — thử tạo tunnel mới."
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

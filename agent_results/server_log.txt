@@ -1,6 +1,3 @@
-**Kh
-2026-08-12 20:25:27 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
-Không. Tất cả đều `ConnectionRefu
 2026-08-12 21:13:39 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không** — Tất cả `ConnectionRefused` cho thấy bore tunnel không forward đún
 2026-08-12 22:04:40 UTC | FAIL | bore.pub:20445 | no_response | ## Phân tích debug NRO J2ME
 
@@ -498,3 +495,6 @@ Không. Tất cả đều `ConnectionRefu
 2026-08-17 15:11:05 UTC | FAIL | bore.pub:20445 | no_response | AI_ERR:The read operation timed out
 2026-08-17 15:39:53 UTC | FAIL | bore.pub:20445 | no_response | AI_ERR:The read operation timed out
 2026-08-17 15:58:38 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không** — tất cả đều `ConnectionRefused`, bore tunnel không forward được ho
+2026-08-17 16:35:22 UTC | FAIL | bore.pub:20445 | no_response | ## Phân tích kết quả debug NRO J2ME
+
+### 1. Server có đang chấp nhận kết nối khô

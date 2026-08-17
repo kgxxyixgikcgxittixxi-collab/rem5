@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-17 08:55:35 UTC",
+  "ts": "2026-08-17 09:39:21 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả test đều `ConnectionRefused` → bore tunnel chưa hoạt động hoặc server Java chưa bind đúng port.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi vì không kết nối được. Cần fix connectivity trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nClient gửi trước. NRO J2ME client khởi tạo bằng `login_cmd1` (username/password). Server không gửi `server_first` trước.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel: `bore client --local-port 20445 --remote-host <server> --remote-port 14445`\n- Xác nhận server Java đang listen: `netstat -tlnp | grep 14445`\n- Test TCP thủ công: `nc bore.pub 20445` hoặc `telnet bore.pub 20445`\n- Kiểm tra firewall/port forwarding nếu dùng VPS riêng"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả `ConnectionRefused` → TCP handshake bị từ chối. Kiểm tra:\n- bore tunnel đang chạy và bind đúng port 20445?\n- Java server listening trên 14445? (`netstat -an | findstr 14445`)\n- Firewall chặn?\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào test được vì không kết nối được. Cần fix connectivity trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nTheo mô tả: **client gửi trước** (server_first = client gửi gói mở đầu, chờ server phản hồi trong 2s).\n\n**4. Bước fix tiếp theo cụ thể:**\n```bash\n# 1. Kiểm tra bore tunnel\nbore local 14445 --subdomain your-subdomain\n\n# 2. Kiểm tra Java server\nnetstat -an | findstr 14445\n# Phải thấy: LISTENING\n\n# 3. Test local trước\ntelnet 127.0.0.1 14445\n# Nếu được → vấn đề ở bore/firewall\n# Nếu không → vấn đề ở Java server\n\n# 4. Test bore tunnel\ntelnet bore.pub 20445\n```"
 }

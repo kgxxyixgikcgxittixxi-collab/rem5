@@ -1,5 +1,3 @@
-### 1. Server có đang chấp nhận kết nối không?
-**Khôn
 2026-08-13 10:39:49 UTC | FAIL | bore.pub:20445 | no_response | ## Phân tích kết quả test
 
 ### 1. Server có đang chấp nhận kết nối không?
@@ -497,4 +495,6 @@ Không. Tất cả đều `ConnectionRefu
 ### 1. Server có đang chấp nhận kết nối không?
 **Khô
 2026-08-17 22:24:48 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
+Không. Tất cả đều `ConnectionRefu
+2026-08-17 22:49:06 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả đều `ConnectionRefu

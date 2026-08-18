@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-18 13:01:53 UTC",
+  "ts": "2026-08-18 13:51:11 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "AI_ERR:The read operation timed out"
+  "ai_diagnosis": "**Phân tích kết quả test:**\n\nTất cả 5 lệnh đều trả về `ConnectionRefused` - server **không chấp nhận bất kỳ kết nối nào**.\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **KHÔNG**. Lỗi `ConnectionRefused` nghĩa là TCP handshake bị từ chối ngay tại port 20445.\n\n**2. Protocol nào có vẻ đúng nhất?**\n→ Không có protocol nào được test vì **không kết nối được**.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\n→ Cần xem code client obfuscated để xác định, nhưng thông thường J2ME game protocol: **client gửi trước** (login request).\n\n**4. Bước fix tiếp theo cụ thể:**\n\n```bash\n# 1. Kiểm tra bore tunnel đang chạy\nbore client --local-addr 0.0.0.0:20445 --remote-addr your-server.bore.run:14445\n\n# 2. Test kết nối trực tiếp đến server Java\nnc -vz localhost 14445\n\n# 3. Kiểm tra server Java đang listen port nào\nnetstat -"
 }

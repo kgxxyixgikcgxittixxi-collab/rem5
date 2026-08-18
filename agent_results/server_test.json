@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-18 19:18:22 UTC",
+  "ts": "2026-08-18 19:45:11 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Debug kết quả bore.pub:20445\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả 5 test đều `ConnectionRefused` — nghĩa là TCP handshake bị từ chối ngay ở tầng mạng, **chưa đến được ứng dụng game**. Nguyên nhân có thể:\n- Bore tunnel không chạy hoặc bị disconnect\n- Server Java không listen trên port 14445\n- Firewall/iptables chặn port 20445\n\n### 2. Protocol nào có phản hồi rx không rỗng?\n**Không có** — tất cả đều `rx: \"\"` vì không kết nối được. Chưa có packet nào đến được server để phản hồi.\n\n### 3"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel chưa hoạt động hoặc server Java chưa bind đúng port 14445. Kiểm tra: `bore local 20445 --remote bore.pub:20445` và `netstat -an | grep 14445`.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào đúng vì không kết nối được. Khi fix tunnel, `server_first` (server gửi trước) là bước đầu tiên cần test.\n\n**3. Protocol NRO bắt đầu bằng ai?**\nServer gửi trước (`server_first`). Client chờ response trong 2s timeout.\n\n**4. Bước fix tiếp theo:**\n- Xác nhận bore tunnel chạy: `curl -v tcp://bore.pub:20445`\n- Kiểm tra server Java bind `0.0.0.0:14445` (không phải `127.0.0.1`)\n- Test TCP thuần: `nc bore.pub 20445` rồi chờ server phản hồi\n- Khi kết nối được, mới test từng command lần lượt"
 }

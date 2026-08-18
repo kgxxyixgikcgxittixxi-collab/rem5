@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-18 23:22:25 UTC",
+  "ts": "2026-08-18 23:43:24 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` — TCP connection bị từ chối ở tầng mạng, chưa đến tầng ứng dụng.\n\n**2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?**\nKhông có protocol nào. Tất cả đều lỗi ở bước connect, chưa gửi được packet nào.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?**\nTheo test `server_first` (server gửi trước, client chờ"
+  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả các lệnh đều trả về `ConnectionRefused` — server/tunnel không nghe trên port 20445.\n\n**2. Protocol nào đúng nhất?**\nKhông có protocol nào có phản hồi (`rx` rỗng hết). Vấn đề nằm ở lớp kết nối, chưa đến lớp protocol.\n\n**3. Protocol NRO bắt đầu bằng ai?**\nDựa trên test `server_first` (chờ server gửi trước trong 2s), protocol có vẻ **server gửi trước** — client chỉ kết nối và chờ packet khởi tạo từ server.\n\n**4. Bước fix tiếp theo:**\n- Kiểm"
 }

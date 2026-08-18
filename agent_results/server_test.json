@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-18 07:53:05 UTC",
+  "ts": "2026-08-18 08:25:40 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả 5 lệnh đều `ConnectionRefused` → server **không lắng nghe** trên port 20445 (bore tunnel) hoặc 14445 (Java server). Cần kiểm tra:\n- bore tunnel có đang chạy và bind đúng không?\n- Java server có đang listen trên `0.0.0.0:14445` hay chỉ `127.0.0.1`?\n- Firewall/iptables có block port 14445 & 20445 không?\n\n### 2. Protocol nào đúng nhất"
+  "ai_diagnosis": ""
 }

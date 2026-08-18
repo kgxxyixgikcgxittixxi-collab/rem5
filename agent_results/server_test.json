@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-18 21:22:05 UTC",
+  "ts": "2026-08-18 21:44:25 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "1. **Không** — tất cả 5 lệnh đều `ConnectionRefused`, server/tunnel không chấp nhận kết nối TCP nào.\n\n2. **Không có protocol nào** — `rx` trống rỗng ở mọi test, không có phản hồi nào từ server.\n\n3. **Server gửi trước** — lệnh `server_first` (chờ server gửi gói đầu tiên trong 2s) cũng lỗi, nghĩa là ngay cả bước handshake ban đầu cũng không xảy ra.\n\n4. **Bước fix:**\n   - Kiểm tra bore tunnel đang chạy: `bore local 20445 -- remote bore.pub:20445` (hoặc config đúng)\n   - Xác nhận server Java bind đúng port **14445**: `"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel hoặc server chưa bind đúng port 14445.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào phản hồi (`rx` rỗng hết). Cần fix connectivity trước.\n\n**3. NRO protocol bắt đầu bằng ai?**\nServer gửi trước (`server_first`). Client chờ packet khởi tạo từ server rồi mới gửi login.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel đang chạy: `b"
 }

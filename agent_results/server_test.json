@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-18 17:40:41 UTC",
+  "ts": "2026-08-18 18:00:47 UTC",
   "target": "bore.pub:20445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả 5 lệnh đều `ConnectionRefused` → TCP handshake không thể thiết lập. Nguyên nhân có thể: bore tunnel chưa chạy, port 20445 không được forward đúng, hoặc server Java chưa bind port 14445.\n\n**2. Protocol nào đúng / server phản hồi rx không rỗng?**\nKhông có protocol nào. Tất cả đều `rx: \"\"` vì kết nối bị từ chối ngay từ đầu.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nTheo test `server_first` (client chờ 2s), server **gửi trước** → server-initiated handshake. Client không gửi gì cả trong bước đầu tiên.\n\n**4. Bước fix tiếp theo cụ thể:**\n- Kiểm tra bore tunnel: `bore local 14445 --to"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → bore tunnel chưa forward đúng, hoặc server Java chưa chạy trên port 14445 nội bộ.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào phản hồi (`rx` rỗng). Cần fix connectivity trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nServer gửi trước (server-first). Client chờ response trong 2s timeout.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra bore tunnel: `bore list` xác nhận port 20445 đã forward đến 14445\n- Kiểm tra server Java: `netstat -an | grep 14445` xem có LISTEN không\n- Thử `telnet bore.pub 20445` hoặc `nc bore.pub 20445` để xác nhận TCP open\n- Nếu tunnel đúng mà vẫn refused → server Java chưa start hoặc bind sai interface"
 }

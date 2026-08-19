@@ -117,13 +117,13 @@ jobs:
 
       - name: Update Config with tunnel address
         run: |
-          sed -i "s/^server\.ip=.*/server.ip=$TUNNEL_HOST/" ~/nro_server/Config.properties
-          if grep -q "^server\.external_port=" ~/nro_server/Config.properties; then
-            sed -i "s/^server\.external_port=.*/server.external_port=$TUNNEL_PORT/" ~/nro_server/Config.properties
+          sed -i "s/^[[:space:]]*server\.ip=.*/server.ip=$TUNNEL_HOST/" ~/nro_server/Config.properties
+          if grep -q "server\.external_port=" ~/nro_server/Config.properties; then
+            sed -i "s/^[[:space:]]*server\.external_port=.*/server.external_port=$TUNNEL_PORT/" ~/nro_server/Config.properties
           else
             echo "server.external_port=$TUNNEL_PORT" >> ~/nro_server/Config.properties
           fi
-          grep "^server\." ~/nro_server/Config.properties
+          grep "server\." ~/nro_server/Config.properties
           echo "✅ APK: $TUNNEL_HOST:$TUNNEL_PORT"
 
       - name: Start Java Game Server
@@ -205,7 +205,7 @@ jobs:
             fi
             if [ -n "$np" ]; then
               BORE_PID=$pid; TUNNEL_PORT=$np
-              sed -i "s/^server\.external_port=.*/server.external_port=$np/" ~/nro_server/Config.properties || \
+              sed -i "s/^[[:space:]]*server\.external_port=.*/server.external_port=$np/" ~/nro_server/Config.properties || \
                 echo "server.external_port=$np" >> ~/nro_server/Config.properties
               push_server_ip "bore.pub" "$np"
               echo "✅ bore restart: bore.pub:$np"

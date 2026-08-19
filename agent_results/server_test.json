@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-19 03:31:58 UTC",
+  "ts": "2026-08-19 04:18:28 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 137,
+      "lat": 203,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 72,
+      "lat": 36,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 72,
+      "lat": 31,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 90,
+      "lat": 36,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 75,
+      "lat": 31,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả test bore.pub:14445\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **Có**, tất cả `ok: true` nghĩa là TCP handshake thành công, server không đóng kết nối ngay. Nhưng **rx=\"\"** (không nhận được gì) → server im lặng, không phản hồi payload nào.\n\n**2. Protocol nào có vẻ đúng nhất?**\n→ **`server_first`** hợp lý nhất — đúng chuẩn server-push của J2ME MMO (server gửi packet chào mừng trước). Các cmd khác gửi đi nhưng rx rỗng → server không recognize.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\n→ **Server gửi trước** (server-first). Client không được quyền gửi login/cmd gì cả cho đến khi nhận được packet khởi tạo từ server. Đây là đặc trưng phổ biến của NRO J2ME.\n\n**4. Bước"
+  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n✅ Có — tất cả test đều `ok: true`, không có lỗi"
 }

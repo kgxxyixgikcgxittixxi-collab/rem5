@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-19 23:10:16 UTC",
+  "ts": "2026-08-19 23:35:44 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 65,
+      "lat": 89,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 38,
+      "lat": 74,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 37,
+      "lat": 77,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 33,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 33,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n✅ Có — tất cả 5 lệnh đều `ok: true`, không lỗi. Server chấp nhận TCP connect và đọc dữ liệu gửi đi.\n\n**2. Protocol nào có phản hồi `rx` khác rỗng?**\n→ **Không có cái nào.** Tất cả `rx: \"\"`. Server không trả về bất kỳ byte nào sau khi nhận lệnh.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nDựa trên kết quả: `server_first` cũng `ok: true` nhưng `rx: \"\"` → **client phải gửi trước**. Server chỉ phản hồi khi nhận đúng handshake/command. NRO J2ME thực tế là **client-initiated** (client gửi lệnh đầu tiên)."
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó — tất cả 5 test đều `ok: true`, `err: null`, nghĩa là TCP connect + send đều thành công.\n\n**2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?**\nKhông có protocol nào có `rx` khác rỗng. Tất cả đều `rx: \"\"` — server chưa phản hồi dữ liệu nào về client.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?**\nDựa trên test `server_first` (client chờ server gửi trước, timeout 2s) — kết quả `ok: true, rx: \"\"` cho thấy **server KHÔNG gửi gì trước**. Vậy protocol thực sự bắt đầu bằng **client gửi trước** (client-initiated).\n\n**"
 }

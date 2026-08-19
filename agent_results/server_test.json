@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-19 13:13:43 UTC",
+  "ts": "2026-08-19 14:42:25 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 95,
+      "lat": 382,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 25,
+      "lat": 28,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 24,
+      "lat": 23,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 28,
+      "lat": 25,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 22,
+      "lat": 25,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 lệnh đều `ok: true`, nghĩa là TCP handshake thành công, server không đóng kết nối ngay.\n\n### 2. Protocol nào đúng nhất?\n**Không có cái nào.** Tất cả `rx: \"\"` — server không phản hồi gì cả. Có thể server đang đóng kết nối sau khi nhận packet (silent drop) hoặc format packet sai hoàn toàn.\n\n### 3. Protocol bắt đầu bằng ai?"
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nCó — tất cả `ok: true` nghĩa là TCP handshake thành công, server không đóng kết nối. Nhưng server **không phản hồi** (rx rỗng) ở mọi lệnh.\n\n**2. Protocol nào có vẻ đúng nhất?**\nKhông có protocol nào có `rx` khác rỗng. Tất cả đều im lặng. Có thể server đang chờ **server-first** (server gửi trước) nhưng client lại gửi lệnh trước → server bỏ qua.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nTheo test `server_first` (client chờ 2s, không nhận được gì) → **client phải gửi trước**, không phải server. Nhưng có thể **thứ tự lệnh sai**.\n\n**4. Bước fix tiếp theo cụ thể?**\n- **Th"
 }

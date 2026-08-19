@@ -1,45 +1,45 @@
 {
-  "ts": "2026-08-19 09:22:58 UTC",
+  "ts": "2026-08-19 09:56:08 UTC",
   "target": "bore.pub:14445",
-  "any_connected": false,
+  "any_connected": true,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 92,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "login_cmd1": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 71,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "version_ff": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 74,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "empty_pkt": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 72,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "cmd_neg101": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 69,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → TCP handshake không thành. Vấn đề ở tầng mạng, không phải protocol.\n\n**2. Protocol nào đúng / server phản hồi rx khác rỗng?**\nKhông có"
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

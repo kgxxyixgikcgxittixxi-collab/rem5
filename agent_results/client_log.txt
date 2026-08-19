@@ -1,4 +1,3 @@
-2026-08-08 18:41:11 UTC | FAIL | bore.pub:20445 | 
 2026-08-08 19:17:33 UTC | FAIL | bore.pub:20445 | 
 2026-08-08 19:54:56 UTC | FAIL | bore.pub:20445 | 
 2026-08-08 20:33:07 UTC | FAIL | bore.pub:20445 | 
@@ -298,3 +297,4 @@ Client **không vào được server**. Lỗi ở **TCP connect** — DNS resolv
 
 - **Client có vào được
 2026-08-19 06:48:56 UTC | WARN | bore.pub:14445 | 
+2026-08-19 07:41:16 UTC | FAIL | bore.pub:14445 | 

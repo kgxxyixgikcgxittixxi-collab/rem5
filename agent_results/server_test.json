@@ -1,45 +1,45 @@
 {
-  "ts": "2026-08-19 01:46:03 UTC",
-  "target": "bore.pub:20445",
-  "any_connected": false,
+  "ts": "2026-08-19 02:44:48 UTC",
+  "target": "bore.pub:14445",
+  "any_connected": true,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 114,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "login_cmd1": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 72,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "version_ff": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 75,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "empty_pkt": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 72,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "cmd_neg101": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 77,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Debug Kết Quả\n\n**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → kết nối TCP không thành lập được. Vấn đề nằm ở **mạng/tunnel**, không phải protocol.\n\n**2. Protocol nào đúng?**\nChưa có protocol nào được kiểm tra vì **không có kết nối nào thành công** (`rx` trống hết).\n\n**3. NRO protocol bắt đầu bằng ai?**\nThử `server_first` (server gửi trước, timeout 2s) là hướng đúng. NRO J2ME thường **server"
+  "ai_diagnosis": "# Debug NRO J2ME Protocol\n\n## 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 test đều `ok: true`, không có lỗi — server chấp nhận TCP connection.\n\n## 2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?\n**Không có protocol nào.** Tất cả `rx: \"\"` — server không gửi lại dữ liệu nào sau khi nhận packet. Đây là"
 }

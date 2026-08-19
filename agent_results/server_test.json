@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-19 12:16:22 UTC",
+  "ts": "2026-08-19 13:13:43 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 105,
+      "lat": 95,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 54,
+      "lat": 25,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 53,
+      "lat": 24,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 53,
+      "lat": 28,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 53,
+      "lat": 22,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có**, TCP connection thành công (tất cả `ok: true`, latency thấp ~50-105ms). Nhưng server **không phản hồi** (`rx: \"\"` ở mọi bước).\n\n### 2. Protocol nào đúng nhất?\n**`server_first`** là bước quan trọng nhất — nếu server không gửi gì trước, toàn bộ protocol phía sau đều sai. Các bước còn lại đều `rx: \"\"` → không có phản hồi nào từ server.\n\n### 3"
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 lệnh đều `ok: true`, nghĩa là TCP handshake thành công, server không đóng kết nối ngay.\n\n### 2. Protocol nào đúng nhất?\n**Không có cái nào.** Tất cả `rx: \"\"` — server không phản hồi gì cả. Có thể server đang đóng kết nối sau khi nhận packet (silent drop) hoặc format packet sai hoàn toàn.\n\n### 3. Protocol bắt đầu bằng ai?"
 }

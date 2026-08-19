@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-19 11:26:08 UTC",
+  "ts": "2026-08-19 11:50:47 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 56,
+      "lat": 95,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 22,
+      "lat": 42,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 24,
+      "lat": 48,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 24,
+      "lat": 42,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 25,
+      "lat": 42,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nCó — tất cả test đều `ok: true`, không có lỗi TCP. Server đang chạy và accept kết nối.\n\n**2. Protocol nào đúng nhất / server phản hồi rx khác rỗng?**\n**Không có** — tất cả đều `rx: \"\"`. Server không gửi lại dữ liệu cho bất kỳ command nào bạn thử.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nKhả năng cao **client gửi trước** (client-first). Test `server_first` cũng không có phản hồi, chứng tỏ server không chủ động gửi gì khi kết nối"
+  "ai_diagnosis": "## Debug NRO J2ME Protocol\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả `ok: true` nghĩa là TCP handshake thành công, server không đóng kết nối. Nhưng **rx=\"\"** cho thấy server **không phản hồi dữ liệu** sau mỗi lệnh.\n\n### 2. Protocol nào đúng nhất?\n**Tất cả"
 }

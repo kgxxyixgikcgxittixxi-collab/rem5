@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-19 15:48:17 UTC",
+  "ts": "2026-08-19 16:14:28 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 408,
+      "lat": 167,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 72,
+      "lat": 69,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 72,
+      "lat": 62,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 74,
+      "lat": 60,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 74,
+      "lat": 68,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "## Phân tích kết quả test NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả 5 test đều `ok: true`, `err: null` → TCP connection hoạt động, bore tunnel hoạt động tốt.\n\n**2. Protocol nào đúng nhất?**\n**Chưa có protocol nào có phản hồi `rx`**. Tất cả đều `rx: \"\"`. Cần kiểm tra lại:\n- Byte order (big-endian vs little-endian) của `[2B len]`\n- Encoding username/password (UTF-8? ASCII? Có null terminator đúng không?)\n- Có thể server đang reject im lặng (silent drop) do packet format sai\n\n**3."
 }

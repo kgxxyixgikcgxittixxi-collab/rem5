@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-20 20:02:38 UTC",
+  "ts": "2026-08-20 20:39:44 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 114,
+      "lat": 417,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 72,
+      "lat": 61,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 72,
+      "lat": 63,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 74,
+      "lat": 63,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 72,
+      "lat": 60,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có**, nhưng server không phản hồi dữ liệu (`rx: \"\"` ở mọi lệnh). TCP connect thành công nhưng server im lặng → có thể server chưa khởi động đúng, hoặc đang chờ packet mở đầu khác.\n\n### 2. Protocol nào đúng nhất?\n**Chưa có protocol nào nhận được phản hồi.** Tất cả `rx = \"\"`. Cần tìm packet khởi động thực sự mà server mong đợi.\n\n### 3. Protocol bắt đầu bằng ai?\nCần thử **client gửi trước** — nhiều game J2ME server chờ client gửi handshake/version trước rồi mới"
+  "ai_diagnosis": "Dựa trên kết quả test:\n\n1. **Server đang chấp nhận kết nối** — tất cả `ok: true`, `err: null`, không có lỗi TCP.\n\n2. **Không có protocol nào có `rx` khác rỗng** — tất cả đều `rx: \"\"`. Server nhận packet nhưng không phản hồi (hoặc phản hồi không đọc được).\n\n3. **NRO J2ME protocol bắt đầu bằng CLIENT gửi trước** — test `server_first` (chờ server gửi"
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-20 20:39:44 UTC",
+  "ts": "2026-08-20 21:03:32 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 417,
+      "lat": 307,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 61,
+      "lat": 33,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 63,
+      "lat": 33,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 63,
+      "lat": 28,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 60,
+      "lat": 32,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n1. **Server đang chấp nhận kết nối** — tất cả `ok: true`, `err: null`, không có lỗi TCP.\n\n2. **Không có protocol nào có `rx` khác rỗng** — tất cả đều `rx: \"\"`. Server nhận packet nhưng không phản hồi (hoặc phản hồi không đọc được).\n\n3. **NRO J2ME protocol bắt đầu bằng CLIENT gửi trước** — test `server_first` (chờ server gửi"
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 lệnh đều `ok: true` — TCP handshake thành công, không bị reject hay timeout.\n\n### 2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?\n**Không có lệnh nào.** Tất cả `rx: \"\"` — server **không phản hồi gì** sau khi nhận packet. Đây là dấu hiệu bất thường.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?\nDựa trên `server_first` (timeout 2s, ok=true, rx=\"\"): **Server gửi trước** — nhưng packet đầu tiên có thể chỉ là handshake byte (ví dụ `0x00` hoặc `"
 }

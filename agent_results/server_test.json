@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-20 23:33:36 UTC",
+  "ts": "2026-08-20 23:55:07 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 29,
+      "lat": 86,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 12,
+      "lat": 69,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 11,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 12,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 11,
+      "lat": 71,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó, `ok: true` ở mọi bước cho thấy TCP kết nối thành công. Tuy nhiên server **không phản hồi dữ liệu** (rx trống) ở tất cả các lệnh.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào hiển thị phản hồi. Cần kiểm tra lại thứ tự handshake. Thông thường server-first là đúng, nhưng nếu rx trống có thể server"
 }

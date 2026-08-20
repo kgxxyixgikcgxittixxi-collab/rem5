@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-20 06:21:35 UTC",
+  "ts": "2026-08-20 07:13:58 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,7 +7,7 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 76,
+      "lat": 211,
       "rx": "",
       "err": null,
       "mode": "sent_first"
@@ -21,25 +21,25 @@
     },
     "version_ff": {
       "ok": true,
-      "lat": 36,
+      "lat": 37,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 32,
+      "lat": 33,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 33,
+      "lat": 35,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Debug Kết Quả NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả `ok: true` nghĩa là TCP connect + send thành công. Nhưng **rx=\"\"** ở mọi bước → server **không phản hồi gì**.\n\n### 2. Protocol nào đúng nhất?\nKhông có packet nào có `rx != \"\"`. Tuy nhiên, `server_first` (chờ server gửi trước) là bước hợp lý nhất để"
+  "ai_diagnosis": ""
 }

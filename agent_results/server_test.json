@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-20 21:38:17 UTC",
+  "ts": "2026-08-20 22:00:03 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 100,
+      "lat": 190,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 66,
+      "lat": 8,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 68,
+      "lat": 8,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 68,
+      "lat": 9,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 64,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả test đều `ok: true`, không có lỗi. Server đang chạy và chấp nhận TCP connection.\n\n**2. Protocol nào đúng nhất / rx khác rỗng?**\nKhông có protocol nào có `rx` khác rỗng. Tất cả đều trả về `\"\"`. Cần xem lại thứ tự/gói tin gửi đi.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nDựa trên `server_first` thành công → **Server gửi trước** (handshake init từ server). Client chỉ chờ nhận gói đầu tiên rồi mới phản hồi.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra **byte order** (big-endian vs little-endian) của `[2B len]`\n- Thử gửi `server_first` packet đúng format (thường là `0x"
+  "ai_diagnosis": ""
 }

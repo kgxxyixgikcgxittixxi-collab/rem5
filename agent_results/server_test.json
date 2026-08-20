@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-20 11:28:52 UTC",
+  "ts": "2026-08-20 11:55:06 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 340,
+      "lat": 92,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 10,
+      "lat": 75,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 7,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 15,
+      "lat": 75,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 7,
+      "lat": 77,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n1. **Server đang chấp nhận kết nối** — tất cả 5 lệnh đều `ok: true, err: null`.\n\n2. **Không có protocol nào có `rx` khác rỗng** — server không phản hồi dữ liệu ở bất kỳ bước nào. Cần capture packet (Wireshark/tcpdump) để xem server thực sự gửi gì (hoặc không gửi gì).\n\n3. **NRO J2ME"
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-20 13:33:43 UTC",
+  "ts": "2026-08-20 14:17:55 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 97,
+      "lat": 281,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 68,
+      "lat": 63,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 64,
+      "lat": 60,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 62,
+      "lat": 67,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 64,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n1. **Server đang chấp nhận kết nối** — `ok: true`, không có lỗi, latency ổn (62-97ms). Tuy nhiên server **không phản hồi dữ liệu** (`rx: \"\"` ở mọi bước).\n\n2. **Không có bước nào có phản hồi** — tất cả `rx` đều rỗng. Điều này cho thấy server có thể đang đóng kết nối ngay sau khi accept, hoặc client gửi sai format khiến server im lặng.\n\n3. **Protocol NRO thực sự bắt đầu bằng server gửi trước** — bước `server_first` (chờ server gửi gói đầu tiên trong 2s) là chuẩn. Nếu server không gửi gì, có thể server chưa sẵn sàng hoặc cần handshake khác.\n\n4. **Bước fix tiếp theo:**\n   - **Kiểm tra server log** xem có nhận được packet từ client không, và có lỗi gì không"
+  "ai_diagnosis": ""
 }

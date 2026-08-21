@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-21 06:03:42 UTC",
+  "ts": "2026-08-21 07:03:12 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 117,
+      "lat": 91,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 8,
+      "lat": 33,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 7,
+      "lat": 31,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 8,
+      "lat": 35,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 7,
+      "lat": 35,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "# Debug NRO J2ME Protocol — bore.pub:14445\n\n## 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 lệnh đều `ok:"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả"
 }

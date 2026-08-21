@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-21 09:51:06 UTC",
+  "ts": "2026-08-21 10:16:51 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 315,
+      "lat": 96,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 52,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 30,
+      "lat": 78,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 36,
+      "lat": 77,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 45,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó — tất cả `ok: true`, `err: null`. Server chấp nhận TCP connect và"
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

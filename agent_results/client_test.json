@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-21 11:56:28 UTC",
+  "ts": "2026-08-21 12:58:48 UTC",
   "target": "bore.pub:14445",
   "status": "WARN",
   "results": {
@@ -9,7 +9,7 @@
     },
     "TCP": {
       "ok": true,
-      "data": "7ms"
+      "data": "78ms"
     },
     "ServerKey": {
       "ok": false,
@@ -24,5 +24,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": ""
+  "ai": "AI err:The read operation timed out"
 }

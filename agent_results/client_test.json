@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-21 21:39:54 UTC",
+  "ts": "2026-08-21 22:00:40 UTC",
   "target": "bore.pub:14445",
   "status": "WARN",
   "results": {
@@ -9,7 +9,7 @@
     },
     "TCP": {
       "ok": true,
-      "data": "40ms"
+      "data": "60ms"
     },
     "ServerKey": {
       "ok": false,
@@ -24,5 +24,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": ""
+  "ai": "**Phân tích:**\n\n- **DNS/TCP/JAR**: OK → kết nối mạng và tải file thành công.\n- **ServerKey**: FAIL \"no greeting\" → server không phản hồi handshake/greeting ban đầu.\n- **Login**: FAIL `0x` →"
 }

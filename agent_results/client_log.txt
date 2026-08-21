@@ -1,4 +1,3 @@
-2026-08-13 23:05:13 UTC | FAIL | bore.pub:20445 | 
 2026-08-14 00:00:30 UTC | FAIL | bore.pub:20445 | 
 2026-08-14 02:37:54 UTC | FAIL | bore.pub:20445 | 
 2026-08-14 04:29:20 UTC | FAIL | bore.pub:20445 | 
@@ -298,3 +297,4 @@ Client **
 
 - **DNS/TCP/JAR**: OK → kết nối mạng và tải file thành công.
 - **ServerKey
+2026-08-21 22:42:31 UTC | WARN | bore.pub:14445 | 

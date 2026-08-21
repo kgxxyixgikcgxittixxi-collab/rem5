@@ -1,8 +1,4 @@
 **1. Server có đang chấp nhận kết nối không?**
-KHÔNG. Tất cả 
-2026-08-16 09:04:01 UTC | FAIL | bore.pub:20445 | no_response | ## Kết quả debug NRO J2ME
-
-**1. Server có đang chấp nhận kết nối không?**
 → **Kh
 2026-08-16 09:37:40 UTC | FAIL | bore.pub:20445 | no_response | AI_ERR:The read operation timed out
 2026-08-16 09:57:17 UTC | FAIL | bore.pub:20445 | no_response | Dựa trên kết quả test:
@@ -498,3 +494,7 @@ Có, `ok: true` ở mọi bước cho thấ
 2026-08-21 03:33:30 UTC | OK | bore.pub:14445 | no_response | 1. **Co chap nhan ket noi**: Co, tat ca test `ok:true`, latency 72-102ms.
 
 2. **
+2026-08-21 04:20:02 UTC | OK | bore.pub:14445 | no_response | ## Phân tích debug NRO J2ME
+
+### 1. Server có đang chấp nhận kết nối không?
+**Có

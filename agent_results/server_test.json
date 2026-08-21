@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-21 04:59:11 UTC",
+  "ts": "2026-08-21 05:39:53 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 83,
+      "lat": 385,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 32,
+      "lat": 21,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 36,
+      "lat": 26,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 40,
+      "lat": 23,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 32,
+      "lat": 23,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả `ok: true` nghĩa là TCP handshake thành công, server không đóng kết nối."
+  "ai_diagnosis": "## Debug NRO J2ME Protocol\n\n**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả `ok: true` nghĩa là TCP connect thành công, không có lỗi kết nối. Tuy nhiên server **không phản hồi** (rx = \"\") với mọi lệnh.\n\n**2. Protocol nào có vẻ đúng nhất?**\nKhông có lệnh nào nhận được phản hồi. Khả năng cao **protocol chưa đúng** hoặc server đang đóng connection sau khi nhận packet mà không reply.\n\n**3. Protocol NRO"
 }

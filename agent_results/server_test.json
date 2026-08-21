@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-21 19:57:43 UTC",
+  "ts": "2026-08-21 20:30:11 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 291,
+      "lat": 508,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 53,
+      "lat": 77,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 55,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 55,
+      "lat": 72,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 53,
+      "lat": 77,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "1. **Có**, server đang chấp nhận kết nối TCP (tất cả `ok: true`, không lỗi).\n\n2. **Không có protocol nào** cho thấy phản hồi `rx` khác rỗng — tất cả đều nhận `\"\"`. Cần kiểm tra lại format packet hoặc timing.\n\n3. **Client gửi trước** — `server_first` test cho thấy server KHÔNG gửi gì trước (rx rỗng), nghĩa là client phải khởi tạo handshake.\n\n4. **Bước fix tiếp theo:**\n   - Thử đọc raw bytes từ socket sau mỗi lệnh (dùng `tcpdump`/`nc -v`) để xem server có gửi gì không (có thể bị mất do timeout"
+  "ai_diagnosis": ""
 }

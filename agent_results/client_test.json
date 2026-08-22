@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-22 10:51:49 UTC",
+  "ts": "2026-08-22 11:23:14 UTC",
   "target": "bore.pub:14445",
   "status": "WARN",
   "results": {
@@ -9,7 +9,7 @@
     },
     "TCP": {
       "ok": true,
-      "data": "8ms"
+      "data": "36ms"
     },
     "ServerKey": {
       "ok": false,
@@ -24,5 +24,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "**Phân tích:**\n\n- **Client"
+  "ai": "**Phân tích:**\n\nClient **có thể kết"
 }

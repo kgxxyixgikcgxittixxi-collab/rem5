@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-22 15:01:48 UTC",
+  "ts": "2026-08-22 15:30:41 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,7 +7,7 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 23,
+      "lat": 15,
       "rx": "",
       "err": null,
       "mode": "sent_first"
@@ -21,21 +21,21 @@
     },
     "version_ff": {
       "ok": true,
-      "lat": 8,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 8,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 7,
+      "lat": 8,
       "rx": "",
       "err": null,
       "mode": "sent_first"

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-22 12:11:10 UTC",
+  "ts": "2026-08-22 13:01:04 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 92,
+      "lat": 78,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 61,
+      "lat": 34,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 56,
+      "lat": 32,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 58,
+      "lat": 38,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 56,
+      "lat": 43,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả 5 lệnh đều `ok: true` → TCP kết nối thành công, server không đóng kết nối.\n\n**2. Protocol nào có phản hồi rx khác rỗng?**\n**Không có cái nào.** Tất cả `rx: \"\"` — server không gửi lại bất kỳ byte nào sau khi nhận lệnh.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\n**Client gửi trước.** `server_first` timeout với `rx: \"\"` xác nhận server không chủ"
+  "ai_diagnosis": "**1. Server đang chấp nhận kết nối?**\nCó, tất cả `ok: true` nghĩa là TCP handshake thành công, server không đóng kết nối.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào nhận được `rx` khác rỗng. Server im lặng hoàn toàn → có thể server đang chờ handshake/bắt tay đặc thù trước khi phản hồi.\n\n**3. NRO protocol bắt đầu bằng ai?**\nThường **server gửi trước** (server-first). Test `server_first` cho thấy server không gửi gì → hoặc timeout 2s quá ngắn, hoặc server cần client gửi packet mở đầu trước.\n\n**4. Bước fix tiếp theo:**\n- Tăng timeout `server_first` lên 5-10s\n- Thử gửi `0x00 0x00` (empty_pkt) rồi đọc phản hồi ngay"
 }

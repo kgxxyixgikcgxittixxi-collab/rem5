@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-22 17:45:13 UTC",
+  "ts": "2026-08-22 18:00:34 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 229,
+      "lat": 76,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 23,
+      "lat": 56,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 24,
+      "lat": 69,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 26,
+      "lat": 67,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 26,
+      "lat": 57,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "**Phân tích kết quả:**\n\n1. **Server đang chấp nhận kết nối** - Tất cả `ok: true`, không có lỗi, latency ổn định (~56-76ms).\n\n2. **Chưa có protocol nào có phản hồi** - Tất cả `rx: \"\"`. Cần capture packet để xem server thực sự trả về gì.\n\n3. **NRO J2ME thường Server gửi trước** - Pattern phổ biến: server gửi init packet (thường 2-4 bytes) trước, client mới phản hồi. `server_first` test đúng hướng nhưng có thể timeout 2s quá ngắn.\n\n4. **Bước fix tiếp theo:**\n   - Tăng timeout `server_first` lên 5s\n   - Capture raw TCP traffic (Wireshark/tcpdump) để xem server gửi gì\n   - Thử gửi `0x00 0x00` trước khi chờ server phản hồi (một"
 }

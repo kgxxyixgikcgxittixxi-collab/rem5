@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-22 09:55:42 UTC",
+  "ts": "2026-08-22 10:21:35 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,21 +7,21 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 115,
+      "lat": 95,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 77,
+      "lat": 79,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 75,
+      "lat": 74,
       "rx": "",
       "err": null,
       "mode": "sent_first"
@@ -35,11 +35,11 @@
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 78,
+      "lat": 79,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả `ok: true` nghĩa là TCP connect + send đều thành công. Server không đóng kết nối ngay → chấp nhận client.\n\n**2. Protocol nào có vẻ đúng nhất?**\nKhông có packet nào có `rx` khác rỗng. Tất cả đều không nhận được phản hồi. Có thể server **không phản hồi** với các lệnh này, hoặc cần handshake trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nThông thường J2ME MMO protocol: **client gửi trước** (login/heartbeat), server phản hồi sau. `server_first` với `rx: \"\"` là bình thường"
+  "ai_diagnosis": ""
 }

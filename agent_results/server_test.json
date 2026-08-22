@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-22 13:01:04 UTC",
+  "ts": "2026-08-22 13:39:02 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 78,
+      "lat": 89,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 34,
+      "lat": 72,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 32,
+      "lat": 72,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 38,
+      "lat": 71,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 43,
+      "lat": 69,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server đang chấp nhận kết nối?**\nCó, tất cả `ok: true` nghĩa là TCP handshake thành công, server không đóng kết nối.\n\n**2. Protocol nào đúng nhất?**\nChưa có protocol nào nhận được `rx` khác rỗng. Server im lặng hoàn toàn → có thể server đang chờ handshake/bắt tay đặc thù trước khi phản hồi.\n\n**3. NRO protocol bắt đầu bằng ai?**\nThường **server gửi trước** (server-first). Test `server_first` cho thấy server không gửi gì → hoặc timeout 2s quá ngắn, hoặc server cần client gửi packet mở đầu trước.\n\n**4. Bước fix tiếp theo:**\n- Tăng timeout `server_first` lên 5-10s\n- Thử gửi `0x00 0x00` (empty_pkt) rồi đọc phản hồi ngay"
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

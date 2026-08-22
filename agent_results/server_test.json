@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-22 20:37:02 UTC",
+  "ts": "2026-08-22 20:57:28 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 159,
+      "lat": 76,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 23,
+      "lat": 61,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 25,
+      "lat": 61,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 21,
+      "lat": 57,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 25,
+      "lat": 57,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả test NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 lệnh đều `ok: true`, không có lỗi kết nối TCP. Server đang chạy và accept connection.\n\n### 2. Protocol nào có vẻ đúng nhất?\n**Tất cả đều `rx: \"\"`** — server không phản hồi gì với bất kỳ lệnh nào. Không có protocol nào hiển thị phản hồi hợp lệ. Cần xem lại format packet.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\nCần **client gửi trước** (handshake init từ client). `server_first` với `rx: \"\"` xác nhận server KHÔNG gửi gì trước — đúng với pattern J2ME MMO thông thường.\n\n### 4. Bước fix tiếp theo"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó — tất cả test đều `ok: true`, không có lỗi kết nối TCP.\n\n**2. Protocol nào đúng nhất / server phản hồi rx khác rỗng?**\nKhông có — tất cả `rx: \"\"`. Server chấp nhận kết nối"
 }

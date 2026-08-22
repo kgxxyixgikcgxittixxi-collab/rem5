@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-22 21:46:27 UTC",
+  "ts": "2026-08-22 22:01:09 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 67,
+      "lat": 30,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 26,
+      "lat": 12,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 24,
+      "lat": 11,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 26,
+      "lat": 13,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 27,
+      "lat": 12,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n✅ Có — tất cả test đều `ok: true`, TCP handshake thành công. Tuy nhiên server **không phản hồi gì** (tất cả `rx: \"\"`).\n\n**2. Protocol nào đúng nhất?**\nKhông có protocol nào nhận được phản hồi. Nhưng `server_first` là bước hợp"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả test đều `ok: true, err: null` — TCP handshake thành công, server không đóng kết nối.\n\n**2. Protocol nào đúng nhất?**\nTất cả đều `rx: \"\"` — không có protocol nào nhận được phản hồi. Cần xem lại thứ tự/giải pháp.\n\n**3. NRO thực sự bắt đầu bằng gì?**\nTheo tài liệu NRO J2ME đã công bố: **Server gửi trước** — server gửi `0x00 0x00` (hoặc init packet) sau khi TCP connect, client mới phản hồi. `server_first"
 }

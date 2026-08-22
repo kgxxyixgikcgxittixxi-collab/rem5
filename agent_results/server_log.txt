@@ -1,4 +1,3 @@
-→ **KH
 2026-08-17 21:04:07 UTC | FAIL | bore.pub:20445 | no_response | ## Phân tích kết quả debug NRO J2ME
 
 **1. Server có đang chấp nhận kết nối không
@@ -498,3 +497,4 @@ Có. Tất cả test đều `ok: true, er
 
 **1. Server có đang chấp nhận kết nối không?**
 Có. 
+2026-08-22 22:53:40 UTC | OK | bore.pub:14445 | no_response | 

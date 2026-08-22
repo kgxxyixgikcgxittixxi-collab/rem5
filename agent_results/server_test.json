@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-22 22:32:21 UTC",
+  "ts": "2026-08-22 22:53:40 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 24,
+      "lat": 88,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 7,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 7,
+      "lat": 71,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 7,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 7,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả 5 test đều `ok: true`, `err: null` → TCP kết nối thành công, server không đóng kết nối.\n\n**2. Protocol nào đúng nhất?**\n`login_cmd1` có vẻ đúng nhất — đây là lệnh đăng nhập chuẩn `[2B len][0x01][user][pass]`. Tuy nhiên **tất cả `rx` đều rỗng**, nghĩa là server chưa phản hồi dữ liệu (hoặc phản hồi nhưng client chưa đọc hết).\n\n**3. Protocol bắt đầu bằng ai?**\nClient gửi trước. Test `server_first` (chờ server gửi trước 2s) cũng `rx: \"\""
+  "ai_diagnosis": ""
 }

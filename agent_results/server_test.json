@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-22 19:50:52 UTC",
+  "ts": "2026-08-22 20:07:48 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 33,
+      "lat": 236,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 8,
+      "lat": 53,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 8,
+      "lat": 56,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 8,
+      "lat": 57,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 7,
+      "lat": 51,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 lệnh đều trả về `ok: true`, `err: null` → TCP connection accepted, không có lỗi kết nối.\n\n### 2. Protocol nào có vẻ đúng nhất / server phản hồi rx khác rỗng?\n**Không có.** Tất cả đều `rx: \"\""
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả `ok: true` chứng tỏ TCP handshake thành công, server không đóng kết nối. Nhưng **server không phản hồi dữ liệu** (`rx: \"\"` ở mọi lệnh).\n\n### 2. Protocol nào đúng nhất?\nKhông có protocol nào cho thấy `rx` khác rỗng. Tuy nhiên:\n- **`server_first`** là quan trọng nhất — nếu server thiết kế gửi packet chào mừng trước, việc `rx=\"\"` sau 2s timeout cho thấy **server không gửi gì cả** → có thể server chưa được cấu hình đúng hoặc cần client gửi lệnh trước.\n- **`cmd_neg101"
 }

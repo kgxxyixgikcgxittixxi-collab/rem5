@@ -1,8 +1,4 @@
 
-### 1. Server có đang chấp nhận kết nối không?
-**KHÔ
-2026-08-16 23:15:52 UTC | FAIL | bore.pub:20445 | no_response | **Kết quả debug:**
-
 1. **Server KHÔNG chấp nhận kết nối** - Tất cả lệnh đều `Con
 2026-08-16 23:37:38 UTC | FAIL | bore.pub:20445 | no_response | **1. Server không chấp nhận kết nối** — tất cả `ConnectionRefused` trên port 204
 2026-08-16 23:54:55 UTC | FAIL | bore.pub:20445 | no_response | 1. **Không** - Tất cả đều `ConnectionRefused`, bore tunnel hoặc server Java chưa
@@ -498,3 +494,7 @@ Có — tất cả
 2026-08-22 08:31:36 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả debug NRO J2ME
 
 ### 1. Server có đang chấp nhận kết nối khô
+2026-08-22 08:59:55 UTC | OK | bore.pub:14445 | no_response | ## Phân tích debug NRO J2ME
+
+**1. Server có đang chấp nhận kết nối không?**
+Có. 

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-23 18:42:06 UTC",
+  "ts": "2026-08-23 19:04:12 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 84,
+      "lat": 96,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 69,
+      "lat": 51,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 72,
+      "lat": 51,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 69,
+      "lat": 49,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 70,
+      "lat": 51,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả test đều `ok: true`, `err: null` → TCP connection thành công, server không đóng kết nối.\n\n### 2. Protocol nào có phản hồi `rx` khác rỗng?\n**Không có.** Tất cả `rx: \"\"` → server **không gửi lại dữ liệu** cho bất kỳ command nào. Đây là dấu hiệu bất thường.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\nDựa trên test `server_first` (client chờ server gửi trước trong 2s) → **Server phải gửi packet khởi động trước**. Nhưng `rx: \"\"` cho thấy server **không gửi gì cả**, có thể do:\n- Server chưa nhận diện được client đúng cách\n- Protocol handshake ban đầu"
+  "ai_diagnosis": "## Phân tích kết quả test NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 bước đều `ok: true`, không có lỗi (`err: null`), latency ổn định 49-96ms. Server đang chạy và phản hồi TCP.\n\n### 2. Protocol nào có vẻ đúng nhất?\n**Tất cả đều `rx: \"\"`** — server không gửi gì ngược lại. Điều này cho thấy:\n- Hoặc server đang chờ thêm dữ liệu từ client\n- Hoặc thứ tự/giải pháp packet chưa đúng protocol thực\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\n**Server gửi trước** (theo `server_first` test). Server thường gửi handshake/banner trước, client mới phản hồi. Nếu `server_first` nhận được dữ liệu, đó là dấu hiệu đúng.\n\n### 4. Bước fix tiếp theo cụ thể?\n```\n1. Kiểm"
 }

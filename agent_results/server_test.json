@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-23 12:24:01 UTC",
+  "ts": "2026-08-23 13:09:54 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 89,
+      "lat": 250,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 68,
+      "lat": 71,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 73,
+      "lat": 71,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 72,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 74,
+      "lat": 72,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 test đều `ok: true`, không có lỗi kết nối. Server đang chạy và accept TCP connection.\n\n### 2. Protocol nào đúng nhất?\n**Chưa có protocol nào đúng.** Tất cả `rx: \"\"` — server không phản hồi gì với bất kỳ packet nào. Điều này cho thấy:\n- Hoặc format packet sai hoàn toàn\n- Hoặc server đang drop packet im lặng"
 }

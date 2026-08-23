@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-23 07:55:41 UTC",
+  "ts": "2026-08-23 08:28:01 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 88,
+      "lat": 513,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 71,
+      "lat": 36,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 71,
+      "lat": 30,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 71,
+      "lat": 38,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 72,
+      "lat": 33,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Debug NRO J2ME Protocol\n\n**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả 5 lệnh đều `ok: true`, nghĩa là TCP kết nối thành công, không bị đóng ngay. Tuy nhiên **rx luôn rỗng** — server không phản hồi dữ liệu.\n\n**2. Protocol nào có vẻ đúng nhất?**\nKhông có lệnh nào có `rx` khác rỗng. Cần capture packet thực tế (Wireshark/tcpdump) để xem server thực sự gửi gì (hoặc không gửi gì).\n\n**3. Protocol NRO bắt đầu bằng client hay server?**\nKết quả `server_first` cho thấy server **không gửi gì trước** (rx rỗng). NRO J2ME thường là **client gửi trước** — server chỉ phản hồi khi nhận đúng command.\n\n**4. Bước fix tiếp theo cụ thể:**\n- Dùng **tcpdump/Wireshark** trên"
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

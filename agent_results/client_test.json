@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-23 11:58:46 UTC",
+  "ts": "2026-08-23 12:56:06 UTC",
   "target": "bore.pub:14445",
   "status": "WARN",
   "results": {
@@ -9,7 +9,7 @@
     },
     "TCP": {
       "ok": true,
-      "data": "33ms"
+      "data": "70ms"
     },
     "ServerKey": {
       "ok": false,
@@ -24,5 +24,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "**Client chưa vào được server.** Lỗi nằm ở bước **Server"
+  "ai": "**Phân tích:**\n\n- **DNS, TCP, Login, JAR**: OK → Client đã kết"
 }

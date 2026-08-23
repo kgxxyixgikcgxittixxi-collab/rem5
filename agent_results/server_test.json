@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-23 20:54:59 UTC",
+  "ts": "2026-08-23 21:18:23 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 268,
+      "lat": 60,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 70,
+      "lat": 25,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 70,
+      "lat": 25,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 71,
+      "lat": 32,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 71,
+      "lat": 26,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Debug NRO J2ME Protocol\n\n**1. Server có đang chấp nhận kết nối không?**\nCó — tất cả test đều `ok: true`, không có lỗi. Server chấp nhận TCP connect.\n\n**2. Protocol nào đúng nhất?**\nKhông có protocol nào cho phản hồi (`rx` trống hết). Có thể **server_first** đúng nhất vì server J2ME thường gửi packet khởi tạo trước.\n\n**3. Protocol thực sự bắt đầu bằng gì?**\nThường là **server gửi trước** — client chỉ cần connect và chờ packet đầu tiên từ server (thường là handshake/version request).\n\n**4. Bước fix tiếp theo:**\n- Tăng timeout `server_first` lên **5-10s**, dùng raw TCP read để bắt mọi byte server gửi\n- Thử connect rồi **chỉ đọc thuần** (không gửi gì) trong 3s, xem server có gửi dữ liệu không\n- Kiểm tra server log"
+  "ai_diagnosis": ""
 }

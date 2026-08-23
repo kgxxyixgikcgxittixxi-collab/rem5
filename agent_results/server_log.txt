@@ -1,5 +1,3 @@
-### 1. Server có đang chấp nhận kết nối không?
-**Khô
 2026-08-17 22:24:48 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả đều `ConnectionRefu
 2026-08-17 22:49:06 UTC | FAIL | bore.pub:20445 | no_response | **1. Server có đang chấp nhận kết nối không?**
@@ -498,3 +496,5 @@ Có, tất cả `ok: true` chứng tỏ TC
 
 ### 1. Server có đang chấp nhận kết nối không?
 **Có.*
+2026-08-23 01:15:55 UTC | OK | bore.pub:14445 | no_response | **1. Server có đang chấp nhận kết nối không?**
+Có. Tất cả 5 lệnh đều `ok: true`,

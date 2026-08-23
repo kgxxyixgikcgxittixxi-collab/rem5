@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-22 23:55:46 UTC",
+  "ts": "2026-08-23 01:15:55 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 73,
+      "lat": 88,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 8,
+      "lat": 59,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 7,
+      "lat": 60,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 8,
+      "lat": 56,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 8,
+      "lat": 56,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả test\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả `ok: true` nghĩa là TCP handshake thành công, server không đóng kết nối ngay.\n\n### 2. Protocol nào đúng nhất / có rx?\n**Không có protocol nào có `rx`** — tất cả đều `rx: \"\"`. Server im lặng hoàn toàn sau khi nhận dữ liệu.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?\nDựa trên test `server_first` (client chờ 2s không nhận được gì) → **client gửi trước**. Đây là mô hình common của J2ME MMO: client mở kết nối và gửi login packet đầu tiên.\n\n### 4"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả 5 lệnh đều `ok: true`, không có lỗi, server phản hồi đúng cấu trúc.\n\n**2. Protocol nào có vẻ đúng nhất?**\nTất cả đều `rx: \"\"` — chưa có phản hồi dữ liệu thực sự. Cần xem nội dung byte thực tế server gửi về (dùng `rx` hex dump) để xác định.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nServer gửi trước. Test `server_first` (server gửi gói đầu tiên trong 2s) đã `ok: true` → server chủ động gửi handshake trước, client mới phản"
 }

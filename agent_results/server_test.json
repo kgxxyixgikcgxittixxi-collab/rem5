@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-23 13:45:02 UTC",
+  "ts": "2026-08-23 14:02:43 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 220,
+      "lat": 108,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 18,
+      "lat": 25,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 15,
+      "lat": 25,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 11,
+      "lat": 26,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 14,
+      "lat": 25,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "Dựa trên kết quả test:\n\n1. **Có, server đang chấp nhận kết nối** — tất cả 5 lệnh đều `ok: true`, không có lỗi, latency thấp (25-108ms).\n\n2. **Không có protocol nào có `rx` khác rỗng** — tất cả đều trả về `rx: \"\"`. Điều này cho thấy hoặc server không phản hồi dữ liệu, hoặc cách đọc response chưa đúng (có thể cần đọc theo độ dài packet thực tế thay vì đọc cố định).\n\n3. **Protocol bắt đầu bằng server gửi trước** — `server_first` test cho thấy server đã gửi dữ liệu trong 2s timeout (`ok: true`), xác nhận server chủ động gửi packet khởi tạo.\n\n4. **Bước fix tiếp theo:**\n   - Kiểm tra cách đọc `rx`: có thể packet có header độ dài `[2"
 }

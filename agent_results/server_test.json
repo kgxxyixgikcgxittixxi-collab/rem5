@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-23 04:56:58 UTC",
+  "ts": "2026-08-23 05:31:47 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 61,
+      "lat": 117,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 24,
+      "lat": 68,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 24,
+      "lat": 68,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 42,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 24,
+      "lat": 69,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**Phân tích kết quả:**\n\n1. **Server có đang chấp nhận kết nối không?**  \n   Có — TCP connect thành công (ok: true, lat ổn định). Nhưng server **không phản hồi** (rx rỗng"
+  "ai_diagnosis": "## Phân tích kết quả test\n\n**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả 5 lệnh đều `ok: true`, không có lỗi. Server chấp nhận TCP connection và đọc được payload.\n\n**2. Protocol nào"
 }

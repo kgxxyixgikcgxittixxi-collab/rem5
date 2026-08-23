@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-23 23:30:42 UTC",
+  "ts": "2026-08-23 23:50:30 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 87,
+      "lat": 16,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 71,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 69,
+      "lat": 8,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 70,
+      "lat": 8,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 70,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "# Debug NRO J2ME Protocol — bore.pub:14445\n\n## 1. Server có đang chấp nhận kết nối không?\n\n**Có.** Tất cả 5 bước đều `ok: true`, latency 69–87ms → TCP handshake thành công, server không đóng kết nối.\n\n## 2. Protocol nào có vẻ đúng nhất / server phản hồi rx khác rỗng?\n\n**Không có bước nào.** Tất cả `rx: \"\"` — server không gửi lại dữ liệu cho bất kỳ command nào. Đây là dấu hiệu quan trọng: hoặc protocol chưa đúng, hoặc server đang chờ một bước khởi tạo đặc biệt trước khi phản hồi.\n\n## 3. Protocol NRO thực sự bắt đầu bằng gì?"
+  "ai_diagnosis": ""
 }

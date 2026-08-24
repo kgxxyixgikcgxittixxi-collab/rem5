@@ -1,4 +1,3 @@
-2026-08-18 19:59:18 UTC | FAIL | bore.pub:20445 | 
 2026-08-18 21:01:23 UTC | FAIL | bore.pub:20445 | 
 2026-08-18 21:39:06 UTC | FAIL | bore.pub:20445 | 
 2026-08-18 21:59:09 UTC | FAIL | bore.pub:20445 | 
@@ -298,3 +297,4 @@ Client **có thể kết nối** vào server (DNS/TCP/Login/JAR đều OK). Lỗ
 2026-08-24 20:03:40 UTC | WARN | bore.pub:14445 | **Client chưa vào được server.**
 
 **Lỗi:** `ServerKey` — server không
+2026-08-24 20:50:10 UTC | WARN | bore.pub:14445 | **Phân

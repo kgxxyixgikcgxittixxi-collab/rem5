@@ -1,7 +1,3 @@
-2026-08-19 08:52:11 UTC | FAIL | bore.pub:14445 | no_response | ## Kết quả debug:
-
-**1. Server có đang chấp nhận kết nối không?**
-→ **KHÔNG.** T
 2026-08-19 09:22:58 UTC | FAIL | bore.pub:14445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả đều `ConnectionRefu
 2026-08-19 09:56:08 UTC | OK | bore.pub:14445 | no_response | AI_ERR:The read operation timed out
@@ -495,6 +491,10 @@ Có, TCP connection được chấp nhận
 ✅ Có
 2026-08-24 08:24:41 UTC | OK | bore.pub:14445 | no_response | AI_ERR:The read operation timed out
 2026-08-24 09:12:45 UTC | OK | bore.pub:14445 | no_response | ## Phân tích debug NRO J2ME
+
+### 1. Server có đang chấp nhận kết nối không?
+**Có
+2026-08-24 10:05:15 UTC | OK | bore.pub:14445 | no_response | ## Phân tích debug NRO J2ME
 
 ### 1. Server có đang chấp nhận kết nối không?
 **Có

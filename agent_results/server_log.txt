@@ -1,4 +1,3 @@
-2026-08-19 10:27:51 UTC | OK | bore.pub:14445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Có, tất cả 5 lệnh đều `ok: true`,
 2026-08-19 10:56:30 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả test NRO J2ME
 
@@ -498,3 +497,4 @@ Có, TCP connection được chấp nhận
 2026-08-24 10:49:52 UTC | OK | bore.pub:14445 | no_response | AI_ERR:The read operation timed out
 2026-08-24 11:15:22 UTC | OK | bore.pub:14445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Có, tất cả test đều `ok: true`, k
+2026-08-24 11:46:48 UTC | OK | bore.pub:14445 | no_response | AI_ERR:The read operation timed out

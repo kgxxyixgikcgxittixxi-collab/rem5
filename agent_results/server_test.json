@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-24 12:17:28 UTC",
+  "ts": "2026-08-24 13:24:47 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 99,
+      "lat": 45,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 58,
+      "lat": 11,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 56,
+      "lat": 13,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 56,
+      "lat": 11,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 57,
+      "lat": 12,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n### 1."
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có**, tất cả `ok: true` nghĩa là TCP handshake thành công, server không đóng kết nối ngay.\n\n### 2. Protocol nào có phản hồi rx khác rỗng?\n**Không có** — tất cả `rx: \"\"`. Server chấp nhận kết nối nhưng **không gửi gì ngược lại** cho bất kỳ lệnh nào bạn gửi.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?\nDựa trên `server_first` (server chờ 2s rồi mới gửi) cũng `rx: \"\"` → **Server KHÔNG gửi packet mở đầu**."
 }

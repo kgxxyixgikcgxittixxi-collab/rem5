@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-24 22:54:11 UTC",
+  "ts": "2026-08-24 23:17:58 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 105,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 58,
+      "lat": 48,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 57,
+      "lat": 36,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 54,
+      "lat": 42,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 53,
+      "lat": 36,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có** — `ok: true` ở mọi lệnh chứng tỏ TCP handshake thành công, server không đóng kết nối. Nhưng **server không phản hồi** (`rx: \"\"` ở tất cả).\n\n### 2. Protocol nào đúng nhất?\n**Không có cái nào** — tất cả đều `rx: \"\"`. Có thể format packet sai hoặc server đang chờ một handshake đặc thù trước.\n\n### 3. Protocol NRO bắt đầu bằng gì?\nCần xác định lại"
+  "ai_diagnosis": ""
 }

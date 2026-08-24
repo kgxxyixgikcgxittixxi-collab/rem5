@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-24 10:05:15 UTC",
+  "ts": "2026-08-24 10:49:52 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 77,
+      "lat": 80,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 33,
+      "lat": 31,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 35,
+      "lat": 38,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 34,
+      "lat": 31,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 35,
+      "lat": 31,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 test đều `ok: true`, nghĩa là TCP handshake thành công, server không đóng kết nối ngay.\n\n### 2. Protocol nào có phản hồi rx khác rỗng?\n**Không có.** Tất cả `rx: \"\"` — server **không phản hồi lại** bất kỳ packet nào bạn gửi. Đây là dấu hiệu bất thường.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?\nTheo đặc trưng J2ME MMO server: **Server gửi trước** (`server_first`). Nhưng trong test của bạn, `server_first` cũng `rx: \"\"` → server không gửi gì cả. Có thể:\n- Server cần **handshake/identify** đặc thù trước khi phản hồi\n- Port 14445 có"
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

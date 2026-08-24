@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-24 04:52:14 UTC",
+  "ts": "2026-08-24 05:40:40 UTC",
   "target": "bore.pub:14445",
   "status": "WARN",
   "results": {
@@ -9,7 +9,7 @@
     },
     "TCP": {
       "ok": true,
-      "data": "25ms"
+      "data": "8ms"
     },
     "ServerKey": {
       "ok": false,
@@ -24,5 +24,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": ""
+  "ai": "## Phân tích kết quả bore.pub test\n\n**Kết nối client có vào được server không?**\n→ **CÓ**, client đã kết nối thành công đến server. Các bước DNS, TCP, Login, JAR đều OK.\n\n**Lỗi ở đâu?**"
 }

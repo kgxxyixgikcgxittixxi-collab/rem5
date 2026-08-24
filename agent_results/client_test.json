@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-24 18:06:02 UTC",
+  "ts": "2026-08-24 19:01:36 UTC",
   "target": "bore.pub:14445",
   "status": "WARN",
   "results": {
@@ -9,7 +9,7 @@
     },
     "TCP": {
       "ok": true,
-      "data": "56ms"
+      "data": "49ms"
     },
     "ServerKey": {
       "ok": false,
@@ -24,5 +24,5 @@
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": "**Phân tích:**\n\nClient **có thể kết nối** vào server (DNS/TCP/Login/JAR đều OK). Lỗi nằm ở bước **ServerKey** — server không gửi greeting response"
+  "ai": "AI err:The read operation timed out"
 }

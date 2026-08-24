@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-24 19:54:13 UTC",
+  "ts": "2026-08-24 20:24:45 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 380,
+      "lat": 27,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 74,
+      "lat": 11,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 73,
+      "lat": 12,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 72,
+      "lat": 15,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 71,
+      "lat": 12,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "## Phân tích kết quả test\n\n**1. Server có đang chấp nhận kết nối không?**\nCó"
 }

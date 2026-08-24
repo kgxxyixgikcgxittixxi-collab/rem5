@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-24 21:30:35 UTC",
+  "ts": "2026-08-24 21:56:07 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 90,
+      "lat": 268,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 70,
+      "lat": 24,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 72,
+      "lat": 26,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 71,
+      "lat": 29,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 72,
+      "lat": 26,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n1. **Server đang chấp nhận kết nối** — tất cả `ok: true`, `err: null`, không có lỗi TCP/connect.\n\n2. **Không có protocol nào có `rx` khác rỗng** — tất cả đều `rx: \"\"`. Cần kiểm tra lại cách đọc response (timeout, buffer, hay packet length parsing).\n\n3. **Protocol bắt đầu bằng client gửi trước** — `server_first` test (chờ server gửi trước 2s) cho `rx: \"\"`, nghĩa là server không gửi gì cả. Client phải là người khởi động handshake.\n\n4. **Bước fix tiếp theo:**\n   - Kiểm tra cách đọc response: dùng `readBytes(len)` hay `readUntilDelimiter`?\n   - Thử đọc raw bytes ngay sau khi gửi `"
+  "ai_diagnosis": "## Phân tích kết quả test\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 lệnh đều `ok: true`, không có lỗi kết nối. Server Java đang chạy và phản hồi TCP.\n\n### 2. Protocol nào có phản hồi `rx` khác rỗng?\n**Không có.** Tất cả `rx: \"\"` — server không gửi lại dữ liệu cho bất kỳ lệnh nào. Đây là vấn đề chính.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\nTheo kết quả `server_first` (client chờ server gửi trước, timeout 2s)"
 }

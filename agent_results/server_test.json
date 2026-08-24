@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-24 00:25:51 UTC",
+  "ts": "2026-08-24 02:07:23 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 87,
+      "lat": 33,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 33,
+      "lat": 12,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 33,
+      "lat": 11,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 41,
+      "lat": 11,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 34,
+      "lat": 12,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả các lệnh đều `ok: true, err: null` — TCP connect thành công, server không đóng kết nối.\n\n**2. Protocol nào đúng nhất?**\nTất cả đều `rx: \"\"` — không có phản hồi nào từ server. Không có gói nào \"đúng\" theo dữ liệu hiện tại. Cần sniff thực client để so sánh.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nThông thường **server gửi trước** (welcome/handshake packet) rồi client mới phản hồi."
+  "ai_diagnosis": ""
 }

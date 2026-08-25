@@ -1,7 +1,4 @@
 
-Client **chưa vào được server**. Lỗi nằm ở bước **ServerKey** — server khô
-2026-08-19 13:10:06 UTC | WARN | bore.pub:14445 | **Phân tích:**
-
 Client **
 2026-08-19 13:59:02 UTC | WARN | bore.pub:14445 | AI err:The read operation timed out
 2026-08-19 15:14:58 UTC | WARN | bore.pub:14445 | 
@@ -298,3 +295,6 @@ Client **chưa vào được server**. Lỗi nằm ở bước **ServerKey** —
 2026-08-25 09:38:12 UTC | WARN | bore.pub:14445 | 
 2026-08-25 10:13:40 UTC | WARN | bore.pub:14445 | **Phân tích:**
 2026-08-25 10:53:10 UTC | WARN | bore.pub:14445 | 
+2026-08-25 11:30:54 UTC | WARN | bore.pub:14445 | **Phân tích:**
+
+- **DNS & TCP:** OK → client kết nối mạng đến server thành công

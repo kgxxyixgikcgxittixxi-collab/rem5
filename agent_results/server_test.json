@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-25 19:24:24 UTC",
+  "ts": "2026-08-25 19:55:13 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 92,
+      "lat": 157,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 70,
+      "lat": 55,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 73,
+      "lat": 51,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 77,
+      "lat": 51,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 71,
+      "lat": 53,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n✅ Có — tất cả `ok: true` nghĩa là TCP handshake thành công, server không đóng kết nối. Nhưng server **không phản hồi** (`rx: \"\"`), tức là server không nhận ra protocol của client.\n\n**2. Protocol nào có vẻ đúng nhất?**\nKhông có packet nào có `rx` khác rỗng → chưa tìm ra protocol đúng. `server_first` (timeout 2s) cũng không có phản hồi, nghĩa là server **không gửi trước** bất kỳ packet chào hỏi nào."
+  "ai_diagnosis": "## Phân tích kết quả\n\n**1. Server có đang chấp nhận kết nối không?**\nCó — tất cả `ok: true` nghĩa là TCP handshake thành công, server không đóng kết nối.\n\n**2. Protocol nào có phản hồi rx khác rỗng?**\n**Không có cái nào** — tất cả `rx: \"\"`. Server chấp nhận kết nối nhưng **không gửi lại bất kỳ byte nào**.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì"
 }

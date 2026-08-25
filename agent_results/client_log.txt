@@ -1,4 +1,3 @@
-2026-08-19 12:02:31 UTC | WARN | bore.pub:14445 | **Phân tích:**
 
 Client **chưa vào được server**. Lỗi nằm ở bước **ServerKey** — server khô
 2026-08-19 13:10:06 UTC | WARN | bore.pub:14445 | **Phân tích:**
@@ -298,3 +297,4 @@ Client **chưa vào được server**. Lỗi nằm ở bước **ServerKey** —
 2026-08-25 08:46:24 UTC | WARN | bore.pub:14445 | 
 2026-08-25 09:38:12 UTC | WARN | bore.pub:14445 | 
 2026-08-25 10:13:40 UTC | WARN | bore.pub:14445 | **Phân tích:**
+2026-08-25 10:53:10 UTC | WARN | bore.pub:14445 | 

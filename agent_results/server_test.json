@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-25 11:02:09 UTC",
+  "ts": "2026-08-25 11:37:06 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 66,
+      "lat": 455,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 29,
+      "lat": 71,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 31,
+      "lat": 71,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 26,
+      "lat": 74,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 25,
+      "lat": 71,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả 5 test đều `ok: true, err: null` — TCP handshake thành công, không có lỗi kết nối.\n\n**2. Protocol nào đúng nhất?**\n**Không có protocol nào đúng.** Tất cả đều `rx: \"\"` — server không phản hồi gì. Điều này cho thấy các lệnh gửi đi **không khớp protocol thực**.\n\n**3. NRO thực sự bắt"
+  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nCó — tất cả `ok: true` nghĩa là TCP connect + send đều thành công. Tuy nhiên **không có phản hồi nào** (`rx: \"\"` ở mọi lệnh).\n\n**2. Protocol nào đúng nhất?**\nKhông có lệnh nào có `rx` khác rỗng. `server_first` có latency cao nhất (455ms) — khả năng cao server **đã gửi dữ liệu** nhưng code đọc chưa bắt kịp hoặc buffer chưa đầy.\n\n**3. NRO protocol bắt đầu bằng ai?**\nThông thường **"
 }

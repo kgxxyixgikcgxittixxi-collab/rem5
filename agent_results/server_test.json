@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-25 23:10:41 UTC",
+  "ts": "2026-08-25 23:38:03 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 138,
+      "lat": 126,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 56,
+      "lat": 77,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 53,
+      "lat": 74,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 54,
+      "lat": 75,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 51,
+      "lat": 76,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả test bore.pub:14445\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 lệnh đều trả về `ok: true`, nghĩa là TCP connect + send thành công, không có lỗi `err`.\n\n### 2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?\n**Không có protocol nào.** Tất cả đều `rx: \"\"` — server **không gửi lại bất kỳ byte nào**. Đây là dấu hiệu bất thường: dù lệnh nào gửi đi, server im lặng hoàn toàn.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?\nTheo đặc tả J2ME MMO thông thường: **server gửi trước** (server-first handshake"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả các lệnh đều `ok: true`, `err: null`, latency thấp (~75-126ms). Server phản hồi TCP đúng.\n\n**2. Protocol nào có vẻ đúng nhất?**\nKhông có gói nào nhận được `rx` (phản hồi từ server đều rỗng). Điều này cho thấy server đang chờ một gói tin **đúng format** để phản hồi, chứ không reject kết nối.\n\n**3. NRO J"
 }

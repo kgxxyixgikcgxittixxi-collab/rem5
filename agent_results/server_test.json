@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-25 21:50:13 UTC",
+  "ts": "2026-08-25 22:45:23 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 56,
+      "lat": 114,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 26,
+      "lat": 61,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 25,
+      "lat": 58,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 27,
+      "lat": 59,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 24,
+      "lat": 56,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server đang chấp nhận kết nối?**  \nCó — tất cả `ok: true`, `err: null`. TCP handshake thành công, server không đóng kết nối ngay.\n\n**2. Protocol nào có phản hồi rx khác rỗng?**  \nKhông có — tất cả `rx: \"\"`. Server không gửi lại dữ liệu cho bất kỳ lệnh nào bạn gửi.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**  \nServer gửi trước. Test `server_first` (chờ server gửi) cũng cho `rx: \"\"` → server **không gửi gì cả** sau khi kết nối. Đây là bất thường.\n\n**4. Bước fix tiếp theo cụ thể?**  \n- Kiểm tra server log tại bore.pub:14445 xem có reject client không có **login token/chữ ký** trước không.\n- NRO J2ME thường yêu"
+  "ai_diagnosis": "1. **Có**, server đang chấp nhận kết nối TCP — tất cả `ok: true`, không có lỗi `err`."
 }

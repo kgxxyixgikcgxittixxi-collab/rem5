@@ -1,4 +1,3 @@
-Có — tất cả `ok: true` nghĩa là T
 2026-08-20 11:28:52 UTC | OK | bore.pub:14445 | no_response | Dựa trên kết quả test:
 
 1. **Server đang chấp nhận kết nối** — tất cả 5 lệnh đều
@@ -498,3 +497,4 @@ Có. Tất cả 5 lệnh đều `ok: true`,
 
 **1. Server có đang chấp nhận kết nối không?**
 → **
+2026-08-25 13:59:18 UTC | OK | bore.pub:14445 | no_response | 

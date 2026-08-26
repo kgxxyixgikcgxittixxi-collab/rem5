@@ -1,6 +1,3 @@
-2026-08-20 07:50:33 UTC | WARN | bore.pub:14445 | AI err:The read operation timed out
-2026-08-20 08:42:21 UTC | WARN | bore.pub:14445 | AI err:The read operation timed out
-2026-08-20 09:19:15 UTC | WARN | bore.pub:14445 | AI err:The read operation timed out
 2026-08-20 10:01:06 UTC | WARN | bore.pub:14445 | **Phân tích:**
 
 - **
@@ -298,3 +295,6 @@ Client **chưa vào được server**. Lỗi nằm ở **ServerKey** — server 
 2026-08-26 10:44:07 UTC | WARN | bore.pub:14445 | 
 2026-08-26 11:14:30 UTC | WARN | bore.pub:14445 | 
 2026-08-26 11:49:26 UTC | WARN | bore.pub:14445 | 
+2026-08-26 12:57:23 UTC | WARN | bore.pub:14445 | ## Phân tích kết nối NRO
+
+**Client có vào được server không?**

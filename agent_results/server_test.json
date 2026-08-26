@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-26 18:05:33 UTC",
+  "ts": "2026-08-26 20:00:30 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 119,
+      "lat": 308,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 45,
+      "lat": 9,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 40,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 37,
+      "lat": 9,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 34,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "AI_ERR:The read operation timed out"
+  "ai_diagnosis": "## Debug NRO J2ME Protocol\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả `ok: true` nghĩa là TCP connect + send thành công. Server không đóng connection ngay → đang lắng nghe.\n\n### 2. Protocol nào đúng nhất?\n**Không có packet nào nhận được `rx`** — tất cả đều `rx: \"\"`. Chưa xác định được protocol nào đúng. Cần sniff packet từ client thật để so sánh.\n\n### 3. Protocol bắt đầu bằng gì? Client hay server gửi trước?\n**Client gửi trước** — `server_first` timeout 2s không nhận được gì. Đây là client-initiated protocol.\n\n### 4. Bước fix tiếp theo cụ thể?"
 }

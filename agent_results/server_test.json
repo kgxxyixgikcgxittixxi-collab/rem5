@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-26 11:29:49 UTC",
+  "ts": "2026-08-26 11:59:01 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,14 +7,14 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 513,
+      "lat": 89,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 72,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
@@ -28,18 +28,18 @@
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 75,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 72,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả các lệnh đều `ok: true`, không có lỗi kết nối. Server đang chạy và chấp nhận TCP connection.\n\n**2. Protocol nào đúng nhất?**\nTất cả đều `rx: \"\"` — server **không phản hồi gì** với bất kỳ packet nào. Không có protocol nào trong"
 }

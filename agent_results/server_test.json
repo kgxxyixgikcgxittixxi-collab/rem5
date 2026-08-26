@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-26 16:16:14 UTC",
+  "ts": "2026-08-26 18:05:33 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 84,
+      "lat": 119,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 61,
+      "lat": 45,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 62,
+      "lat": 40,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 63,
+      "lat": 37,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 61,
+      "lat": 34,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả test bore.pub:14445\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 lệnh đều `ok: true`, nghĩa là TCP handshake thành công, server không đóng kết nối ngay.\n\n### 2. Protocol nào đúng nhất / server phản hồi rx ≠ \"\"?\n**Không có protocol nào.** Tất cả `rx: \"\"` — server **không phản hồi gì** với bất kỳ lệnh nào. Đây là dấu hiệu rõ ràng nhất."
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

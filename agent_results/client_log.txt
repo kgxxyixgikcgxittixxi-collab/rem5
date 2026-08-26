@@ -1,4 +1,3 @@
-
 - **Client đã kết nối được server** (DNS,
 2026-08-20 02:59:28 UTC | WARN | bore.pub:14445 | **Client chưa vào được server.** Lỗi nằm ở bước **ServerKey** — server
 2026-08-20 03:53:33 UTC | WARN | bore.pub:14445 | 
@@ -298,3 +297,4 @@ Client **chưa vào được server**. Lỗi nằm ở **ServerKey** — server 
 
 - **DNS, TCP, Login,
 2026-08-26 05:17:27 UTC | WARN | bore.pub:14445 | **Client chưa vào được server.** Lỗi nằm ở bước **ServerKey** — server không gửi greeting 
+2026-08-26 06:00:22 UTC | WARN | bore.pub:14445 | 

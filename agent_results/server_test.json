@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-26 06:21:31 UTC",
+  "ts": "2026-08-26 07:15:39 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 265,
+      "lat": 167,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 71,
+      "lat": 29,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 72,
+      "lat": 25,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 74,
+      "lat": 23,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 74,
+      "lat": 24,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó, TCP connect thành công (ok=true) ở mọi bước. Nhưng server **không phản hồi** (rx=rỗng) với mọi lệnh.\n\n**2. Protocol nào đúng nhất?**\nChưa có lệnh nào nhận được phản hồi. Có thể server đang chờ handshake/bắt tay trước đó, hoặc format packet chưa đúng.\n\n**3. Protocol NRO bắt đầu bằng gì?**\nThường **client gửi trước** (login/version). Việc `server_first` rx=rỗng cho thấy server không chủ động gửi gì — đúng với client-first.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra **độ dài packet** (header [2B len] có đúng không?)\n- Thử gửi **login_cmd1** với username/password có độ dài chính xác (kèm null terminator)\n- Dùng Wiresh"
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

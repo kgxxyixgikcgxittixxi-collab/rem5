@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-27 15:27:04 UTC",
+  "ts": "2026-08-28 00:31:10 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 86,
+      "lat": 120,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 73,
+      "lat": 54,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 75,
+      "lat": 55,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 75,
+      "lat": 56,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 75,
+      "lat": 51,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả các test đều `ok: true`, `err: null` → TCP kết nối thành công, server không đóng kết nối ngay.\n\n**2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?**\nTất cả `rx: \"\"` → không có bước nào nhận được phản hồi từ server. Cần kiểm tra lại cách đọc response (timeout, buffer, hay server thực sự không reply).\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nCần xác minh lại tài liệu/ Reverse engineering. Thông thường J2ME MMO protocol thường **client gửi trước** (login handshake), nhưng test `server_first` `ok:true` với `rx:\"\"` có thể server có gửi packet đầu tiên nhưng client không đọc đúng.\n\n**4. Bước fix tiếp theo cụ thể?**\n- Thêm **log raw bytes** nhận được sau mỗi lệnh"
+  "ai_diagnosis": "## Phân tích kết quả debug NRO J"
 }

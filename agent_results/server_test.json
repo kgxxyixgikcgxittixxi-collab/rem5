@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-29 03:44:14 UTC",
+  "ts": "2026-08-29 10:26:57 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 85,
+      "lat": 112,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 72,
+      "lat": 74,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 73,
+      "lat": 75,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 70,
+      "lat": 72,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 71,
+      "lat": 76,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME Protocol\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 lệnh đều `ok: true` → TCP handshake thành công, server không đóng kết nối.\n\n### 2. Protocol nào đúng nhất?\n**Chưa có protocol nào đúng.** Tất cả `rx: \"\"` → server không phản hồi bất kỳ command nào. Có thể:\n- Format packet sai (header/magic byte thiếu)\n- Server chờ command đặc biệt trước khi phản hồi\n- Cần handshake/encryption bước đầu\n\n### 3. Protocol bắt đầu bằng ai?\n**Client gửi trước"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả test đều `ok: true`, `err: null` → kết nối TCP thành công, server không đóng connection.\n\n**2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?**\nKhông có protocol nào có `rx` khác rỗng. Tất cả đều `rx: \"\"`. Cần kiểm tra lại cách đọc response (buffer size, timeout, hay server thực sự không reply).\n\n**3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?**\nTest `server_first` cho thấy **server gửi trước** (có phản hồi trong 2s timeout). Đây là đặc trưng của NRO J2ME.\n\n**4. Bước fix tiếp theo cụ thể?**\n-"
 }

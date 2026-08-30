@@ -1,4 +1,3 @@
-2026-08-20 22:46:08 UTC | WARN | bore.pub:14445 | Client **không vào được server**. Lỗi nằm ở **ServerKey** — server không gửi greeting, khi
 2026-08-20 23:27:59 UTC | WARN | bore.pub:14445 | **Phân tích:**
 
 Client **
@@ -298,3 +297,4 @@ Client **chưa vào được server**. Lỗi nằm ở **ServerKey** — server 
 2026-08-30 07:29:35 UTC | WARN | bore.pub:14445 | 
 2026-08-30 13:14:01 UTC | WARN | bore.pub:14445 | 
 2026-08-30 17:34:44 UTC | WARN | bore.pub:14445 | 
+2026-08-30 22:46:03 UTC | WARN | bore.pub:14445 | **Client chưa vào được server.** Lỗi

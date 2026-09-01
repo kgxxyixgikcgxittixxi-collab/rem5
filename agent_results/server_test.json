@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-01 12:07:41 UTC",
+  "ts": "2026-09-01 16:35:44 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 57,
+      "lat": 29,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 25,
+      "lat": 8,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 25,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 26,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 24,
+      "lat": 8,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "## Phân tích kết quả\n\n**1. Server có đang chấp nhận kết nối không?**\n✅ Có. Tất cả `ok: true` + `err: null` chứng tỏ TCP handshake thành công, server không đóng kết"
 }

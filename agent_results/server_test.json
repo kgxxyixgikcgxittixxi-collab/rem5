@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-03 12:11:33 UTC",
+  "ts": "2026-09-03 16:26:14 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 121,
+      "lat": 86,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 72,
+      "lat": 71,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 74,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 72,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 72,
+      "lat": 71,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "## Phân tích kết quả test bore.pub:14445\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có** — tất cả 5 test đều `ok: true`, không có lỗi TCP/connect. Server phản hồi ở tầng transport (TCP handshake thành công), nhưng **không gửi bất kỳ dữ liệu nào về phía client** (`rx: \"\"` ở mọi test).\n\n### 2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?\n**Không có protocol nào** — tất cả đều `rx: \"\"`. Tuy nhiên, nếu phải chọn, `login_cmd1` là ứng viên sáng giá nhất vì:\n- Format `[2B len][0x01][user\\0][pass\\0]` là pattern"
 }

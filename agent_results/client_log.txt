@@ -1,4 +1,3 @@
-
 - **DNS/TCP/JAR**: OK → kết nối mạng và tải file thành công.
 - **ServerKey
 2026-08-21 22:42:31 UTC | WARN | bore.pub:14445 | 
@@ -298,3 +297,4 @@ Client **chưa vào được server**. Lỗi nằm ở **ServerKey** — server 
 
 - **DNS, TCP
 2026-09-03 23:27:39 UTC | WARN | bore.pub:14445 | AI err:HTTP Error 500: Internal Server Error
+2026-09-04 01:15:16 UTC | WARN | bore.pub:14445 | AI err:HTTP Error 500: Internal Server Error

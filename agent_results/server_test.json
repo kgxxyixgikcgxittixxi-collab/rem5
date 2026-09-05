@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-05 00:21:18 UTC",
+  "ts": "2026-09-05 04:41:30 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 148,
+      "lat": 299,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 59,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 59,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 59,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 58,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**"
+  "ai_diagnosis": "1. **Có**, server đang chấp nhận kết nối TCP (tất cả `ok: true`, không có lỗi).\n\n2. **Không có protocol nào** cho phản hồi `rx` khác rỗng — tất cả đều `rx: \"\"`. Cần kiểm tra cách đọc response (byte length, encoding, hay timeout).\n\n3. **Client gửi trước** — `server_first` chỉ test việc chờ server gửi, nhưng NRO J2ME thông thường client là người khởi tạo handshake.\n\n4. **Fix tiếp theo:**\n   - Kiểm tra cách đọc `rx`: dùng `readFully` hay `readUntilDelimiter`?\n   - Thử đọc raw bytes từ socket sau mỗi lệnh để xem server có thực"
 }

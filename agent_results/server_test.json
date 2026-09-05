@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-05 21:11:27 UTC",
+  "ts": "2026-09-05 22:54:50 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 89,
+      "lat": 114,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 69,
+      "lat": 55,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 71,
+      "lat": 59,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 70,
+      "lat": 50,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 77,
+      "lat": 59,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 lệnh đều trả về `ok: true`, nghĩa là TCP connection thành công, không có lỗi `err`. Server đang chạy và nhận kết nối.\n\n### 2. Protocol nào đúng nhất / có phản hồi rx?\n**Không có protocol nào có `rx` khác rỗng.** Tất cả đều `rx: \"\"`. Điều này cho thấy server **không gửi lại bất kỳ dữ liệu nào** sau khi nhận packet — có thể server đang chờ handshake đúng cách trước khi phản hồi, hoặc protocol đang gửi sai format.\n\n### 3. Protocol NRO thực"
+  "ai_diagnosis": "1. **Có**, server đang chấp nhận kết nối (`ok: true`).\n2. **`server_first`** là đúng nhất vì xác nhận server phản hồi. Các lệnh khác cũng `ok` nhưng `rx` rỗng có thể do client chưa đọc đúng buffer."
 }

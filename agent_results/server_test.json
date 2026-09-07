@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-07 19:07:37 UTC",
+  "ts": "2026-09-07 21:59:41 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 256,
+      "lat": 96,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 35,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 37,
+      "lat": 69,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 33,
+      "lat": 71,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 37,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả các lệnh đều trả về `ok: true` — TCP handshake thành công, server không đóng kết nối.\n\n### 2. Protocol nào có vẻ đúng nhất?\n**Không có protocol nào nhận được phản hồi `rx`** — tất cả đều `rx: \"\"`. Server chấp nhận kết nối nhưng **không phản hồi lại bất kỳ command nào**. Có thể:\n- Server đang chờ một **handshake khác** trước khi xử lý các lệnh này.\n- Format packet có thể sai (thiếu checksum, encryption, hoặc header version).\n- Server bore.pub:14445 có thể là **server khác phiên bản** hoặc đã tắt game logic.\n\n### 3. Protocol NRO thực sự"
+  "ai_diagnosis": ""
 }

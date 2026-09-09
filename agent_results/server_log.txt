@@ -1,8 +1,4 @@
 ### 1. Server có đang chấp nhận kết nối không?
-**Có
-2026-08-23 09:56:04 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả test
-
-### 1. Server có đang chấp nhận kết nối không?
 **Có.*
 2026-08-23 10:23:36 UTC | OK | bore.pub:14445 | no_response | ## Debug NRO J2ME Protocol
 
@@ -498,3 +494,7 @@ Có —
 
 **1. Server có đang chấp nhận kết nối không?**
 Có. 
+2026-09-09 00:34:22 UTC | OK | bore.pub:14445 | no_response | Phân tích kết quả test:
+
+**1. Server có đang chấp nhận kết nối không?**
+→ **Có.*

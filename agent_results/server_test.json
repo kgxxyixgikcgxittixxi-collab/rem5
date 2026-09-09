@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-09 20:02:02 UTC",
+  "ts": "2026-09-09 22:27:53 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,7 +7,7 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 30,
+      "lat": 24,
       "rx": "",
       "err": null,
       "mode": "sent_first"
@@ -35,11 +35,11 @@
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 10,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 test đều `ok: true`, `err: null` → TCP connect thành công, server không đóng kết nối.\n\n### 2. Protocol nào có vẻ đúng nhất?\n**Chưa có protocol nào cho thấy `rx` khác rỗng.** Tất cả đều `rx"
+  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n###"
 }

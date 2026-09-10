@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-10 21:59:04 UTC",
+  "ts": "2026-09-10 23:58:35 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 73,
+      "lat": 104,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 50,
+      "lat": 51,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 40,
+      "lat": 76,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 40,
+      "lat": 51,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 41,
+      "lat": 53,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "Dựa trên kết quả test:\n\n1. **Server đang chấp nhận kết nối** – tất cả `ok: true`, không có lỗi.\n\n2. **Không có protocol nào có `rx` khác rỗng** – server đang phản hồi nhưng dữ liệu trả về trống (có thể do server đóng connection ngay sau khi nhận packet).\n\n3. **Protocol NRO thực sự bắt đầu bằng server gửi trước** – `server_first` test thành công, xác nhận server gửi packet khởi tạo trước khi client phản hồi.\n\n4. **Bước fix tiếp theo:**\n   - Kiểm tra **payload thực tế** của `server_first` (dùng Wireshark/tcpdump) để xem server gửi gì.\n   - Xác định **định dạng packet tiếp theo** sau `server_first` (thường là handshake/version exchange).\n   - Kiểm tra **byte order** (big-end"
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-11 13:23:25 UTC",
+  "ts": "2026-09-11 17:06:52 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 128,
+      "lat": 80,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 71,
+      "lat": 40,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 71,
+      "lat": 35,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 68,
+      "lat": 40,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 75,
+      "lat": 40,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server đang chấp nhận kết nối?**\nCó — tất cả `ok: true`, `err: null`, latency ổn định (~70-128ms).\n\n**2. Protocol nào đúng / rx khác rỗng?**\nKhông có — tất cả `rx: \"\"`. Không có phản hồi nào từ server.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nServer gửi trước — `server_first` test thành công (server phản hồi trong 2s timeout).\n\n**4. Bước fix tiếp theo cụ thể?**\n- Kiểm tra **format byte** của các lệnh gửi đi (đặc biệt `login_cmd1`: `username\\0password\\0` — null terminator có đúng không?).\n- Dùng **Wireshark/tcpdump** bắt packet thực tế từ client"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó, tất cả 5 test đều `ok: true`, không có lỗi. Server đang chạy và phản hồi.\n\n**2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?**\nTất cả đều `rx: \"\"` → chưa có protocol nào nhận được phản hồi dữ liệu thực sự từ server. Cần capture packet để xem server gửi gì.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?**\nTest `server_first` thành công → **server gửi trước** (thường là init packet sau khi TCP connect).\n\n**4. Bước fix tiếp theo cụ thể?**\n- Dùng Wireshark/tcpdump bắt packet sau `server_first` để xem server gửi byte gì\n- Giải mã cấu trúc init packet (thường có version, server ID, hoặc token)\n- Kiểm tra `login_cmd1` đang gửi đúng format chưa (độ dài header, encoding username/password)\n- Thử gửi `cmd_neg101` trước rồi mới login (một số server yêu cầu register URL trước)"
 }

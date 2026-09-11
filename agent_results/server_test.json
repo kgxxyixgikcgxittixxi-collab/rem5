@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-11 04:14:45 UTC",
+  "ts": "2026-09-11 08:57:30 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 24,
+      "lat": 365,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 7,
+      "lat": 69,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 7,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 7,
+      "lat": 69,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 7,
+      "lat": 68,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nCó."
+  "ai_diagnosis": "**Phân tích debug NRO J2ME:**\n\n1. **Server đang chấp nhận kết nối** - Tất cả `ok: true` cho thấy TCP handshake thành công, server không đóng kết nối ngay.\n\n2. **Không có protocol nào có `rx` khác rỗng** - Server chấp nhận kết nối nhưng **không phản hồi dữ liệu**. Đây là vấn đề chính.\n\n3. **Protocol bắt đầu bằng server gửi trước** - Test `server_first` xác nhận server phải gửi packet đầu tiên trong 2s timeout.\n\n4. **Bước fix tiếp theo:**\n   - Kiểm tra server log: Server có nhận được kết nối và xử lý đúng không?\n   - Verify server đang chờ command gì trước khi gửi response\n   - Thử gửi `login_cmd1` ngay lập tức thay vì chờ server gửi trước"
 }

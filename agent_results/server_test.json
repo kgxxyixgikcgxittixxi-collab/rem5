@@ -1,45 +1,45 @@
 {
-  "ts": "2026-09-12 17:08:29 UTC",
+  "ts": "2026-09-12 19:18:26 UTC",
   "target": "bore.pub:14445",
-  "any_connected": true,
+  "any_connected": false,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": true,
-      "lat": 27,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "login_cmd1": {
-      "ok": true,
-      "lat": 7,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "version_ff": {
-      "ok": true,
-      "lat": 8,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "empty_pkt": {
-      "ok": true,
-      "lat": 8,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "cmd_neg101": {
-      "ok": true,
-      "lat": 8,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả test đều `ok: true`, không có lỗi. Server đang chạy và chấp nhận TCP connection.\n\n**2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?**\n**Không có** — tất cả `rx` đều rỗng (`\"\"`). Không có test nào nhận được dữ liệu phản hồi từ"
+  "ai_diagnosis": "1. **Không.** Tất cả đều `ConnectionRefused` → server/tunnel không chấp nhận kết nối TCP.\n\n2. **Không có protocol nào.** Chưa có gói nào tới được server để phản hồi.\n\n3. **Server gửi trước.** `server_first` (client chờ 2s nhận gói từ server) là bước khởi động chuẩn của NRO J2ME.\n\n4. **Fix bore tunnel:**\n   - Kiểm tra bore tunnel đang chạy: `bore client local 127.0.0.1:14445 --remote bore.pub:14445`\n   - Test local: `nc -vz 127.0.0.1 14445`\n   - Nếu local ok nhưng bore fail → đổi port remote hoặc check firewall\n   -"
 }

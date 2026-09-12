@@ -1,8 +1,4 @@
 
-### 1. Server có đang chấp nhận kết nối khô
-2026-08-23 20:34:00 UTC | OK | bore.pub:14445 | no_response | 
-2026-08-23 20:54:59 UTC | OK | bore.pub:14445 | no_response | ## Debug NRO J2ME Protocol
-
 **1. Server có đang chấp nhận kết nối không?**
 Có — 
 2026-08-23 21:18:23 UTC | OK | bore.pub:14445 | no_response | 
@@ -498,3 +494,7 @@ Có, tất cả `ok: true` chứng tỏ TC
 2026-09-12 06:30:33 UTC | OK | bore.pub:14445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Có. Tất cả 5 lệnh đều `ok: true`,
 2026-09-12 11:11:55 UTC | OK | bore.pub:14445 | no_response | AI_ERR:The read operation timed out
+2026-09-12 14:09:39 UTC | OK | bore.pub:14445 | no_response | ## Kết quả debug:
+
+**1. Server có đang chấp nhận kết nối không?**
+✅ Có — tất cả 

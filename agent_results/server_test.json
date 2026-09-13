@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-13 18:06:56 UTC",
+  "ts": "2026-09-13 20:45:39 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 88,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 41,
+      "lat": 56,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 41,
+      "lat": 56,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 35,
+      "lat": 56,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 37,
+      "lat": 58,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả test\n\n**1. Server có đang chấp nhận kết nối không?**\n→ **Có.** Tất cả các lệnh đều `ok: true`, không có lỗi TCP. Server đang lắng nghe và phản hồi ở mức connection.\n\n**2. Protocol nào có vẻ đúng nhất?**\n→ **Không có protocol nào cho thấy server phản hồi dữ liệu** (`rx: \"\"` ở tất cả). Điều này nghi ngờ — ngay cả `empty_pkt` hay `version_ff` cũng không nhận được gì. Có thể:\n- Server đang chờ handshake/bắt tay trước khi phản hồi\n- Payload gửi đi chưa đúng format (đặc biệt `login_cmd1` với null byte trong username/password)\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\n→ **Client gửi trước.** Trong J2ME MMO protocol thông thường, client là"
+  "ai_diagnosis": "Dựa trên kết quả test:\n\n1. **Server đang chấp nhận kết nối** — tất cả `ok"
 }

@@ -1,7 +1,4 @@
 ### 1. Server có đang chấp nhận kết nố
-2026-08-23 21:57:11 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả test bore.pub:14445
-
-### 1. Server có đang chấp nhận kết nố
 2026-08-23 22:24:37 UTC | OK | bore.pub:14445 | no_response | 
 2026-08-23 22:46:50 UTC | OK | bore.pub:14445 | no_response | 
 2026-08-23 23:02:06 UTC | OK | bore.pub:14445 | no_response | 
@@ -498,3 +495,6 @@ Có. Tất cả test đều `ok: true`, k
 2026-09-12 21:29:18 UTC | OK | bore.pub:14445 | no_response | 
 2026-09-12 23:14:27 UTC | OK | bore.pub:14445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Có. Tất cả `ok: true`, `err: null
+2026-09-13 01:03:46 UTC | FAIL | bore.pub:14445 | no_response | ## Debug NRO J2ME - bore.pub:14445
+
+### 1. Server có đang chấp nhận kết nối khôn

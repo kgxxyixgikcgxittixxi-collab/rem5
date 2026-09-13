@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-13 11:40:54 UTC",
+  "ts": "2026-09-13 15:03:28 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 26,
+      "lat": 62,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 12,
+      "lat": 26,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 12,
+      "lat": 24,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 12,
+      "lat": 26,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 12,
+      "lat": 27,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả test đều `ok: true`, không có lỗi kết nối. Server đang chạy và chấp nhận TCP connection.\n\n**2. Protocol nào đúng nhất?**\n**Không có protocol nào cho phản hồi** — tất cả `rx: \"\"`. Đây là dấu hiệu cảnh báo: server chấp nhận kết nối nhưng **không reply** với bất kỳ command nào bạn gửi. Có thể format packet sai hoặc server đang chờ một handshake khác.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nDựa trên test `server_first` (client chờ server gửi trước trong 2s) — **server gửi trước**. Đây là pattern phổ biến của NRO J2ME: server sẽ gửi packet khởi tạo (thường chứa version/seed), sau đó client mới phản hồi. Việc bạn chủ động gửi `login_cmd1"
+  "ai_diagnosis": "## Kết quả debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n✅ Có — tất cả `ok: true`, không có lỗi TCP. Server đang chạy và accept connection.\n\n**2. Protocol nào đúng nhất?**\nTất cả đều `rx: \"\"` — **không có packet nào server phản hồi**. Cần kiểm tra lại format byte.\n\n**3. Protocol NRO bắt đầu bằng gì?**\nTheo tài liệu NRO J2ME: **Server gửi trước** (server-first packet) → client mới phản hồi. Test `server_first` của bạn `rx: \"\"` nghĩa là server **không gửi gì**, có thể do:\n- Server chờ client gửi gì đó trước (khác tài liệu)\n- Cần handshake ban đầu (ví dụ: gửi version/client"
 }

@@ -1,45 +1,45 @@
 {
-  "ts": "2026-09-13 01:03:46 UTC",
+  "ts": "2026-09-13 06:01:45 UTC",
   "target": "bore.pub:14445",
-  "any_connected": false,
+  "any_connected": true,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 16,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "login_cmd1": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 7,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "version_ff": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 10,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "empty_pkt": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 7,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "cmd_neg101": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 8,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Debug NRO J2ME - bore.pub:14445\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả 5 lệnh đều trả về `ConnectionRefused` — server/tunnel không chấp nhận TCP connection ở port 14445.\n\n### 2. Protocol nào đúng / có rx?\n**Không có.** Tất cả `rx: \"\"` — không có packet nào đến được server để phản hồi.\n\n### 3. NRO protocol bắt đầu bằng gì? Client hay server gửi trước?\nTheo tài liệu NRO J2ME đã công bố: **Client gửi trước** — handshake bắt đầu bằng `server_first` (client chờ server phản hồi sau khi connect). Nhưng nếu server không accept connection thì không bước nào trong số này chạy được"
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

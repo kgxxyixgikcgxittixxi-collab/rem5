@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-13 20:45:39 UTC",
+  "ts": "2026-09-14 00:27:20 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,21 +7,21 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 73,
+      "lat": 104,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 56,
+      "lat": 55,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 56,
+      "lat": 53,
       "rx": "",
       "err": null,
       "mode": "sent_first"
@@ -35,11 +35,11 @@
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 58,
+      "lat": 51,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n1. **Server đang chấp nhận kết nối** — tất cả `ok"
+  "ai_diagnosis": "## Phân tích kết quả test bore.pub:14445\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 lệnh đều `ok: true`, nghĩa là TCP connect thành công, không có lỗi `err`. Server đang chạy và chấp nhận kết nối.\n\n### 2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?\n**Không có protocol nào.** Tất cả `rx: \"\"` — server **không phản hồi gì** sau bất kỳ lệnh nào. Điều này cho thấy:\n- Hoặc server đang chờ một **handshake/bắt tay** cụ thể trước khi phản hồi.\n- Hoặc format packet gửi đi **sai cấu trúc** (thiếu checksum, wrong"
 }

@@ -1,7 +1,4 @@
 
-- **DNS, TCP
-2026-08-23 19:57:29 UTC | WARN | bore.pub:14445 | **Phân tích:**
-
 - **DNS, TCP, Login
 2026-08-23 20:31:55 UTC | WARN | bore.pub:14445 | 
 2026-08-23 21:00:03 UTC | WARN | bore.pub:14445 | 
@@ -298,3 +295,6 @@ Client **có thể kết nối** đến server (DNS, TCP, Login, JAR đều OK).
 2026-09-15 01:55:48 UTC | WARN | bore.pub:14445 | 
 2026-09-15 07:27:09 UTC | WARN | bore.pub:14445 | 
 2026-09-15 12:51:13 UTC | WARN | bore.pub:14445 | 
+2026-09-15 17:32:31 UTC | WARN | bore.pub:14445 | **Client không vào được server.**
+
+**Lỗi ở:** `Server

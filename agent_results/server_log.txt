@@ -1,6 +1,3 @@
-Có, tất cả test đều `ok: true`, k
-2026-08-24 11:46:48 UTC | OK | bore.pub:14445 | no_response | AI_ERR:The read operation timed out
-2026-08-24 12:17:28 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả debug NRO J2ME
 
 ### 1.
 2026-08-24 13:24:47 UTC | OK | bore.pub:14445 | no_response | ## Phân tích debug NRO J2ME
@@ -498,3 +495,6 @@ Có — tất cả test đều `ok: true`,
 
 **1. Server có đang chấp nhận kết nối không
 2026-09-15 20:10:37 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả test NRO J2ME
+2026-09-15 22:54:03 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả test bore.pub:14445
+
+### 1. Server có đang chấp nhận kết nố

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-20 06:07:07 UTC",
+  "ts": "2026-09-20 11:16:52 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 294,
+      "lat": 26,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 45,
+      "lat": 11,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 45,
+      "lat": 11,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 42,
+      "lat": 12,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 41,
+      "lat": 12,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả `ok: true` với latency thấp (41-45ms), ngoại trừ `server_first` (294ms) do chờ timeout 2s.\n\n**2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?**\nKhông có protocol nào. Tất cả `rx: \"\"` — server không trả về dữ liệu nào cả.\n\n**3. Protocol"
+  "ai_diagnosis": ""
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-20 11:16:52 UTC",
+  "ts": "2026-09-20 14:43:52 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 26,
+      "lat": 91,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 11,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 11,
+      "lat": 68,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 12,
+      "lat": 74,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 12,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "## Phân tích kết quả test bore.pub:14445\n\n**1. Server có đang chấp nhận kết nối"
 }

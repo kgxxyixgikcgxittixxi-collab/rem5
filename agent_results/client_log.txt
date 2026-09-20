@@ -1,4 +1,3 @@
-
 - **
 2026-08-25 03:32:46 UTC | WARN | bore.pub:14445 | 
 2026-08-25 04:24:05 UTC | WARN | bore.pub:14445 | 
@@ -298,3 +297,4 @@ Client **đã kết nối được** server (DNS, TCP, Login, JAR đều OK). L�
 
 Client **
 2026-09-20 16:23:43 UTC | WARN | bore.pub:14445 | 
+2026-09-20 18:58:43 UTC | WARN | bore.pub:14445 | 

@@ -1,7 +1,3 @@
-**Có
-2026-08-25 08:35:33 UTC | OK | bore.pub:14445 | no_response | ## Debug kết quả NRO J2ME
-
-**1. Server có đang chấp nhận kết nối không?**
 Có — t
 2026-08-25 09:18:14 UTC | OK | bore.pub:14445 | no_response | 
 2026-08-25 09:55:28 UTC | OK | bore.pub:14445 | no_response | 
@@ -498,3 +494,7 @@ Có. Tất cả `ok: true` với latency
 **1. Server có đang chấp nhận kết nối không
 2026-09-21 01:44:37 UTC | OK | bore.pub:14445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Có. Tất cả `ok: true`, không có l
+2026-09-21 07:14:51 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả test
+
+### 1. Server có đang chấp nhận kết nối không?
+**Có.*

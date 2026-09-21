@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-21 07:14:51 UTC",
+  "ts": "2026-09-21 14:16:12 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 122,
+      "lat": 14,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 53,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 49,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 47,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 49,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả test\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 test đều `ok: true`, `err: null`, latency thấp (47-122ms). Server Java trên port 14445 đang chạy và accept kết nối TCP bình thường.\n\n### 2. Protocol nào đúng nhất?\n**Không có protocol nào cho `rx` khác rỗng.** Tất cả đều `rx:"
+  "ai_diagnosis": "AI_ERR:The read operation timed out"
 }

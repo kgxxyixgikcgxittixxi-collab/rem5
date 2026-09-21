@@ -1,4 +1,3 @@
-Có — t
 2026-08-25 09:18:14 UTC | OK | bore.pub:14445 | no_response | 
 2026-08-25 09:55:28 UTC | OK | bore.pub:14445 | no_response | 
 2026-08-25 10:30:37 UTC | OK | bore.pub:14445 | no_response | AI_ERR:The read operation timed out
@@ -498,3 +497,4 @@ Có. Tất cả `ok: true`, không có l
 
 ### 1. Server có đang chấp nhận kết nối không?
 **Có.*
+2026-09-21 14:16:12 UTC | OK | bore.pub:14445 | no_response | AI_ERR:The read operation timed out

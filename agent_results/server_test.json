@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-22 15:52:21 UTC",
+  "ts": "2026-09-22 19:21:45 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 103,
+      "lat": 54,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 70,
+      "lat": 25,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 72,
+      "lat": 26,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 71,
+      "lat": 28,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 68,
+      "lat": 26,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả 5 lệnh đều `ok: true`, `err: null` → server chấp nhận TCP connection và đọc dữ liệu gửi tới mà không lỗi.\n\n**2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?**\nTất cả `rx: \"\"` → chưa có phản hồi nào. Tuy nhiên `server_first` (server gửi trước) là bước khởi động quan trọng nhất, nếu server không gửi gì sau 2s timeout thì có thể server đang chờ client gửi lệnh trước.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?**\nCần xem `rx` từ `server_first` chứa gì. Nếu `rx` rỗng → server KHÔNG gửi trước, protocol bắt đầu bằng **client gửi lệnh**. Nếu `rx` có dữ liệu → server gửi trước (thường là version/chào hỏi)."
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó, tất cả các lệnh đều `ok: true`, không có lỗi. Server đang chạy và chấp nhận kết nối TCP.\n\n**2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?**\n**Không có** — tất cả đều `rx: \"\"`. Không có lệnh nào nhận được phản hồi từ server.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?**\nDựa trên `server_first` cũng `rx: \"\"` → **Server KHÔNG gửi trước**. Protocol bắt đầu bằng **client gửi lệnh đầu tiên**.\n\n**4. Bước fix tiếp theo cụ thể?**\n- **Bắt gói tin (packet capture)** trên port 14445 để xem server có thực sự gửi gì không, hay chỉ đóng kết nối im lặng."
 }

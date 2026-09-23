@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-22 22:20:25 UTC",
+  "ts": "2026-09-23 00:44:05 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 79,
+      "lat": 80,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 33,
+      "lat": 31,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 33,
+      "lat": 45,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 37,
+      "lat": 35,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 37,
+      "lat": 36,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó, tất cả test đều `ok: true`, không có lỗi. Server đang chạy và phản hồi (dù rx rỗng).\n\n**2. Protocol nào đúng nhất?**\nChưa rõ - tất cả đều `rx: \"\"`. Cần kiểm tra packet capture (Wireshark) để xem server thực sự gửi gì.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nThông thường **server gửi trước** (server_first), sau đó client mới login. Test `server_first` timeout 2s mà không có dữ liệu → có thể server không gửi handshake ban đầu, hoặc client cần gửi gì đó trước.\n\n**4. Bước fix tiếp theo:**\n- Dùng Wireshark/tcpdump bắt packet để xem server có thực sự gửi dữ liệu không\n- Kiểm tra bore tunnel có forward đúng không (test với telnet/nc)\n- Thử kết nối trực tiếp (không qua tunnel) để loại trừ tunnel issue\n- Nếu server không gửi gì → có thể cần gửi init packet trước (khác với `server_first` chờ đợi)"
+  "ai_diagnosis": ""
 }

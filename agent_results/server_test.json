@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-24 18:38:25 UTC",
+  "ts": "2026-09-24 21:48:09 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 108,
+      "lat": 212,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 58,
+      "lat": 34,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 56,
+      "lat": 31,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 56,
+      "lat": 31,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 56,
+      "lat": 31,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả test bore.pub:14445\n\n**1. Server có đang chấp nhận kết nối không?**\n✅ Có — tất cả 5 lệnh đều `ok: true`, không có lỗi TCP. Server chấp nhận kết nối nhưng **không phản hồi dữ liệu** (`rx: \"\"` ở mọi lệnh).\n\n**2. Protocol nào có vẻ đúng nhất?**\n`server_first` — vì NRO J2ME thực tế là **server gửi trước** (server hello/handshake packet), không phải client gửi login ngay. Các lệnh còn lại đều không nhận được phản hồi vì gửi sai thứ tự.\n\n**3. Protocol NRO thực sự bắt đầu"
+  "ai_diagnosis": ""
 }

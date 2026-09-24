@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-23 21:56:20 UTC",
+  "ts": "2026-09-24 00:14:59 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 30,
+      "lat": 31,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 12,
+      "lat": 7,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 12,
+      "lat": 8,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 12,
+      "lat": 8,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 11,
+      "lat": 8,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n1. **Server đang chấp nhận kết nối** — tất cả 5 lệnh đều `ok: true`, không có lỗi, latency ổn định (~11-30ms).\n\n2. **Không có protocol nào có `rx` khác rỗng** — tất cả đều trả về `rx: \"\"`. Cần kiểm tra lại cách đọc response (có thể buffer chưa được flush hoặc cách parse length prefix sai).\n\n3. **Protocol NRO bắt đầu bằng server gửi trước** — `server_first` test thành công, xác nhận server chủ động gửi packet khởi tạo sau khi TCP connect.\n\n4. **Bước fix tiếp theo:**\n   - Kiểm tra cách đọc response: NRO J2ME thường dùng length-prefix `[2B len][payload]`. Cần đọc đúng 2 byte length đầu tiên rồi đọc tiếp payload.\n   - Log raw bytes của `rx` thay vì chỉ kiểm tra empty string.\n   - Thử đọc response sau `server_first` — đó là packet đầu tiên"
+  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?"
 }

@@ -1,45 +1,45 @@
 {
-  "ts": "2026-09-25 18:58:15 UTC",
+  "ts": "2026-09-25 22:08:49 UTC",
   "target": "bore.pub:14445",
-  "any_connected": true,
+  "any_connected": false,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": true,
-      "lat": 113,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "login_cmd1": {
-      "ok": true,
-      "lat": 56,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "version_ff": {
-      "ok": true,
-      "lat": 56,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "empty_pkt": {
-      "ok": true,
-      "lat": 58,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "cmd_neg101": {
-      "ok": true,
-      "lat": 59,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có** — tất cả 5 lệnh đều `ok: true`, không có lỗi. Server Java phản hồi TCP accept.\n\n### 2. Protocol nào có phản hồi `rx` khác rỗng?\n**Không có** — tất cả `rx: \"\"`. Đây là dấu hiệu vấn đề: server không gửi lại dữ liệu, hoặc client đóng connection quá sớm trước khi đọc response.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\nTheo protocol J2ME NRO chuẩn: **Server gửi trước** — sau khi TCP connect, server gửi byte `0x02` (hoặc `0x01`) làm handshake khởi tạo. Client mới gửi"
+  "ai_diagnosis": "1. **Khong**, server tu Choi ket noi (tat ca ConnectionRefused).\n2. **Khong co protocol nao**, tat ca `rx` de trong.\n3. **Client gui truoc**.\n4. **Fix tiep theo**:\n   - Kiem tra `bore` da forward dung port 14445 chua.\n   - Kiem tra firewall/iptables cho port 14445.\n   - Kiem tra server Java dang listen tren port 14445 (dùng `netstat -tlnp`)."
 }

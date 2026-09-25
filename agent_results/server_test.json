@@ -1,45 +1,45 @@
 {
-  "ts": "2026-09-25 09:52:02 UTC",
+  "ts": "2026-09-25 14:50:25 UTC",
   "target": "bore.pub:14445",
-  "any_connected": true,
+  "any_connected": false,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": true,
-      "lat": 73,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "login_cmd1": {
-      "ok": true,
-      "lat": 42,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "version_ff": {
-      "ok": true,
-      "lat": 42,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "empty_pkt": {
-      "ok": true,
-      "lat": 38,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "cmd_neg101": {
-      "ok": true,
-      "lat": 38,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả test bore.pub:14445\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 test đều `ok: true` → TCP connection thành công, server không đóng kết nối. Tuy nhiên **rx luôn rỗng** nghĩa là server **không phản hồi** lại bất kỳ lệnh nào client gửi.\n\n### 2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?\n**Không có protocol nào.** Tất cả `rx: \"\"`. Server chấp nhận kết nối nhưng im lặng hoàn toàn — không phản hồi với `server_first`, `login_cmd1`, `version_ff`, `empty_pkt`, hay `cmd_neg101`.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?\nDựa trên test `server_first` (ok=true, rx=\"\"): **Server KHÔNG gửi gì trước** — nếu protocol yêu cầu server gửi trước, client sẽ nhận được dữ liệu, nhưng rx rỗng. Protocol NRO J2ME thực tế có thể là **client gửi trước** (client-initiated handshake), không phải server-first.\n\n### 4. Bước"
+  "ai_diagnosis": "## Debug Kết Quả NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**KHÔNG.** Tất cả 5 lệnh đều trả về `ConnectionRefused` — TCP handshake không thể thiết lập. Vấn đề nằm ở lớp kết nối, chưa đến lớp protocol.\n\n### 2. Protocol nào đúng / server phản hồi rx khác rỗng?\n**Không có.** Tất cả `rx: \"\"` vì không kết nối được. Chưa thể đánh giá protocol.\n\n### 3. NRO protocol bắt đầu bằng ai gửi trước?\nDựa trên test `server_first` ("
 }

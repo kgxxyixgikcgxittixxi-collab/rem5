@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-26 17:53:55 UTC",
+  "ts": "2026-09-26 20:32:28 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 101,
+      "lat": 100,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 37,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 35,
+      "lat": 74,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 44,
+      "lat": 73,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 30,
+      "lat": 70,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 test đều `ok: true` → TCP handshake thành công, server chấp nhận kết nối. Vấn đề nằm ở **protocol layer**, không phải network.\n\n### 2. Protocol nào có vẻ đúng nhất?\n**Không có packet nào nhận được phản hồi (`rx: \"\"`)**. Điều này cho thấy server **không phản hồi ở layer application** — có thể do:\n- Thứ tự packet sai\n- Packet format chưa đúng (thiếu checksum, length, hay magic bytes)\n- Server đang chờ một packet khởi tạo đặc biệt trước\n\n### 3. Protocol NRO thực sự bắt đầu"
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\nCó. Tất cả test đều `ok: true`, `err: null` → TCP kết nối thành công, server không đóng connection.\n\n**2. Protocol nào có phản hồi rx khác rỗng?**\n**Không có** — tất cả `rx: \"\"`. Server không gửi lại bất kỳ byte nào dù client đã gửi lệnh.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\n**Server gửi trước.** Đây là đặc trưng của NRO J2ME: server gửi packet chào mừng (thường chứa version, seed, hoặc init data) ngay khi client kết nối TCP. Client chỉ phản hồi sau khi nhận được gói này."
 }

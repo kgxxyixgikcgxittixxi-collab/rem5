@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-26 14:25:48 UTC",
+  "ts": "2026-09-26 17:53:55 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 54,
+      "lat": 101,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 24,
+      "lat": 37,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 24,
+      "lat": 35,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 24,
+      "lat": 44,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 24,
+      "lat": 30,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có** — tất cả `ok: true` nghĩa là TCP connect thành công, server không đóng connection. Nhưng server **không phản hồi** (`rx: \"\"`) với bất kỳ lệnh nào.\n\n### 2. Protocol nào có vẻ đúng nhất?\nKhông có protocol nào nhận được phản hồi. Tuy nhiên, `server_first` là quan trọng nhất — nếu server không gửi gì trước sau 2s, có thể **thứ tự handshake sai**.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\nCần xác"
+  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 test đều `ok: true` → TCP handshake thành công, server chấp nhận kết nối. Vấn đề nằm ở **protocol layer**, không phải network.\n\n### 2. Protocol nào có vẻ đúng nhất?\n**Không có packet nào nhận được phản hồi (`rx: \"\"`)**. Điều này cho thấy server **không phản hồi ở layer application** — có thể do:\n- Thứ tự packet sai\n- Packet format chưa đúng (thiếu checksum, length, hay magic bytes)\n- Server đang chờ một packet khởi tạo đặc biệt trước\n\n### 3. Protocol NRO thực sự bắt đầu"
 }

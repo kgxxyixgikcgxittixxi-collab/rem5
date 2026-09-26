@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-26 05:26:55 UTC",
+  "ts": "2026-09-26 10:05:43 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 23,
+      "lat": 273,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 7,
+      "lat": 45,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 7,
+      "lat": 41,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 7,
+      "lat": 46,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 7,
+      "lat": 46,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có**, nhưng server **không phản hồi** (rx = \"\" ở mọi lệnh). TCP handshake thành công, nhưng server im lặng.\n\n### 2. Protocol nào đúng nhất?\n**login_cmd1** có cấu trúc đúng nhất: `[2B len][0x01][username\\0][password\\0]`. Đây là lệnh login chuẩn J2ME NRO.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\n**Client gửi trước** — server chờ client khởi tạo. `server_first` (rx rỗng) xác nhận server không gửi gì chủ động.\n\n### 4. Bước fix tiếp theo cụ thể?\n\n| Vấn đề | Hướng fix |\n|--------|-----------|\n| **rx rỗng** | Kiểm tra server-side"
+  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 test đều `ok: true`, `err: null` → TCP connect thành công, không có lỗi.\n\n### 2. Protocol nào đúng nhất / server phản hồi rx khác rỗng?\n**Không có test nào có `rx` khác rỗng.** Tất cả đều `rx: \"\"`. Điều này cho thấy server **đóng kết nối ngay** sau khi nhận packet, không gửi lại dữ liệu. Có thể server đang reject do protocol chưa đúng bước.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì"
 }

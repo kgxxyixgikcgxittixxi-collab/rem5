@@ -1,45 +1,45 @@
 {
-  "ts": "2026-09-25 22:08:49 UTC",
+  "ts": "2026-09-26 00:37:02 UTC",
   "target": "bore.pub:14445",
-  "any_connected": false,
+  "any_connected": true,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 371,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "login_cmd1": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 25,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "version_ff": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 22,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "empty_pkt": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 43,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "cmd_neg101": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 25,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "1. **Khong**, server tu Choi ket noi (tat ca ConnectionRefused).\n2. **Khong co protocol nao**, tat ca `rx` de trong.\n3. **Client gui truoc**.\n4. **Fix tiep theo**:\n   - Kiem tra `bore` da forward dung port 14445 chua.\n   - Kiem tra firewall/iptables cho port 14445.\n   - Kiem tra server Java dang listen tren port 14445 (dùng `netstat -tlnp`)."
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n✅ Có — tất cả 5 lệnh đều `ok: true`, TCP handshake thành công, không có lỗi `err`.\n\n**2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?**\n❌ **Không có** — tất cả `rx: \"\"`. Server không phản hồi gì với bất kỳ lệnh nào.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?**\nCần xác minh lại. Một số NRO server J2ME thực tế **client gửi trước** (login/cmd), không phải server gửi trước. `server_first` với `rx: \"\"` có thể do server không có cơ chế \"gửi trước\""
 }

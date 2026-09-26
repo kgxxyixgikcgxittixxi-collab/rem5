@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-26 10:05:43 UTC",
+  "ts": "2026-09-26 14:25:48 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 273,
+      "lat": 54,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 45,
+      "lat": 24,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 41,
+      "lat": 24,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 46,
+      "lat": 24,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 46,
+      "lat": 24,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 test đều `ok: true`, `err: null` → TCP connect thành công, không có lỗi.\n\n### 2. Protocol nào đúng nhất / server phản hồi rx khác rỗng?\n**Không có test nào có `rx` khác rỗng.** Tất cả đều `rx: \"\"`. Điều này cho thấy server **đóng kết nối ngay** sau khi nhận packet, không gửi lại dữ liệu. Có thể server đang reject do protocol chưa đúng bước.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì"
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có** — tất cả `ok: true` nghĩa là TCP connect thành công, server không đóng connection. Nhưng server **không phản hồi** (`rx: \"\"`) với bất kỳ lệnh nào.\n\n### 2. Protocol nào có vẻ đúng nhất?\nKhông có protocol nào nhận được phản hồi. Tuy nhiên, `server_first` là quan trọng nhất — nếu server không gửi gì trước sau 2s, có thể **thứ tự handshake sai**.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\nCần xác"
 }

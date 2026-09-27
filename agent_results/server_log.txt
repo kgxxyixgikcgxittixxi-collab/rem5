@@ -1,9 +1,5 @@
 
 ### 1. Server có đang chấp nhận kết nố
-2026-08-26 14:55:14 UTC | OK | bore.pub:14445 | no_response | 
-2026-08-26 16:16:14 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả test bore.pub:14445
-
-### 1. Server có đang chấp nhận kết nố
 2026-08-26 18:05:33 UTC | OK | bore.pub:14445 | no_response | AI_ERR:The read operation timed out
 2026-08-26 20:00:30 UTC | OK | bore.pub:14445 | no_response | ## Debug NRO J2ME Protocol
 
@@ -498,3 +494,7 @@ Có.
 2026-09-27 12:30:37 UTC | OK | bore.pub:14445 | no_response | # Debug NRO J2ME Protocol — bore.pub:14445
 
 ## 1. Server có đang chấp nhận kết n
+2026-09-27 17:13:45 UTC | OK | bore.pub:14445 | no_response | ## Phân tích debug NRO J2ME
+
+### 1. Server có đang chấp nhận kết nối không?
+**Có

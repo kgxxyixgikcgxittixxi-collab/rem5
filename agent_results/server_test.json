@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-27 12:30:37 UTC",
+  "ts": "2026-09-27 17:13:45 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 25,
+      "lat": 264,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 7,
+      "lat": 47,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 9,
+      "lat": 47,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 8,
+      "lat": 51,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 8,
+      "lat": 47,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "# Debug NRO J2ME Protocol — bore.pub:14445\n\n## 1. Server có đang chấp nhận kết nối"
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 lệnh đều `ok: true` → TCP handshake thành công, server không đóng kết nối.\n\n### 2. Protocol nào có vẻ đúng nhất?\n**Không có protocol nào.** Tất cả `rx: \"\"` — server **không phản hồi gì** sau khi nhận dữ liệu. Đây là dấu hiệu server đang chờ một gói tin khởi tạo đặc biệt mà client chưa gửi.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\n**Server gửi trước.** Tên test `server_first` xác nhận điều này — server phải gửi gói khởi động (handshake/chào hỏi) trước, client mới phản hồi. Client gửi lung tung → server im lặng.\n\n###"
 }

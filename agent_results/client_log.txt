@@ -1,4 +1,3 @@
-2026-08-28 01:10:03 UTC | WARN | bore.pub:14445 | **
 2026-08-28 12:47:55 UTC | WARN | bore.pub:14445 | 
 2026-08-28 22:56:43 UTC | WARN | bore.pub:14445 | 
 2026-08-29 04:05:58 UTC | WARN | bore.pub:14445 | 
@@ -298,3 +297,4 @@ Client **không vào được server**.
 
 Client **chưa vào được server**. Lỗi nằm
 2026-09-28 16:56:23 UTC | WARN | bore.pub:14445 | 
+2026-09-28 22:28:07 UTC | WARN | bore.pub:14445 | 

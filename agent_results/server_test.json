@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-29 19:12:53 UTC",
+  "ts": "2026-09-29 22:59:10 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 41,
+      "lat": 192,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 7,
+      "lat": 58,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 7,
+      "lat": 58,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 7,
+      "lat": 56,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 7,
+      "lat": 58,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "Dựa trên kết quả test:\n\n**1. Server có đang chấp nhận kết nối không?**\nCó — tất cả các lệnh đều `ok: true`, không có lỗi. Tuy nhiên `rx: \"\"` (trống) cho thấy **server không gửi phản hồi lại** cho bất kỳ lệnh nào.\n\n**2. Protocol nào có vẻ đúng nhất / server phản hồi rx không rỗng?**\nKhông có protocol nào trong số trên nhận được `rx` từ server. Tất cả đều rỗng → chưa xác định được protocol đúng.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì? Client hay server gửi trước?**\nTheo test `server_first` — **"
+  "ai_diagnosis": ""
 }

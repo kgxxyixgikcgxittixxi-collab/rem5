@@ -1,7 +1,4 @@
 
-### 1. Server có đang chấp nhận kết nối khô
-2026-08-30 01:18:31 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả test NRO J2ME
-
 ### 1. Server có đang chấp nhận kết nối khôn
 2026-08-30 06:48:35 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả debug NRO J2ME
 
@@ -498,3 +495,6 @@ Có — tất
 ### 1. Server có đang chấp
 2026-09-30 19:56:10 UTC | FAIL | bore.pub:14445 | no_response | **1. Server có đang chấp nhận kết nối không?**
 Không. Tất cả test đều `Connectio
+2026-09-30 23:30:22 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả test NRO J2ME
+
+**1. Server có đang chấp nhận kết nối không?

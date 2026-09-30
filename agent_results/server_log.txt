@@ -1,6 +1,3 @@
-### 1. Server có đang chấp nhận kết nối kh
-2026-08-29 10:26:57 UTC | OK | bore.pub:14445 | no_response | **1. Server có đang chấp nhận kết nối không?**
-Có. Tất cả test đều `ok: true`, `
 2026-08-29 15:11:36 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả test NRO J2ME
 
 ### 1. Server có đang chấp nhận kết nối khôn
@@ -498,3 +495,6 @@ Có —
 **1. Server có đang chấp nhận kết nối không?**
 Có — tất 
 2026-09-29 22:59:10 UTC | OK | bore.pub:14445 | no_response | 
+2026-09-30 01:59:11 UTC | OK | bore.pub:14445 | no_response | ## Phân tích kết quả test bore.pub:14445
+
+### 1. Server có đang chấp nhận kết nố

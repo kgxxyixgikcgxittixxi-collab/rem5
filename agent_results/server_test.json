@@ -1,45 +1,45 @@
 {
-  "ts": "2026-09-30 23:30:22 UTC",
+  "ts": "2026-10-01 02:20:24 UTC",
   "target": "bore.pub:14445",
-  "any_connected": true,
+  "any_connected": false,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": true,
-      "lat": 475,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "login_cmd1": {
-      "ok": true,
-      "lat": 61,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "version_ff": {
-      "ok": true,
-      "lat": 58,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "empty_pkt": {
-      "ok": true,
-      "lat": 59,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "cmd_neg101": {
-      "ok": true,
-      "lat": 62,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả test NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n✅ **Có.** Tất cả 5 lệnh đều `ok: true`, `err: null`, nghĩa là TCP connect + handshake thành công. Server đang chạy và chấp nhận kết nối.\n\n**2. Protocol nào có vẻ đúng nhất?**\n⚠️ **Tất cả đều `rx: \"\"`** — không có phản hồi nào từ server."
+  "ai_diagnosis": "## Debug Kết Quả NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Không.** Tất cả 5 test đều `ConnectionRefused` → server **không lắng nghe** trên port 14445 hoặc tunnel không forward đúng.\n\n### 2. Protocol nào đúng / server phản hồi?\n**Không có** — tất cả `rx: \"\"`. Chưa có packet nào đến được ứng dụng.\n\n### 3. NRO protocol bắt đầu bằng ai?\n**Server gửi trước** — `server_first` test (client chờ 2s) là đúng hướng, nhưng vì connection bị từ chối nên không có phản hồi.\n\n### 4. Bước fix tiếp theo cụ thể:\n1. **Kiểm tra server"
 }

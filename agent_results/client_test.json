@@ -1,20 +1,28 @@
 {
-  "ts": "2026-10-01 18:48:12 UTC",
+  "ts": "2026-10-01 23:02:09 UTC",
   "target": "bore.pub:14445",
-  "status": "FAIL",
+  "status": "WARN",
   "results": {
     "DNS": {
       "ok": true,
       "data": "159.223.110.159"
     },
     "TCP": {
+      "ok": true,
+      "data": "54ms"
+    },
+    "ServerKey": {
       "ok": false,
-      "error": "[Errno 111] Connection refused"
+      "error": "no greeting from server"
+    },
+    "Login": {
+      "ok": true,
+      "data": "0x"
     },
     "JAR": {
       "ok": true,
       "data": "nrmod_ws.jar 1639KB 223cls"
     }
   },
-  "ai": ""
+  "ai": "Client **vào được server** ở các bước DNS, TCP, Login, JAR đều OK. Lỗi duy nhất ở **ServerKey: \"no greeting from server\"**.\n\n**Nguyên nhân:** Server không gửi phản hồi handshake/ServerKey trong thời gian chờ. Có thể do:\n- Server chưa khởi động đúng hoặc đang lỗi."
 }

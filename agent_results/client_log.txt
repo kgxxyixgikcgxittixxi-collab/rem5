@@ -1,4 +1,3 @@
-2026-08-31 20:50:59 UTC | WARN | bore.pub:14445 | **Ph
 2026-09-01 00:26:56 UTC | WARN | bore.pub:14445 | **Phân tích:**
 
 - **Client
@@ -298,3 +297,4 @@ Client **đã kết nối được** vào server (DNS, TCP, Login, JAR đều OK
 2026-10-01 12:58:51 UTC | WARN | bore.pub:14445 | 
 2026-10-01 18:48:12 UTC | FAIL | bore.pub:14445 | 
 2026-10-01 23:02:09 UTC | WARN | bore.pub:14445 | Client **vào được server** ở các bước DNS, TCP, Login, JAR đều OK. Lỗi duy nhất ở **Server
+2026-10-02 02:16:47 UTC | WARN | bore.pub:14445 | 

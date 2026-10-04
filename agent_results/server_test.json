@@ -1,45 +1,45 @@
 {
-  "ts": "2026-10-04 20:00:25 UTC",
+  "ts": "2026-10-04 23:00:06 UTC",
   "target": "bore.pub:14445",
-  "any_connected": false,
+  "any_connected": true,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 59,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "login_cmd1": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 23,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "version_ff": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 24,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "empty_pkt": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 22,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "cmd_neg101": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 22,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Kết quả debug:\n\n**1. Server có đang chấp nhận kết nối không?**\n**Không.** Tất cả 5 lệnh đều trả về `ConnectionRefused` — server đang **không lắng nghe** trên port 14445 hoặc bore tunnel chưa forward đúng.\n\n**2. Protocol nào đúng / có phản hồi?**\n**Không có** — tất cả `rx` đều rỗng vì không kết nối được.\n\n**3. NRO J2ME protocol bắt đầu bằng ai?**\n**Client gửi trước.** Server không gửi `server_first` trước. Lệnh `server_first` (chờ server gửi) là sai — kết quả `ConnectionRefused` xác nhận điều này.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel đang chạy: `bore local 14445 --to <server_ip"
+  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n✅ Có — `ok: true` ở mọi test nghĩa là TCP handshake thành công, server không đóng kết nối. Nhưng server **không phản hồi** (`rx: \"\"`), tức là request client gửi ra không đúng protocol hoặc bị server bỏ qua.\n\n**2. Protocol nào có vẻ đúng nhất?**\nKhông có protocol nào cho `rx` khác rỗng. Tất cả đều im lặng. Khả năng cao **server không đọc đúng frame** — có thể thiếu length prefix, CRC, hoặc server chờ client làm gì đó trước.\n\n**3. Protocol NRO"
 }

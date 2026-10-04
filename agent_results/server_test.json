@@ -1,45 +1,45 @@
 {
-  "ts": "2026-10-04 16:58:21 UTC",
+  "ts": "2026-10-04 20:00:25 UTC",
   "target": "bore.pub:14445",
-  "any_connected": true,
+  "any_connected": false,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": true,
-      "lat": 108,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "login_cmd1": {
-      "ok": true,
-      "lat": 56,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "version_ff": {
-      "ok": true,
-      "lat": 51,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "empty_pkt": {
-      "ok": true,
-      "lat": 47,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "cmd_neg101": {
-      "ok": true,
-      "lat": 48,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     }
   },
-  "ai_diagnosis": ""
+  "ai_diagnosis": "## Kết quả debug:\n\n**1. Server có đang chấp nhận kết nối không?**\n**Không.** Tất cả 5 lệnh đều trả về `ConnectionRefused` — server đang **không lắng nghe** trên port 14445 hoặc bore tunnel chưa forward đúng.\n\n**2. Protocol nào đúng / có phản hồi?**\n**Không có** — tất cả `rx` đều rỗng vì không kết nối được.\n\n**3. NRO J2ME protocol bắt đầu bằng ai?**\n**Client gửi trước.** Server không gửi `server_first` trước. Lệnh `server_first` (chờ server gửi) là sai — kết quả `ConnectionRefused` xác nhận điều này.\n\n**4. Bước fix tiếp theo:**\n- Kiểm tra bore tunnel đang chạy: `bore local 14445 --to <server_ip"
 }

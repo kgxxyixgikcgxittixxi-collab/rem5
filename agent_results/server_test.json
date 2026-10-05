@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-04 23:00:06 UTC",
+  "ts": "2026-10-05 01:48:45 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 59,
+      "lat": 115,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 23,
+      "lat": 37,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 24,
+      "lat": 38,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 22,
+      "lat": 34,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 22,
+      "lat": 31,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích debug NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n✅ Có — `ok: true` ở mọi test nghĩa là TCP handshake thành công, server không đóng kết nối. Nhưng server **không phản hồi** (`rx: \"\"`), tức là request client gửi ra không đúng protocol hoặc bị server bỏ qua.\n\n**2. Protocol nào có vẻ đúng nhất?**\nKhông có protocol nào cho `rx` khác rỗng. Tất cả đều im lặng. Khả năng cao **server không đọc đúng frame** — có thể thiếu length prefix, CRC, hoặc server chờ client làm gì đó trước.\n\n**3. Protocol NRO"
+  "ai_diagnosis": "## Phân tích kết quả debug NRO J2ME\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả `ok: true` nghĩa là TCP handshake thành công, server không đóng kết nối. Nhưng **server không phản hồi** (`rx: \"\"` ở mọi lệnh).\n\n### 2. Protocol nào đúng nhất?\nKhông có packet nào nhận được phản hồi. Tuy nhiên, `server_first` là quan trọng nhất — nếu server không gửi gì trước sau 2s timeout, có thể **server đã reject** hoặc **protocol không đúng**.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\nCần xác định: **client gửi trước** hay **server gửi trước**. Kết quả `server_first` với `rx: \"\"` cho thấy server **không gửi dữ liệu khởi động** → khả năng cao NRO J2ME là **client-gửi-trước** (client mở kết nối và gửi lệnh đầu tiên"
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-06 02:33:14 UTC",
+  "ts": "2026-10-06 09:22:07 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 111,
+      "lat": 262,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 69,
+      "lat": 11,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 71,
+      "lat": 11,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 68,
+      "lat": 11,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 72,
+      "lat": 11,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "## Phân tích kết quả test NRO J2ME\n\n**1. Server có đang chấp nhận kết nối không?**\n✅ Có — tất cả 5 lệnh đều `ok: true`, `err: null`. Server phản hồi TCP đúng, không lỗi kết nối.\n\n**2. Protocol nào có rx khác rỗng"
+  "ai_diagnosis": "## Phân tích kết quả test bore.pub:14445\n\n### 1. Server có đang chấp nhận kết nối không?\n**Có.** Tất cả 5 test đều `ok: true` → TCP handshake thành công, server không đóng kết nối.\n\n### 2. Protocol nào có phản hồi rx khác rỗng?\n**Không có.** Tất cả `rx: \"\"` → server **không gửi lại bất kỳ byte nào** sau khi nhận lệnh.\n\n### 3. Protocol NRO thực sự bắt đầu bằng gì?\nCần **capture traffic thực** từ client J2ME chính chủ để xác định:\n-"
 }

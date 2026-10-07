@@ -1,45 +1,45 @@
 {
-  "ts": "2026-10-07 00:22:40 UTC",
+  "ts": "2026-10-07 06:14:18 UTC",
   "target": "bore.pub:14445",
-  "any_connected": false,
+  "any_connected": true,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 43,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "login_cmd1": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 12,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "version_ff": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 11,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "empty_pkt": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 11,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     },
     "cmd_neg101": {
-      "ok": false,
-      "lat": 0,
+      "ok": true,
+      "lat": 11,
       "rx": "",
-      "err": "ConnectionRefused",
-      "mode": ""
+      "err": null,
+      "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nKhông. Tất cả đều `ConnectionRefused` → TCP connection bị từ chối ngay ở tầng socket. Có thể bore tunnel chưa hoạt động, server Java chưa bind đúng port, hoặc firewall chặn.\n\n**2. Protocol nào có vẻ đúng nhất?**\nKhông có gói nào phản hồi (`rx` rỗng). Chưa thể xác định protocol đúng vì chưa kết"
+  "ai_diagnosis": "1. **Có**, server chấp nhận kết nối TCP (tất cả `ok: true`), nhưng **không phản hồi dữ liệu** (`rx: \"\"` ở mọi lệnh).\n\n2. **Không có protocol nào** cho phản hồi `rx` khác rỗng. Tất cả đều im"
 }

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-07 06:14:18 UTC",
+  "ts": "2026-10-07 13:31:33 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
   "any_response": false,
@@ -7,39 +7,39 @@
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 43,
+      "lat": 81,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 12,
+      "lat": 37,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 11,
+      "lat": 38,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 11,
+      "lat": 33,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 11,
+      "lat": 35,
       "rx": "",
       "err": null,
       "mode": "sent_first"
     }
   },
-  "ai_diagnosis": "1. **Có**, server chấp nhận kết nối TCP (tất cả `ok: true`), nhưng **không phản hồi dữ liệu** (`rx: \"\"` ở mọi lệnh).\n\n2. **Không có protocol nào** cho phản hồi `rx` khác rỗng. Tất cả đều im"
+  "ai_diagnosis": "**1. Server có đang chấp nhận kết nối không?**\nCó — tất cả `ok: true` nghĩa là TCP handshake thành công, server không đóng kết nối.\n\n**2. Protocol nào có vẻ đúng nhất?**\nChưa có protocol nào cho thấy `rx` khác rỗng — server chưa phản hồi dữ liệu ở bất kỳ bước nào.\n\n**3. Protocol NRO thực sự bắt đầu bằng gì?**\nTheo kết quả `server_first` (timeout 2s, `rx: \"\"`), server **không gửi trước** → protocol bắt"
 }

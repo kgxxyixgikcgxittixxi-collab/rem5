@@ -1,44 +1,44 @@
 {
-  "ts": "2026-10-11 02:17:21 UTC",
+  "ts": "2026-10-11 09:02:40 UTC",
   "target": "bore.pub:14445",
-  "any_connected": true,
+  "any_connected": false,
   "any_response": false,
   "best_probe": null,
   "probes": {
     "server_first": {
-      "ok": true,
-      "lat": 303,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "login_cmd1": {
-      "ok": true,
-      "lat": 26,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "version_ff": {
-      "ok": true,
-      "lat": 25,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "empty_pkt": {
-      "ok": true,
-      "lat": 21,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     },
     "cmd_neg101": {
-      "ok": true,
-      "lat": 25,
+      "ok": false,
+      "lat": 0,
       "rx": "",
-      "err": null,
-      "mode": "sent_first"
+      "err": "ConnectionRefused",
+      "mode": ""
     }
   },
   "ai_diagnosis": "AI_ERR:HTTP Error 503: Service Unavailable"

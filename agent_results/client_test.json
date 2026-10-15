@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-14 22:39:59 UTC",
+  "ts": "2026-10-15 00:55:16 UTC",
   "target": "bore.pub:14445",
   "status": "WARN",
   "results": {
@@ -9,7 +9,7 @@
     },
     "TCP": {
       "ok": true,
-      "data": "39ms"
+      "data": "57ms"
     },
     "ServerKey": {
       "ok": false,

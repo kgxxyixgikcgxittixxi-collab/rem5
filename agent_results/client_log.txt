@@ -1,4 +1,3 @@
-2026-09-08 15:20:14 UTC | WARN | bore.pub:14445 | 
 2026-09-08 18:55:38 UTC | WARN | bore.pub:14445 | 
 2026-09-08 21:41:02 UTC | WARN | bore.pub:14445 | **Client không
 2026-09-08 23:41:17 UTC | WARN | bore.pub:14445 | 
@@ -298,3 +297,4 @@ Client **đã kết nối được** vào server (DNS, TCP, Login, JAR đều OK
 2026-10-16 18:24:53 UTC | WARN | bore.pub:14445 | AI err:HTTP Error 503: Service Unavailable
 2026-10-16 21:34:27 UTC | WARN | bore.pub:14445 | AI err:HTTP Error 503: Service Unavailable
 2026-10-16 23:55:02 UTC | WARN | bore.pub:14445 | AI err:HTTP Error 503: Service Unavailable
+2026-10-17 03:34:39 UTC | WARN | bore.pub:14445 | AI err:HTTP Error 503: Service Unavailable

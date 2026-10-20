@@ -1,4 +1,3 @@
-2026-09-09 00:34:22 UTC | OK | bore.pub:14445 | no_response | Phân tích kết quả test:
 
 **1. Server có đang chấp nhận kết nối không?**
 → **Có.*
@@ -498,3 +497,4 @@ Không. Tất cả đều `ConnectionRefu
 2026-10-19 19:40:00 UTC | OK | bore.pub:14445 | no_response | AI_ERR:HTTP Error 503: Service Unavailable
 2026-10-19 23:05:46 UTC | OK | bore.pub:14445 | no_response | AI_ERR:HTTP Error 503: Service Unavailable
 2026-10-20 01:45:40 UTC | OK | bore.pub:14445 | no_response | AI_ERR:HTTP Error 503: Service Unavailable
+2026-10-20 06:41:50 UTC | OK | bore.pub:14445 | no_response | AI_ERR:HTTP Error 503: Service Unavailable

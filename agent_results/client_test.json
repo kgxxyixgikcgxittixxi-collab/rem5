@@ -1,23 +1,15 @@
 {
-  "ts": "2026-11-06 14:51:06 UTC",
+  "ts": "2026-11-06 20:44:10 UTC",
   "target": "bore.pub:14445",
-  "status": "OK",
+  "status": "FAIL",
   "results": {
     "DNS": {
       "ok": true,
       "data": "159.223.110.159"
     },
     "TCP": {
-      "ok": true,
-      "data": "40ms"
-    },
-    "ServerKey": {
-      "ok": true,
-      "data": "0x5353482d (4B)"
-    },
-    "Login": {
-      "ok": true,
-      "data": "0x322e302d4f70656e5353485f31302e33"
+      "ok": false,
+      "error": "[Errno 111] Connection refused"
     },
     "JAR": {
       "ok": true,

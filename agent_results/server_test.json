@@ -1,42 +1,42 @@
 {
-  "ts": "2026-11-06 17:18:07 UTC",
+  "ts": "2026-11-06 22:10:58 UTC",
   "target": "bore.pub:14445",
   "any_connected": true,
-  "any_response": false,
-  "best_probe": null,
+  "any_response": true,
+  "best_probe": "server_first",
   "probes": {
     "server_first": {
       "ok": true,
-      "lat": 93,
-      "rx": "",
+      "lat": 41,
+      "rx": "5353482d322e302d4f70656e5353485f31302e330d0a",
       "err": null,
-      "mode": "sent_first"
+      "mode": "server_sent_first"
     },
     "login_cmd1": {
       "ok": true,
-      "lat": 34,
-      "rx": "",
+      "lat": 15,
+      "rx": "5353482d322e302d4f70656e5353485f31302e330d0a496e76616c696420535348206964656e74696669636174696f6e20737472696e672e0d0a",
       "err": null,
       "mode": "sent_first"
     },
     "version_ff": {
       "ok": true,
-      "lat": 34,
-      "rx": "",
+      "lat": 14,
+      "rx": "5353482d322e302d4f70656e5353485f31302e330d0a",
       "err": null,
       "mode": "sent_first"
     },
     "empty_pkt": {
       "ok": true,
-      "lat": 32,
-      "rx": "",
+      "lat": 17,
+      "rx": "5353482d322e302d4f70656e5353485f31302e330d0a",
       "err": null,
       "mode": "sent_first"
     },
     "cmd_neg101": {
       "ok": true,
-      "lat": 34,
-      "rx": "",
+      "lat": 12,
+      "rx": "5353482d322e302d4f70656e5353485f31302e330d0a496e76616c696420535348206964656e74696669636174696f6e20737472696e672e0d0a",
       "err": null,
       "mode": "sent_first"
     }

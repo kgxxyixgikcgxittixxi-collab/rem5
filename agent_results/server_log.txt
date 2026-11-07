@@ -1,4 +1,3 @@
-→ **Có
 2026-09-13 20:45:39 UTC | OK | bore.pub:14445 | no_response | Dựa trên kết quả test:
 
 1. **Server đang chấp nhận kết nối** — tất cả `ok
@@ -498,3 +497,4 @@ Không. Tất cả đều `ConnectionRefu
 2026-11-06 17:18:07 UTC | OK | bore.pub:14445 | no_response | AI_ERR:HTTP Error 500: Internal Server Error
 2026-11-06 22:10:58 UTC | OK | bore.pub:14445 | best=server_first rx=0x5353482d322e302d | AI_ERR:HTTP Error 500: Internal Server Error
 2026-11-07 01:55:33 UTC | FAIL | bore.pub:14445 | no_response | AI_ERR:HTTP Error 500: Internal Server Error
+2026-11-07 08:21:09 UTC | OK | bore.pub:14445 | no_response | AI_ERR:HTTP Error 500: Internal Server Error

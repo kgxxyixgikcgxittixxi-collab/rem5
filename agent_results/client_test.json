@@ -1,7 +1,7 @@
 {
-  "ts": "2026-11-09 02:40:37 UTC",
+  "ts": "2026-11-09 10:23:06 UTC",
   "target": "bore.pub:14445",
-  "status": "OK",
+  "status": "WARN",
   "results": {
     "DNS": {
       "ok": true,
@@ -9,15 +9,15 @@
     },
     "TCP": {
       "ok": true,
-      "data": "7ms"
+      "data": "25ms"
     },
     "ServerKey": {
-      "ok": true,
-      "data": "0x5353482d (4B)"
+      "ok": false,
+      "error": "no greeting from server"
     },
     "Login": {
       "ok": true,
-      "data": "0x322e302d4f70656e5353485f31302e33"
+      "data": "0x"
     },
     "JAR": {
       "ok": true,

@@ -1,4 +1,3 @@
-Client **
 2026-09-20 16:23:43 UTC | WARN | bore.pub:14445 | 
 2026-09-20 18:58:43 UTC | WARN | bore.pub:14445 | 
 2026-09-20 21:26:07 UTC | WARN | bore.pub:14445 | 
@@ -298,3 +297,4 @@ Client **đã kết nối được** vào server (DNS, TCP, Login, JAR đều OK
 2026-11-10 23:56:08 UTC | OK | bore.pub:14445 | AI err:HTTP Error 500: Internal Server Error
 2026-11-11 05:34:55 UTC | OK | bore.pub:14445 | AI err:HTTP Error 500: Internal Server Error
 2026-11-11 12:58:07 UTC | OK | bore.pub:14445 | AI err:HTTP Error 500: Internal Server Error
+2026-11-11 20:07:29 UTC | OK | bore.pub:14445 | AI err:HTTP Error 500: Internal Server Error

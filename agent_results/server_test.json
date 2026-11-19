@@ -1,5 +1,5 @@
 {
-  "ts": "2026-11-19 17:44:22 UTC",
+  "ts": "2026-11-19 23:53:39 UTC",
   "target": "bore.pub:14445",
   "any_connected": false,
   "any_response": false,
@@ -41,5 +41,5 @@
       "mode": ""
     }
   },
-  "ai_diagnosis": "AI_ERR:HTTP Error 500: Internal Server Error"
+  "ai_diagnosis": "AI_ERR:HTTP Error 429: Too Many Requests"
 }
